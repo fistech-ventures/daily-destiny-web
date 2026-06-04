@@ -1,0 +1,252 @@
+{
+  "navLinks": {
+    "home": "Home",
+    "recent": "Recent",
+    "video": "Video"
+  },
+  "auth": {
+    "signIn": "Log In",
+    "signOut": "Log Out",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "welcomeBack": "Welcome back!",
+    "donthaveAcc": "Don't Have an Account?",
+    "register": "Register",
+    "forgotPassword": "Forgot Password?",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "registration": "Registration",
+    "fullName": "Full Name",
+    "enterFullName": "Enter your full name",
+    "createPassword": "Create a password"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "resultsFound": "Results found: {count}",
+    "showingResults": "Showing results for: \"{query}\"...",
+    "noResults": "No results found"
+  },
+  "recent": {
+    "title": "Recent News",
+    "loadMore": "Load More",
+    "noArticles": "No articles found"
+  },
+  "shareMarket": {
+    "title": "Share Market"
+  },
+  "live": {
+    "label": "Watch Live"
+  },
+  "time": {
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "night": "Evening",
+    "lateNight": "Night"
+  },
+  "image": {
+    "label": "Image Story",
+    "lastLabel": "Image"
+  },
+  "article": {
+    "headline": "Today's Headline",
+    "trending": "Trending",
+    "bazarPricing": "Bazar Pricing",
+    "more": "More",
+    "specialArticle": "Special Reports",
+    "video": "Video",
+    "videoPageTitle": "Recent Videos",
+    "image": "Image",
+    "imagePageTitle": "Image Story",
+    "relatedArticle": "Other related news"
+  },
+  "notFound": {
+    "statusTag": "Technical Difficulty",
+    "title": "We've Lost the Connection",
+    "description": "This frequency is currently showing static. The page you are looking for is either off-air or has been moved.",
+    "button": "Return to Station"
+  },
+  "gallery": {
+    "title": "Today's Gallery",
+    "more": "More Images"
+  },
+  "footer": {
+    "brandName": "Prime Satellite TV Ltd.",
+    "description": "The ultimate boilerplate for building high-performance Next.js applications with style.",
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "placeholder": "Enter your email",
+      "button": "Join"
+    },
+    "sections": {
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "links": {
+      "quickLinks": [
+        {
+          "name": "Home",
+          "href": "/"
+        },
+        {
+          "name": "Recent News",
+          "href": "/recent"
+        },
+        {
+          "name": "Video",
+          "href": "/video"
+        },
+        {
+          "name": "About",
+          "href": "/about"
+        },
+        {
+          "name": "Contact",
+          "href": "/contact"
+        }
+      ],
+      "legal": [
+        {
+          "name": "Privacy",
+          "href": "/privacy"
+        },
+        {
+          "name": "Terms",
+          "href": "/terms"
+        },
+        {
+          "name": "Cookie Policy",
+          "href": "/cookies"
+        }
+      ]
+    },
+    "copyright": "© {year} Prime Tv. All rights reserved.",
+    "developed": "Developed by Quicksoft Limited",
+    "socialLabel": "Social Media",
+    "companyInfoEn": {
+      "name": "Prime Satellite TV Ltd.",
+      "subtitle": "Trusted | Timely | True ",
+      "address": "SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
+      "phone": "Phone: +880 1618-954713",
+      "email": "Email: theprimetv.com@gmail.com"
+    },
+    "companyInfoBn": {
+      "name": "প্রাইম স্যাটেলাইট টিভি লিমিটেড",
+      "subtitle": "বিশ্বস্ত | সময়োপযোগী | সত্য",
+      "address": "এসকে সেন্টার, ৪র্থ তলা, জি. পি- জ-৪, মহাখালী টিবি গেট, গুলশান, ঢাকা-১২১২",
+      "phone": "ফোন: +৮৮০ ১৬১৮-৯৫৪৭১৩",
+      "email": "ই-মেইল: theprimetv.com@gmail.com"
+    },
+    "social": [
+      {
+        "name": "Twitter",
+        "href": "https://twitter.com"
+      },
+      {
+        "name": "GitHub",
+        "href": "https://github.com"
+      },
+      {
+        "name": "YouTube",
+        "href": "https://youtube.com"
+      }
+    ]
+  },
+  "common": {
+    "noDataAvailable": "No data available",
+    "comingSoon": "Coming Soon",
+    "backToHome": "Back to Home",
+    "notFoundNews": "Sorry, we couldn't find this news you're looking for.",
+    "notFoundNewsDescription": "The article might have been removed, or the link is incorrect. Please check the URL or browse our other latest news.",
+    "moreNewsInCategory": "More news in this category",
+    "moreNews": "Latest News",
+    "headline": "Headline"
+  },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "description": "We encountered an unexpected error. Please try again.",
+    "tryAgain": "Try Again",
+    "goHome": "Go Home"
+  },
+  "tooManyRequests": {
+    "title": "Slow Down! Too Many Requests",
+    "description": "You've made too many requests. Please wait a moment before trying again.",
+    "retryIn": "Auto-retrying in {seconds}s...",
+    "tryAgain": "Try Again"
+  },
+  "livePage": {
+    "status": "UPCOMING",
+    "badge": "Live Broadcast",
+    "title": "Coming Soon",
+    "description": "We are currently preparing our next live broadcast. Please stay tuned for updates and the final schedule.",
+    "footer": "Wait For Signal // Stay Tuned"
+  },
+  "maintenance": {
+    "title": "We'll Be Right Back!",
+    "description": "We're currently performing scheduled maintenance to improve your experience. Please check back shortly.",
+    "status": "Under Maintenance"
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "description": "Welcome to all viewers, readers, and digital users of Prime Television. We are committed to delivering fast, accurate, and unbiased news. The term “user” refers to anyone accessing our content through our website or social media platforms such as Facebook, YouTube, Twitter, and others. By using our services, you are deemed to have accepted these terms and conditions.",
+    "disclaimerTitle": "Disclaimer",
+    "disclaimerText": "All content published on Prime Television, including news, images, and videos, is collected from various sources such as individuals, organizations, and research institutions. Responsibility for the accuracy of such information primarily lies with those sources. While we strive to verify information carefully, Prime Television does not assume direct liability for any inaccuracies. The authority reserves the right to accept or reject user feedback at its discretion.",
+    "intelectualTitle": "Intellectual Property",
+    "intelectualText": "All materials on Prime Television—including text, images, videos, logos, graphics, and other assets—are the property of the organization. Unauthorized use, especially for commercial purposes, is strictly prohibited. Legal action may be taken in case of violations.",
+    "legalTitle": "Legal Compliance",
+    "legalText": "Prime Television operates in accordance with applicable laws and media regulations. Users are expected to follow these standards when interacting with our platforms. Any violation of law by a user will be their sole responsibility.",
+    "contentTitle": "Content Modification",
+    "contentText": "Prime Television reserves the right to modify, update, or remove any content at any time without prior notice.",
+    "advertisementTitle": "Advertisements and Third-Party Content",
+    "advertisementText": "Advertisements displayed on our platforms are created by third-party advertisers. Prime Television does not take responsibility for the content or impact of such advertisements; liability rests with the respective advertisers."
+  },
+  "privacy": {
+    "description": "Prime Television places the highest importance on protecting the privacy and personal information of its users. This policy explains how user information is collected, used, and managed when accessing our platform.",
+    "title": "Privacy Policy",
+    "personalTitle": "Personal Information Protection",
+    "personalText": "We are committed to safeguarding users’ personal data, including names, phone numbers, email addresses, social media IDs, age, and address. Such information may be used in a limited capacity for improving services, analytics, and enhancing user experience.",
+    "userContentTitle": "User-Generated Content",
+    "userContentText": "Any comments, opinions, or information shared by users on our website or social media platforms remain their sole responsibility. Prime Television does not guarantee the accuracy or authenticity of such content. Appropriate action may be taken against fake or unauthorized activities. Users are advised to exercise caution when sharing information.",
+    "advertisementTitle": "Advertisements and Third-Party Content",
+    "advertisementText": "Advertisements displayed on our platform are managed by third-party advertisers. Prime Television does not take responsibility for the content, accuracy, or acceptability of these advertisements. All liabilities rest with the respective advertisers.",
+    "childrenTitle": "Children’s Policy",
+    "childrenText": "Our content is primarily intended for adult audiences. We do not knowingly collect or store personal information from children. However, we remain mindful of children’s psychological well-being when publishing content.",
+    "cookiesTitle": "Cookies and Data Usage",
+    "cookiesText": "Prime Television does not store users’ cookies or personal browsing data. If any third party collects such information, it is beyond our responsibility.",
+    "copyrightTitle": "Copyright and Usage Policy",
+    "copyrightText": "All content published by Prime Television is protected under applicable copyright and intellectual property laws. Unauthorized or commercial use of our content is strictly prohibited. Limited use for non-commercial informational purposes may be allowed with proper attribution. Legal action may be taken in case of violations."
+  },
+  "about": {
+    "title": "About Us",
+    "description": "Prime Television is a leading media organization dedicated to delivering accurate, unbiased, and timely news to our viewers. We strive to maintain the highest standards of journalism while serving the public interest.",
+    "missionTitle": "Our Mission",
+    "missionText": "To provide fast, accurate, and unbiased news coverage that informs, educates, and empowers our audience. We are committed to journalistic integrity and ethical reporting practices.",
+    "visionTitle": "Our Vision",
+    "visionText": "To become the most trusted and respected media organization in the region, known for our commitment to truth, transparency, and public service.",
+    "teamTitle": "Our Team",
+    "teamText": "Our dedicated team of journalists, editors, and media professionals work tirelessly to bring you the most relevant and important news stories. With years of experience in the field, we ensure quality reporting.",
+    "valuesTitle": "Our Values",
+    "valuesText": "Integrity, accuracy, impartiality, and public service are the core values that guide our operations. We believe in responsible journalism that serves the greater good of society.",
+    "contactTitle": "Contact Us",
+    "contactText": "We welcome your feedback, suggestions, and news tips. You can reach us through our website, social media platforms, or by contacting our editorial team directly. Your voice matters to us."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Get in touch with Prime Television for news, inquiries, or feedback. We value your communication and strive to respond promptly.",
+    "formTitle": "Send us a Message",
+    "nameLabel": "Full Name",
+    "emailLabel": "Email Address",
+    "phoneLabel": "Phone Number",
+    "purposeLabel": "Purpose of Contact",
+    "submitButton": "Send Message",
+    "contactInfoTitle": "Contact Information",
+    "addressLabel": "Address",
+    "phone": "+880 1618-954713",
+    "email": "theprimetv.com@gmail.com",
+    "address": "SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
+    "mapTitle": "Find Us on Map",
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1929.5705510992548!2d90.40754866306354!3d23.78065484991673!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7c5d92d43c5%3A0xcc41df18e517d66!2sPrime%20TV!5e1!3m2!1sen!2sbd!4v1777093385827!5m2!1sen!2sbd"
+  }
+}
