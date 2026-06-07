@@ -7,6 +7,7 @@ import { Category } from "@/lib/types";
 import { Metadata } from "next";
 import React from "react";
 import NewsListClient from "@/components/news/news-list-client";
+import LocationFilter from "@/components/category/categoryfilter";
 
 export async function generateMetadata({
   params,
@@ -81,20 +82,27 @@ export default async function CategoryPage({
   const meta = response?.meta;
 
   return (
-    <div className="">
-      <h2 className="lg:text-2xl text-xl font-bold">
+    <div className="container mx-auto px-4 py-6">
+      <h2 className="lg:text-2xl text-xl font-bold border-b pb-2 border-gray-100">
         {subCategoryTitle || category?.titleBn}
       </h2>
 
-      <div className="mt-4">
-        <NewsListClient
-          initialData={articlesList}
-          initialMeta={meta}
-          fetchParams={{
-            categoryId: category?.id,
-            subCategoryId,
-          }}
-        />
+      <div className="mt-6 flex flex-col lg:flex-row gap-6 items-start">
+        <div className="flex-1 w-full pr-2 border-r border-gray-100">
+          <NewsListClient
+            initialData={articlesList}
+            initialMeta={meta}
+            fetchParams={{
+              categoryId: category?.id,
+              subCategoryId,
+            }}
+          />
+        </div>
+
+        {/* Keeping LocationFilter untouched as requested */}
+        <div className="w-full lg:w-80 shrink-0 sticky top-4">
+          <LocationFilter />
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,12 @@ import { Loader2, ChevronDown } from "lucide-react";
 interface PaginatedListProps<T> {
   initialData: T[];
   initialMeta?: { total?: number; page?: number; limit?: number };
-  fetchData: (page: number) => Promise<{ data: T[]; meta?: { total?: number; page?: number; limit?: number } } | T[]>;
+  fetchData: (
+    page: number,
+  ) => Promise<
+    | { data: T[]; meta?: { total?: number; page?: number; limit?: number } }
+    | T[]
+  >;
   renderItem: (item: T, index: number) => React.ReactNode;
   listClassName?: string;
   wrapperClassName?: string;
@@ -19,7 +24,7 @@ export default function PaginatedList<T>({
   initialMeta,
   fetchData,
   renderItem,
-  listClassName = "grid grid-cols-1 gap-6",
+  listClassName = "grid grid-cols-3 gap-6",
   wrapperClassName = "w-full",
   noDataMessage = "কোনো ডেটা পাওয়া যায়নি",
 }: PaginatedListProps<T>) {
@@ -40,16 +45,40 @@ export default function PaginatedList<T>({
       const response = await fetchData(nextPage);
 
       let newItems: T[] = [];
-      let newMeta: { total?: number; page?: number; limit?: number } | undefined | null = null;
+      let newMeta:
+        | { total?: number; page?: number; limit?: number }
+        | undefined
+        | null = null;
 
       if (Array.isArray(response)) {
         newItems = response;
-      } else if (response && typeof response === "object" && Array.isArray((response as { data: T[]; meta?: { total?: number; page?: number; limit?: number } }).data)) {
-        newItems = (response as { data: T[]; meta?: { total?: number; page?: number; limit?: number } }).data;
-        newMeta = (response as { data: T[]; meta?: { total?: number; page?: number; limit?: number } }).meta;
+      } else if (
+        response &&
+        typeof response === "object" &&
+        Array.isArray(
+          (
+            response as {
+              data: T[];
+              meta?: { total?: number; page?: number; limit?: number };
+            }
+          ).data,
+        )
+      ) {
+        newItems = (
+          response as {
+            data: T[];
+            meta?: { total?: number; page?: number; limit?: number };
+          }
+        ).data;
+        newMeta = (
+          response as {
+            data: T[];
+            meta?: { total?: number; page?: number; limit?: number };
+          }
+        ).meta;
       }
 
-      setItems((prev) => [...prev, ...newItems]);
+      setItems(prev => [...prev, ...newItems]);
       setPage(nextPage);
 
       if (newMeta?.total !== undefined) {

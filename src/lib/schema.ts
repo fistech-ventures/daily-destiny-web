@@ -23,7 +23,7 @@ interface WebsiteProps {
 }
 
 function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://theprimetv.com";
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://dailydestiny.com";
 }
 
 export const SchemaGenerator = {
@@ -92,7 +92,7 @@ export const SchemaGenerator = {
       image,
       author: {
         "@type": "Person",
-        name: article.author?.name || "Prime TV",
+        name: article.author?.name || "Daily Destiny",
       },
       publisher: {
         "@type": "Organization",
