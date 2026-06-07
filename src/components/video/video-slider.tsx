@@ -118,7 +118,6 @@
 //     </div>
 //   );
 // }
-
 "use client";
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
@@ -133,103 +132,134 @@ interface VideoSliderProps {
 }
 
 export default function VideoSlider({ 
-  videos = [], // Fallback to an empty array to prevent undefined runtime errors
+  videos = [], 
   title = "ভিডিও", 
   autoPlayInterval = 4000 
 }: VideoSliderProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [activeDotIndex, setActiveDotIndex] = useState(0);
+  const [activePage, setActivePage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
-  const totalDots = 5;
 
-  // 1. Core definitions must be evaluated before any early returns or hooks
-  const loopedVideos = [...videos, ...videos, ...videos];
   const originalLength = videos.length;
+  // Triple the data array to create our infinite scrolling buffer wheels
+  const loopedVideos = [...videos, ...videos, ...videos];
 
-  // 2. All Hooks must stay unconditionally at the top level
-  const getCardMetrics = useCallback(() => {
+  // Extracts dynamic dimensions and layouts from the live DOM viewport
+  const getLayoutMetrics = useCallback(() => {
     if (!sliderRef.current || !sliderRef.current.firstElementChild) {
-      return { cardWidth: 300, clientWidth: 1200 };
+      return { cardWidth: 300, clientWidth: 1200, visibleCards: 3, pageWidth: 900 };
     }
     const card = sliderRef.current.firstElementChild as HTMLElement;
-    const cardWidth = card.offsetWidth + 20; // card width + gap-5 (20px)
-    return { cardWidth, clientWidth: sliderRef.current.clientWidth };
+    const cardWidth = card.offsetWidth + 20; // 20px corresponds to gap-5
+    const clientWidth = sliderRef.current.clientWidth;
+    
+    // Calculate how many full or fractional cards fit on the screen
+    const visibleCards = Math.max(1, Math.round(clientWidth / cardWidth));
+    const pageWidth = visibleCards * cardWidth;
+
+    return { cardWidth, clientWidth, visibleCards, pageWidth };
   }, []);
 
+  // Recalculates total layout pages responsively based on active browser layout
+  const updateLayoutStructure = useCallback(() => {
+    if (originalLength === 0) return;
+    const { visibleCards } = getLayoutMetrics();
+    const pages = Math.ceil(originalLength / visibleCards);
+    setTotalPages(pages || 1);
+  }, [originalLength, getLayoutMetrics]);
+
+  // Initial load alignment and structural observation setup
   useEffect(() => {
-    if (sliderRef.current && originalLength > 0) {
-      const { cardWidth } = getCardMetrics();
-      sliderRef.current.scrollLeft = cardWidth * originalLength;
-    }
-  }, [originalLength, getCardMetrics]);
-
-  const scroll = useCallback((direction: "left" | "right") => {
-    if (sliderRef.current && originalLength > 0) {
-      const { cardWidth, clientWidth } = getCardMetrics();
-      const scrollAmount = Math.max(cardWidth, Math.floor(clientWidth / cardWidth) * cardWidth);
-
-      sliderRef.current.scrollTo({
-        left: direction === "left" ? sliderRef.current.scrollLeft - scrollAmount : sliderRef.current.scrollLeft + scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  }, [getCardMetrics, originalLength]);
-
-  const handleDotClick = (dotIndex: number) => {
     if (!sliderRef.current || originalLength === 0) return;
-    
-    const { cardWidth, clientWidth } = getCardMetrics();
-    const totalBufferWidth = cardWidth * originalLength;
-    const maxScrollableSegment = totalBufferWidth - clientWidth;
-    
-    if (maxScrollableSegment <= 0) return;
 
-    const progressFactor = dotIndex / (totalDots - 1);
-    const targetRelativeLeft = progressFactor * maxScrollableSegment;
-    
-    sliderRef.current.scrollTo({
-      left: totalBufferWidth + targetRelativeLeft,
-      behavior: "smooth",
+    const { cardWidth } = getLayoutMetrics();
+    // Center-align layout directly on the second identical set group index
+    sliderRef.current.scrollLeft = cardWidth * originalLength;
+
+    updateLayoutStructure();
+
+    // Dynamically re-adjust whenever the window or container scales down or stretches out
+    const resizeObserver = new ResizeObserver(() => {
+      updateLayoutStructure();
     });
+    
+    resizeObserver.observe(sliderRef.current);
+    return () => resizeObserver.disconnect();
+  }, [originalLength, getLayoutMetrics, updateLayoutStructure]);
+
+  // Discrete Page Navigation Engine
+  const goToPage = useCallback((pageIndex: number, behavior: ScrollBehavior = "smooth") => {
+    if (!sliderRef.current || originalLength === 0) return;
+
+    const { cardWidth, pageWidth } = getLayoutMetrics();
+    const totalBufferWidth = cardWidth * originalLength;
+
+    // Direct scroll target alignment mapping page indexes against computed structural metrics
+    const targetScrollLeft = totalBufferWidth + (pageIndex * pageWidth);
+
+    sliderRef.current.scrollTo({
+      left: targetScrollLeft,
+      behavior,
+    });
+  }, [originalLength, getLayoutMetrics]);
+
+  // Directional navigation arrows triggers
+  const handleStepScroll = (direction: "left" | "right") => {
+    const nextTargetPage = direction === "left" ? activePage - 1 : activePage + 1;
+    goToPage(nextTargetPage);
   };
 
+  // Continuous loop engine observer tracker
   useEffect(() => {
     if (isPaused || originalLength === 0) return;
 
     const interval = setInterval(() => {
-      scroll("right");
+      goToPage(activePage + 1);
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [isPaused, scroll, autoPlayInterval, originalLength]);
+  }, [isPaused, activePage, autoPlayInterval, originalLength, goToPage]);
 
+  // Real-time scrolling synchronization and wheel shifting
   const handleScroll = () => {
     if (!sliderRef.current || originalLength === 0) return;
 
+    // 1. Get DOM properties directly from the element
     const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-    const { cardWidth } = getCardMetrics();
+    
+    // 2. Get your layout metrics from the helper
+    const { cardWidth, pageWidth } = getLayoutMetrics();
+    
     const totalBufferWidth = cardWidth * originalLength;
 
+    // A. Left Edge Loop Trigger Reset
     if (scrollLeft <= cardWidth) {
-      sliderRef.current.scrollLeft = scrollLeft + totalBufferWidth;
+      const offsetFix = scrollLeft + totalBufferWidth;
+      sliderRef.current.scrollLeft = offsetFix;
       return;
     }
+
+    // B. Right Edge Loop Trigger Reset
     if (scrollLeft + clientWidth >= scrollWidth - cardWidth) {
-      sliderRef.current.scrollLeft = scrollLeft - totalBufferWidth;
+      const offsetFix = scrollLeft - totalBufferWidth;
+      sliderRef.current.scrollLeft = offsetFix;
       return;
     }
 
-    const relativeScrollLeft = (scrollLeft % totalBufferWidth);
-    const maxScrollableSegment = totalBufferWidth - clientWidth;
+    // C. Precise discrete active page tracking computation
+    const relativeScrollLeft = scrollLeft - totalBufferWidth;
+    
+    // Using Math.round eliminates half-scrolled layout snapping indicator conflicts
+    let computedPage = Math.round(relativeScrollLeft / pageWidth);
+    
+    // Correct variations down to match within a strictly bound zero-indexed array context
+    if (computedPage < 0) computedPage = totalPages - 1;
+    if (computedPage >= totalPages) computedPage = 0;
 
-    if (maxScrollableSegment > 0) {
-      const progress = Math.min(Math.max(relativeScrollLeft / maxScrollableSegment, 0), 1);
-      const dotIndex = Math.min(Math.floor(progress * totalDots), totalDots - 1);
-      setActiveDotIndex(dotIndex);
-    }
+    setActivePage(computedPage);
   };
 
-  // 3. Early return moved completely BELOW the hook declarations
   if (originalLength === 0) {
     return null;
   }
@@ -237,7 +267,7 @@ export default function VideoSlider({
   return (
     <div className="w-full flex flex-col gap-6 bg-white p-4 rounded-md select-none">
       
-      {/* Slider Header */}
+      {/* Slider Header Line Block */}
       <div className="flex items-center justify-between border-b border-gray-100 pb-2">
         <div className="flex items-center gap-1.5 group cursor-pointer">
           <h2 className="text-xl font-bold text-gray-900 border-b-2 border-red-600 pb-2 -mb-[10px]">
@@ -246,26 +276,26 @@ export default function VideoSlider({
           <ChevronRight className="h-5 w-5 text-red-600 mt-0.5 transition-transform group-hover:translate-x-0.5" />
         </div>
 
-        {/* Navigation Controls */}
+        {/* Dynamic Action Buttons Layout */}
         <div className="flex items-center gap-2">
           <button
-            onClick={() => scroll("left")}
+            onClick={() => handleStepScroll("left")}
             className="flex items-center justify-center h-8 w-8 rounded border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 active:scale-95 transition-all"
-            aria-label="Previous Slide"
+            aria-label="Previous Page"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <button
-            onClick={() => scroll("right")}
+            onClick={() => handleStepScroll("right")}
             className="flex items-center justify-center h-8 w-8 rounded border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 active:scale-95 transition-all"
-            aria-label="Next Slide"
+            aria-label="Next Page"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>
       </div>
 
-      {/* Main Horizontal Row Slider */}
+      {/* Main Horizontal Carousel Layer Area */}
       <div
         ref={sliderRef}
         onScroll={handleScroll}
@@ -286,18 +316,18 @@ export default function VideoSlider({
         ))}
       </div>
 
-      {/* Clickable Pagination Tracker Dots */}
+      {/* Precise Context-Aware Functional Indicator Action Dots */}
       <div className="flex items-center justify-center gap-2 mt-2">
-        {Array.from({ length: totalDots }).map((_, idx) => (
+        {Array.from({ length: totalPages }).map((_, idx) => (
           <button
             key={idx}
-            onClick={() => handleDotClick(idx)}
+            onClick={() => goToPage(idx)}
             className="p-1 focus:outline-none focus-visible:scale-125 transition-transform"
-            aria-label={`Go to slide group ${idx + 1}`}
+            aria-label={`Maps direct to video sequence row page group ${idx + 1}`}
           >
             <span
               className={`block h-2 w-2 rounded-full transition-all duration-300 ${
-                idx === activeDotIndex 
+                idx === activePage 
                   ? "bg-gray-800 scale-125 shadow-sm" 
                   : "bg-gray-300 hover:bg-gray-400"
               }`}
