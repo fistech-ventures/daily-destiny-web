@@ -9,7 +9,7 @@ const poppins = Noto_Serif_Bengali({
 });
 
 export const metadata: Metadata = {
-  title: "Under Maintenance | Prime Tv",
+  title: "Under Maintenance | Daily Destiny",
   description: "We are currently under maintenance. Please check back soon.",
 };
 

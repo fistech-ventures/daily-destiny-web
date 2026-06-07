@@ -14,7 +14,7 @@ export async function generateMetadata({
 
   return {
     ...generateFallbackMetadata({ path: `/topic/${decodedSlug}`, locale }),
-    title: `${decodedSlug} | Prime Tv`,
+    title: `${decodedSlug} | Daily Destiny`,
     description: `Latest news about ${decodedSlug} - Trusted | Timely | True`,
   };
 }

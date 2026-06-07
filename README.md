@@ -1,4 +1,4 @@
-# Prime TV Web
+# Daily Destiny Web
 
 A modern, bilingual (Bengali & English) news and media web application built with **Next.js 15**, featuring locale-aware routing, server-side rendering, and a responsive layout with sidebar navigation.
 
@@ -25,7 +25,7 @@ A modern, bilingual (Bengali & English) news and media web application built wit
 
 ## Overview
 
-Prime TV Web is the front-end web application for the Prime TV media platform. It delivers news articles, videos, market prices, and topic-based content in both **Bengali (বাংলা)** and **English**. The app uses Next.js App Router with locale-based routing so every URL is automatically prefixed with the active locale (e.g. `/bn/`, `/en/`).
+Daily Destiny Web is the front-end web application for the Daily Destiny media platform. It delivers news articles, videos, market prices, and topic-based content in both **Bengali (বাংলা)** and **English**. The app uses Next.js App Router with locale-based routing so every URL is automatically prefixed with the active locale (e.g. `/bn/`, `/en/`).
 
 ---
 
@@ -50,7 +50,7 @@ Prime TV Web is the front-end web application for the Prime TV media platform. I
 ## Project Structure
 
 ```
-prime-tv-web/
+daily-destiny-web/
 ├── public/                    # Static assets (images, icons)
 ├── src/
 │   ├── app/
@@ -134,8 +134,8 @@ All routes are prefixed with the active locale (default: `bn`).
 ### Installation
 
 ```bash
-git clone https://github.com/quicksoft/prime-tv-web.git
-cd prime-tv-web
+git clone https://github.com/quicksoft/daily-destiny-web.git
+cd daily-destiny-web
 npm install
 ```
 

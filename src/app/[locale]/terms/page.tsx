@@ -10,8 +10,8 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     ...generateFallbackMetadata({ path: "/terms", locale }),
-    title: "Terms of Use | Prime Tv",
-    description: "Terms and conditions for using Prime Tv",
+    title: "Terms of Use | Daily Destiny",
+    description: "Terms and conditions for using Daily Destiny",
   };
 }
 

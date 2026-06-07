@@ -72,7 +72,7 @@
     "more": "More Images"
   },
   "footer": {
-    "brandName": "Prime Satellite TV Ltd.",
+    "brandName": "Daily Destiny Ltd.",
     "description": "The ultimate boilerplate for building high-performance Next.js applications with style.",
     "newsletter": {
       "title": "Subscribe to our newsletter",
@@ -122,22 +122,22 @@
         }
       ]
     },
-    "copyright": "© {year} Prime Tv. All rights reserved.",
+    "copyright": "© {year} Daily Destiny. All rights reserved.",
     "developed": "Developed by Quicksoft Limited",
     "socialLabel": "Social Media",
     "companyInfoEn": {
-      "name": "Prime Satellite TV Ltd.",
+      "name": "Daily Destiny Ltd.",
       "subtitle": "Trusted | Timely | True ",
-      "address": "SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
+      "address": "Daily Destiny, SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
       "phone": "Phone: +880 1618-954713",
-      "email": "Email: theprimetv.com@gmail.com"
+      "email": "Email: contact@dailydestiny.com"
     },
     "companyInfoBn": {
-      "name": "প্রাইম স্যাটেলাইট টিভি লিমিটেড",
+      "name": "ডেইলি ডেস্টিনি লিমিটেড",
       "subtitle": "বিশ্বস্ত | সময়োপযোগী | সত্য",
-      "address": "এসকে সেন্টার, ৪র্থ তলা, জি. পি- জ-৪, মহাখালী টিবি গেট, গুলশান, ঢাকা-১২১২",
+      "address": "ডেইলি ডেস্টিনি, এসকে সেন্টার, ৪র্থ তলা, জি. পি- জ-৪, মহাখালী টিবি গেট, গুলশান, ঢাকা-১২১২",
       "phone": "ফোন: +৮৮০ ১৬১৮-৯৫৪৭১৩",
-      "email": "ই-মেইল: theprimetv.com@gmail.com"
+      "email": "ই-মেইল: contact@dailydestiny.com"
     },
     "social": [
       {
@@ -190,37 +190,37 @@
   },
   "terms": {
     "title": "Terms of Use",
-    "description": "Welcome to all viewers, readers, and digital users of Prime Television. We are committed to delivering fast, accurate, and unbiased news. The term “user” refers to anyone accessing our content through our website or social media platforms such as Facebook, YouTube, Twitter, and others. By using our services, you are deemed to have accepted these terms and conditions.",
+    "description": "Welcome to all viewers, readers, and digital users of Daily Destiny. We are committed to delivering fast, accurate, and unbiased news. The term “user” refers to anyone accessing our content through our website or social media platforms such as Facebook, YouTube, Twitter, and others. By using our services, you are deemed to have accepted these terms and conditions.",
     "disclaimerTitle": "Disclaimer",
-    "disclaimerText": "All content published on Prime Television, including news, images, and videos, is collected from various sources such as individuals, organizations, and research institutions. Responsibility for the accuracy of such information primarily lies with those sources. While we strive to verify information carefully, Prime Television does not assume direct liability for any inaccuracies. The authority reserves the right to accept or reject user feedback at its discretion.",
+    "disclaimerText": "All content published on Daily Destiny, including news, images, and videos, is collected from various sources such as individuals, organizations, and research institutions. Responsibility for the accuracy of such information primarily lies with those sources. While we strive to verify information carefully, Daily Destiny does not assume direct liability for any inaccuracies. The authority reserves the right to accept or reject user feedback at its discretion.",
     "intelectualTitle": "Intellectual Property",
-    "intelectualText": "All materials on Prime Television—including text, images, videos, logos, graphics, and other assets—are the property of the organization. Unauthorized use, especially for commercial purposes, is strictly prohibited. Legal action may be taken in case of violations.",
+    "intelectualText": "All materials on Daily Destiny—including text, images, videos, logos, graphics, and other assets—are the property of the organization. Unauthorized use, especially for commercial purposes, is strictly prohibited. Legal action may be taken in case of violations.",
     "legalTitle": "Legal Compliance",
-    "legalText": "Prime Television operates in accordance with applicable laws and media regulations. Users are expected to follow these standards when interacting with our platforms. Any violation of law by a user will be their sole responsibility.",
+    "legalText": "Daily Destiny operates in accordance with applicable laws and media regulations. Users are expected to follow these standards when interacting with our platforms. Any violation of law by a user will be their sole responsibility.",
     "contentTitle": "Content Modification",
-    "contentText": "Prime Television reserves the right to modify, update, or remove any content at any time without prior notice.",
+    "contentText": "Daily Destiny reserves the right to modify, update, or remove any content at any time without prior notice.",
     "advertisementTitle": "Advertisements and Third-Party Content",
-    "advertisementText": "Advertisements displayed on our platforms are created by third-party advertisers. Prime Television does not take responsibility for the content or impact of such advertisements; liability rests with the respective advertisers."
+    "advertisementText": "Advertisements displayed on our platforms are created by third-party advertisers. Daily Destiny does not take responsibility for the content or impact of such advertisements; liability rests with the respective advertisers."
   },
   "privacy": {
-    "description": "Prime Television places the highest importance on protecting the privacy and personal information of its users. This policy explains how user information is collected, used, and managed when accessing our platform.",
+    "description": "Daily Destiny places the highest importance on protecting the privacy and personal information of its users. This policy explains how user information is collected, used, and managed when accessing our platform.",
     "title": "Privacy Policy",
     "personalTitle": "Personal Information Protection",
     "personalText": "We are committed to safeguarding users’ personal data, including names, phone numbers, email addresses, social media IDs, age, and address. Such information may be used in a limited capacity for improving services, analytics, and enhancing user experience.",
     "userContentTitle": "User-Generated Content",
-    "userContentText": "Any comments, opinions, or information shared by users on our website or social media platforms remain their sole responsibility. Prime Television does not guarantee the accuracy or authenticity of such content. Appropriate action may be taken against fake or unauthorized activities. Users are advised to exercise caution when sharing information.",
+    "userContentText": "Any comments, opinions, or information shared by users on our website or social media platforms remain their sole responsibility. Daily Destiny does not guarantee the accuracy or authenticity of such content. Appropriate action may be taken against fake or unauthorized activities. Users are advised to exercise caution when sharing information.",
     "advertisementTitle": "Advertisements and Third-Party Content",
-    "advertisementText": "Advertisements displayed on our platform are managed by third-party advertisers. Prime Television does not take responsibility for the content, accuracy, or acceptability of these advertisements. All liabilities rest with the respective advertisers.",
+    "advertisementText": "Advertisements displayed on our platform are managed by third-party advertisers. Daily Destiny does not take responsibility for the content, accuracy, or acceptability of these advertisements. All liabilities rest with the respective advertisers.",
     "childrenTitle": "Children’s Policy",
     "childrenText": "Our content is primarily intended for adult audiences. We do not knowingly collect or store personal information from children. However, we remain mindful of children’s psychological well-being when publishing content.",
     "cookiesTitle": "Cookies and Data Usage",
-    "cookiesText": "Prime Television does not store users’ cookies or personal browsing data. If any third party collects such information, it is beyond our responsibility.",
+    "cookiesText": "Daily Destiny does not store users’ cookies or personal browsing data. If any third party collects such information, it is beyond our responsibility.",
     "copyrightTitle": "Copyright and Usage Policy",
-    "copyrightText": "All content published by Prime Television is protected under applicable copyright and intellectual property laws. Unauthorized or commercial use of our content is strictly prohibited. Limited use for non-commercial informational purposes may be allowed with proper attribution. Legal action may be taken in case of violations."
+    "copyrightText": "All content published by Daily Destiny is protected under applicable copyright and intellectual property laws. Unauthorized or commercial use of our content is strictly prohibited. Limited use for non-commercial informational purposes may be allowed with proper attribution. Legal action may be taken in case of violations."
   },
   "about": {
     "title": "About Us",
-    "description": "Prime Television is a leading media organization dedicated to delivering accurate, unbiased, and timely news to our viewers. We strive to maintain the highest standards of journalism while serving the public interest.",
+    "description": "Daily Destiny is a leading media organization dedicated to delivering accurate, unbiased, and timely news to our viewers. We strive to maintain the highest standards of journalism while serving the public interest.",
     "missionTitle": "Our Mission",
     "missionText": "To provide fast, accurate, and unbiased news coverage that informs, educates, and empowers our audience. We are committed to journalistic integrity and ethical reporting practices.",
     "visionTitle": "Our Vision",
@@ -234,7 +234,7 @@
   },
   "contact": {
     "title": "Contact Us",
-    "description": "Get in touch with Prime Television for news, inquiries, or feedback. We value your communication and strive to respond promptly.",
+    "description": "Get in touch with Daily Destiny for news, inquiries, or feedback. We value your communication and strive to respond promptly.",
     "formTitle": "Send us a Message",
     "nameLabel": "Full Name",
     "emailLabel": "Email Address",
@@ -244,9 +244,9 @@
     "contactInfoTitle": "Contact Information",
     "addressLabel": "Address",
     "phone": "+880 1618-954713",
-    "email": "theprimetv.com@gmail.com",
-    "address": "SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
+    "email": "contact@dailydestiny.com",
+    "address": "Daily Destiny, SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
     "mapTitle": "Find Us on Map",
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1929.5705510992548!2d90.40754866306354!3d23.78065484991673!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7c5d92d43c5%3A0xcc41df18e517d66!2sPrime%20TV!5e1!3m2!1sen!2sbd!4v1777093385827!5m2!1sen!2sbd"
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1929.5705510992548!2d90.40754866306354!3d23.78065484991673!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7c5d92d43c5%3A0xcc41df18e517d66!2sDaily%20Destiny!5e1!3m2!1sen!2sbd!4v1777093385827!5m2!1sen!2sbd"
   }
 }

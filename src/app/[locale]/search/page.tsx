@@ -21,8 +21,8 @@ export async function generateMetadata({
   if (q?.trim()) {
     return {
       ...generateFallbackMetadata({ path: "/search", locale }),
-      title: `${q} - Search | Prime Tv`,
-      description: `Search results for "${q}" on Prime Tv`,
+      title: `${q} - Search | Daily Destiny`,
+      description: `Search results for "${q}" on Daily Destiny`,
       robots: { index: false, follow: false },
     };
   }
