@@ -182,7 +182,7 @@ export async function getVideos(query?: { page?: number; limit?: number }) {
         title: article.title || article.titleBn,
         excerpt: article.excerpt,
         coverImage: article.coverImage,
-        slug: article.slug,
+        slug: article.slug || article.code,
         code: article.code,
         category: article.category,
         date: article.date || article.createdAt,
@@ -204,6 +204,43 @@ export async function getVideos(query?: { page?: number; limit?: number }) {
   } catch (error) {
     console.error("Error fetching videos:", error);
     throw error;
+  }
+}
+
+// Get single video by code (with full media details)
+export async function getVideoByCode(code: string): Promise<VideoArticle | null> {
+  try {
+    const response = await getArticleByCode(code);
+    const article = response?.data || response;
+
+    if (!article) return null;
+
+    const videoMedia = article.medias?.find(
+      (m: any) =>
+        m.source === "youtube" ||
+        m.source === "facebook" ||
+        m.mimetype?.includes("video"),
+    );
+
+    return {
+      id: article.id,
+      title: article.title || article.titleBn,
+      excerpt: article.excerpt,
+      coverImage: article.coverImage,
+      slug: article.slug || article.code,
+      code: article.code,
+      date: article.date || article.createdAt,
+      createdAt: article.createdAt,
+      views: "0",
+      source: videoMedia?.source ?? "do-space",
+      url: videoMedia?.url ?? "",
+      key: videoMedia?.key ?? "",
+      mimetype: videoMedia?.mimetype ?? "",
+      extension: videoMedia?.extension ?? "",
+    };
+  } catch (error) {
+    console.error("Error fetching single video by code:", error);
+    return null;
   }
 }
 
