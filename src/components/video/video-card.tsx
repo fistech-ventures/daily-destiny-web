@@ -51,20 +51,28 @@ export default function VideoCard({
           </div>
         </div>
 
-        <div
-          className={`flex flex-col gap-1.5 ${isFeatured ? "px-0" : "px-1"}`}
-        >
-          {/* <div className="flex items-center gap-1.5 opacity-80 mb-0.5">
-            <Timer className="h-4 w-4 text-primary" />
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              {formatRelativeTime(video.date)}
-            </span>
-          </div> */}
+        <div className={`flex flex-col gap-1.5 ${isFeatured ? "px-0" : "px-1"}`}>
+          {/* Video Title */}
           <h3
-            className={`font-bold leading-[1.3] text-gray-900 transition-colors duration-200 group-hover:text-primary ${isFeatured ? "text-lg lg:text-2xl" : variant === "small" ? "text-base" : "text-lg md:text-xl"}`}
+            className={`font-bold leading-[1.3] text-gray-900 transition-colors duration-200 group-hover:text-primary ${
+              isFeatured ? "text-lg lg:text-2xl" : variant === "small" ? "text-base" : "text-lg md:text-xl"
+            }`}
           >
             {video.title}
           </h3>
+
+          <p className="text-sm font-medium leading-normal text-gray-600 transition-colors">
+            {video.excerpt}
+          </p>
+
+          {/* FIXED: Formatted Date */}
+          <p className="text-xs text-gray-400 font-medium">
+            {new Date(video.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
         </div>
       </div>
     </Link>
