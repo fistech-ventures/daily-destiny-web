@@ -18,7 +18,6 @@ interface VideoGalleryProps {
 
 export default function VideoGallery({
   initialVideos = [],
-  initialMeta,
 }: VideoGalleryProps) {
   const tCommon = useTranslations("common");
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { getVideos, getImages } from "@/lib/api";
 import VideoList from "@/components/video/video-list";
-import VideoSidebar from "@/components/video/video-sidebar";
 import { getTranslations } from "next-intl/server";
 import { generateHomeMetadata } from "@/lib/metadata";
 
@@ -21,7 +20,6 @@ export async function generateMetadata({
 export default async function VideoPage() {
   const t = await getTranslations("article");
   const videoResponse = await getVideos({ page: 1, limit: 11 }); 
-  const images = await getImages();
 
   return (
     <div className="">
