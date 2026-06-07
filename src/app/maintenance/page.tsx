@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
 export const metadata = {
-  title: "Under Maintenance | Prime Tv",
+  title: "Under Maintenance | Daily Destiny",
   robots: { index: false, follow: false },
 };
 

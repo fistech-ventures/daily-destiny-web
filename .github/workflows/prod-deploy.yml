@@ -1,4 +1,4 @@
-name: Prime TV Production CD
+name: Daily Destiny Production CD
 
 on:
   push:
@@ -17,9 +17,9 @@ jobs:
         env:
           PORT: 5007
           NODE_ENV: production
-          NEXT_PUBLIC_API_URL: https://api.theprimetv.com/api/v1
+          NEXT_PUBLIC_API_URL: https://api.dailydestiny.com/api/v1
           NEXT_PUBLIC_MAINTENANCE_MODE: false
-          NEXT_PUBLIC_SITE_URL: https://theprimetv.com
+          NEXT_PUBLIC_SITE_URL: https://dailydestiny.com
 
       - name: Copy files to VPS (SCP)
         uses: appleboy/scp-action@v0.1.7
@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           key: ${{ secrets.PRODUCTION_SERVER_SSH_PRIVATE_KEY }}
           source: "./"
-          target: "/home/pitech/deployed-services/primetv-web-prod"
+          target: "/home/pitech/deployed-services/daily-destiny-web-prod"
           rm: true
 
       - name: Deploy via SSH (Docker)
@@ -40,10 +40,10 @@ jobs:
           script: |
             set -e
 
-            APP_DIR=/home/pitech/deployed-services/primetv-web-prod
-            IMAGE_NAME=primetv-web-prod
-            NEW_CONTAINER=primetv-web-prod-new
-            OLD_CONTAINER=primetv-web-prod
+            APP_DIR=/home/pitech/deployed-services/daily-destiny-web-prod
+            IMAGE_NAME=daily-destiny-web-prod
+            NEW_CONTAINER=daily-destiny-web-prod-new
+            OLD_CONTAINER=daily-destiny-web-prod
 
             cd $APP_DIR
 
