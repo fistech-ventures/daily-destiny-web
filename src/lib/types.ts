@@ -14,6 +14,7 @@ export interface Category {
   titleBn: string;
   slug: string;
   slugBn: string;
+  position?: number;
   subCategories: Category[];
   seoMetaData?: SeoMetaData;
 }

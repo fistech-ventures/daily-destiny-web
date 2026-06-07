@@ -140,13 +140,13 @@ export function Footer() {
               `© ${new Date().getFullYear()} সর্বস্বত্ব সংরক্ষিত`}
           </p>
           <Link
-            href="https://quicksoftltd.com"
+            href="https://fistech.org"
             target="_blank"
             className="hover:text-white transition-colors flex items-center gap-1"
           >
             <span>{tFooter("developed") || "Developed by"}</span>
             <span className="text-gray-400 font-bold hover:underline">
-              Quicksoft Ltd.
+              Fistech Ventures 
             </span>
           </Link>
         </div>

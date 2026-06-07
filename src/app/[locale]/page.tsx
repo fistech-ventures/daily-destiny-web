@@ -1,13 +1,15 @@
 import MainLayout from "@/components/home/main-layout";
-import VideoSlider from "@/components/video/video-slider";
+import VideoSlider from "@/components/video/video-slider"; 
 import VideoGallery from "@/components/home/video-gallery";
 import FourCategoryGrid from "@/components/category/ThreeColumnCategoryFeatured";
+import CategoryWithSubcategories from "@/components/category/CategoryWithSubcategories";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
-import { getVideos, getArticles, getAllcategories } from "@/lib/api";
+import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
 import { Category } from "@/lib/types";
-
-export const revalidate = 60;
+import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
+import { formatRelativeTime } from "@/utils/date-formatter";
+import SingleCategoryNewsGrid from "@/components/category/SingleCategoryNewsGrid";
 
 export async function generateMetadata({
   params,
@@ -20,6 +22,18 @@ export async function generateMetadata({
     path: "/",
     locale,
   });
+}
+
+export const revalidate = 60;
+
+// Create a safe, strict structure type interface for the incoming images response 
+interface GalleryApiItem {
+  id: string | number;
+  coverImage?: string;
+  title: string;
+  description?: string;
+  date?: string;
+  code?: string;
 }
 
 export default async function Home({
@@ -100,6 +114,21 @@ export default async function Home({
     getCategoryData("business"),
   ]);
 
+  // Fetch recent photo gallery articles
+  const galleryRes = await getImages({ page: 1, limit: 5 });
+  const galleryArticles: GalleryApiItem[] = galleryRes?.data || [];
+  
+  // Clean type assignment instead of using forbidden 'any'
+  const galleryItems = galleryArticles.map((article: GalleryApiItem) => ({
+    id: article.id,
+    url: article.coverImage || "",
+    title: article.title,
+    description: article.description,
+    timeAgo: article.date ? formatRelativeTime(article.date) : "",
+    photographer: "নিজস্ব প্রতিবেদক", 
+    code: article.code,
+  }));
+
   return (
     <main className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-8">
       {/* Hero / Main News Grid section Layout */}
@@ -108,11 +137,17 @@ export default async function Home({
       {/* Slider Carousel Block Layout (Uses dedicated payload sliderVideos) */}
       <VideoSlider videos={sliderVideos} title="ভিডিও গ্যালারি" />
 
+      <SingleCategoryNewsGrid slug="international" limit={4} />
       {/* Asymmetric Gallery Layout (Passes data & pagination meta seamlessly) */}
+      <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
+      <SingleCategoryNewsGrid slug="sports" limit={4} />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
+
+      {/* Category sections with subcategories grids */}
 
       {/* 4 Column Category Matrix Section Component Layout */}
       <FourCategoryGrid categories={categoriesData} sectionTitle="অন্যান্য" />
+
     </main>
   );
 }

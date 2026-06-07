@@ -101,7 +101,7 @@ export default async function ArticleSection() {
   // Get exclusive articles
   const { data: exclusiveArticles } = await getArticles({
     page: 1,
-    limit: 5,
+    limit: 7,
     isExclusive: true,
     sortBy: "position",
     sortOrder: "ASC",
@@ -129,6 +129,9 @@ export default async function ArticleSection() {
           </div>
           <div className="pt-4">
             <NewsGrid articles={exclusiveArticles.slice(3, 5)} />
+          </div>
+          <div className="pt-4">
+            <NewsGrid articles={exclusiveArticles.slice(5, 7)} />
           </div>
         </div>
 
