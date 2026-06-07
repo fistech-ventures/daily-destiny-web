@@ -1,5 +1,5 @@
 import React from "react";
-import { getVideos, VideoArticle } from "@/lib/api";
+import { getVideos, getVideoByCode, VideoArticle } from "@/lib/api";
 import VideoPlayerDetails from "@/components/video/video-player-details";
 import VideoCard from "@/components/video/video-card";
 import { getTranslations } from "next-intl/server";
@@ -12,11 +12,8 @@ export default async function VideoDetailPage({
   const { slug } = await params;
   const t = await getTranslations("article");
 
-  // Mock fetching data
-  const allVideosResponse = await getVideos({ page: 1, limit: 100 });
-  const video = allVideosResponse.data.find(
-    (v: VideoArticle) => v.slug === slug,
-  );
+  // Fetch detailed video data by its code/slug
+  const video = await getVideoByCode(slug);
 
   if (!video) {
     return (
@@ -28,8 +25,10 @@ export default async function VideoDetailPage({
     );
   }
 
+  // Fetch recommendations list
+  const allVideosResponse = await getVideos({ page: 1, limit: 10 });
   const recommendations = allVideosResponse.data
-    .filter((v: VideoArticle) => v.slug !== slug)
+    .filter((v: VideoArticle) => v.code !== video.code)
     .slice(0, 8);
 
   return (
