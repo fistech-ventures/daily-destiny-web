@@ -12,8 +12,8 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     ...generateFallbackMetadata({ path: "/about", locale }),
-    title: "About Us | Prime Tv",
-    description: "Learn more about Prime Television and our mission",
+    title: "About Us | Daily Destiny",
+    description: "Learn more about Daily Destiny and our mission",
   };
 }
 

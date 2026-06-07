@@ -17,10 +17,14 @@ export default function NewsListClient({
   initialData,
   initialMeta,
   fetchParams = {},
-  noDataMessage = "কোনো সংবাদ পাওয়া যায়নি",
+  noDataMessage = "কোনো সংবাদ পাওয়া যায়নি",
 }: NewsListClientProps) {
   const fetchMore = async (page: number) => {
-    return getArticles({ ...fetchParams, page, limit: initialMeta?.limit || 10 });
+    return getArticles({
+      ...fetchParams,
+      page,
+      limit: initialMeta?.limit || 10,
+    });
   };
 
   return (
@@ -28,13 +32,24 @@ export default function NewsListClient({
       initialData={initialData}
       initialMeta={initialMeta}
       fetchData={fetchMore}
-      listClassName="divide-y divide-gray-100"
+      listClassName="grid grid-cols-1 md:grid-cols-3 gap-6"
+      wrapperClassName="w-full"
       noDataMessage={noDataMessage}
-      renderItem={(article: Article) => (
-        <div key={article.id} className="">
-          <HorizontalArticleCard article={article} />
-        </div>
-      )}
+      renderItem={(article: Article, index: number) => {
+
+        let layoutType: "featured" | "side" | "grid" = "grid";
+        if (index === 0) layoutType = "featured";
+        if (index === 1) layoutType = "side";
+
+        return (
+          <div
+            key={article.id}
+            className={`${index === 0 ? "md:col-span-2" : "md:col-span-1"}`}
+          >
+            <HorizontalArticleCard article={article} layoutType={layoutType} />
+          </div>
+        );
+      }}
     />
   );
 }

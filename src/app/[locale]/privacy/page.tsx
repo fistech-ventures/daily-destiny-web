@@ -10,8 +10,8 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     ...generateFallbackMetadata({ path: "/privacy", locale }),
-    title: "Privacy Policy | Prime Tv",
-    description: "How Prime Tv collects and uses your data.",
+    title: "Privacy Policy | Daily Destiny",
+    description: "How Daily Destiny collects and uses your data.",
   };
 }
 

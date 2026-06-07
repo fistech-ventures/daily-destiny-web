@@ -18,7 +18,7 @@ export default function NewsDetails({ article }: { article: Article }) {
           width={200}
           height={200}
           src="/images/logo.png"
-          alt="Prime Tv"
+          alt="Daily Destiny"
           className="w-24 h-16 object-contain"
         />
       </div>
@@ -80,7 +80,7 @@ export default function NewsDetails({ article }: { article: Article }) {
         </div>
 
         <div className="hidden print:flex justify-center py-2 border-y mt-10">
-          <img src="/images/logo.png" alt="Prime Tv" className="w-24 h-16 object-contain" />
+          <img src="/images/logo.png" alt="Daily Destiny" className="w-24 h-16 object-contain" />
         </div>
         <div className="hidden print:flex justify-between items-center py-2">
           <p className="text-sm text-gray-500">{currentLocale === "bn" ? article.author.nameBn : article.author.name}</p>

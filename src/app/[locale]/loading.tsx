@@ -10,7 +10,7 @@ export default function Loading() {
         <div className="relative h-24 w-24 md:h-32 md:w-32 animate-pulse flex items-center justify-center bg-white rounded-full p-4 shadow-sm">
           <img
             src="/images/logo.png"
-            alt="Prime TV Loading..."
+            alt="Daily Destiny Loading..."
             className="object-contain"
             loading="eager"
           />

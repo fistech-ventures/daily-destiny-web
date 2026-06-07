@@ -14,8 +14,8 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     ...generateFallbackMetadata({ path: "/contact", locale }),
-    title: "Contact Us | Prime Tv",
-    description: "Get in touch with Prime Satellite TV",
+    title: "Contact Us | Daily Destiny",
+    description: "Get in touch with Daily Destiny",
   };
 }
 
