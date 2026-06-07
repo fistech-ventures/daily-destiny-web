@@ -20,13 +20,13 @@ export async function generateMetadata({
 
 export default async function VideoPage() {
   const t = await getTranslations("article");
-  const videoResponse = await getVideos({ page: 1, limit: 11 }); // 1 featured + 10 grid
+  const videoResponse = await getVideos({ page: 1, limit: 11 }); 
   const images = await getImages();
 
   return (
     <div className="">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-8 flex flex-col">
+        <div className="lg:col-span-12 flex flex-col">
           <div className="my-2">
             <div className="flex items-center gap-3 border-l-4 border-primary pl-4">
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
@@ -41,9 +41,9 @@ export default async function VideoPage() {
           />
         </div>
 
-        <div className="lg:col-span-4">
+        {/* <div className="lg:col-span-4">
           <VideoSidebar images={images.data} t={t} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
