@@ -31,7 +31,7 @@ export default function VideoPlayerDetails({ video }: VideoPlayerDetailsProps) {
             title={video.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="absolute inset-0 h-full w-full border-0"
+            className="absolute inset-0 h-full w-full border-0 aspect-video"
           />
         ) : video.source === "facebook" ? (
           <div className="absolute inset-0 flex items-center justify-center bg-black">
@@ -41,7 +41,7 @@ export default function VideoPlayerDetails({ video }: VideoPlayerDetailsProps) {
               allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
               allowFullScreen
               scrolling="no"
-              className="border-0"
+              className="border-0 aspect-video"
               style={{
                 height: "100%",
                 width: "calc(100% * 9 / 16)",
@@ -55,7 +55,7 @@ export default function VideoPlayerDetails({ video }: VideoPlayerDetailsProps) {
             controls
             autoPlay
             poster={thumbnail}
-            className="absolute inset-0 h-full w-full object-contain"
+            className="absolute inset-0 h-full w-full object-contain aspect-video"
           />
         )}
       </div>

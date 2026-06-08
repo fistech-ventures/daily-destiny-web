@@ -19,7 +19,7 @@ export default function VideoCard({
         <img
           src={video.coverImage || "/placeholder.jpg"}
           alt={video.title}
-          className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-102"
+          className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-102 aspect-video"
         />
 
         {/* Center Play Button Overlay */}

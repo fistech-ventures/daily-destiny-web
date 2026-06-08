@@ -58,7 +58,7 @@ export default async function SingleCategoryNewsGrid({
                 {/* Left Side: Large Featured Article Card */}
                 {featuredArticle && (
                     <div className="lg:col-span-1 flex flex-col bg-white border border-gray-200 rounded-md p-4 pb-14 shadow-xs relative">
-                        <Link href={`/news/${featuredArticle.slug || featuredArticle.code}`} className="group flex flex-col gap-3">
+                        <Link href={`/news/${featuredArticle.category.slug || featuredArticle.category.slugBn}/${featuredArticle.code}`} className="group flex flex-col gap-3">
                             <div className="relative w-full aspect-video rounded overflow-hidden bg-gray-100">
                                 <img
                                     src={featuredArticle.coverImage}
@@ -82,7 +82,7 @@ export default async function SingleCategoryNewsGrid({
                         {/* Bottom Right Details Button */}
                         <div className="absolute bottom-4 right-4">
                             <Link
-                                href={`/news/${featuredArticle.slug || featuredArticle.code}`}
+                                href={`/news/${featuredArticle.category.slug || featuredArticle.category.slugBn}/${featuredArticle.code}`}
                                 className="inline-flex items-center justify-center bg-primary hover:bg-primary/80 text-white text-xs font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
                             >
                                 বিস্তারিত
@@ -96,7 +96,7 @@ export default async function SingleCategoryNewsGrid({
                     {secondaryArticles.map((article: Article, idx: number) => (
                         <Link
                             key={article.id || article.code || idx}
-                            href={`/news/${article.slug || article.code}`}
+                            href={`/news/${article.category.slug || article.category.slugBn}/${article.code}`}
                             className="group flex gap-4 bg-white border border-gray-150 rounded-md p-3 shadow-xs hover:border-gray-300 transition-all items-center justify-between"
                         >
                             {/* Left Container: Thumbnail & Text Details */}

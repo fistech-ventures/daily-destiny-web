@@ -3,6 +3,7 @@ import { getVideos, getVideoByCode, VideoArticle } from "@/lib/api";
 import VideoPlayerDetails from "@/components/video/video-player-details";
 import VideoCard from "@/components/video/video-card";
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 
 export default async function VideoDetailPage({
   params,
@@ -49,7 +50,9 @@ export default async function VideoDetailPage({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
               {recommendations.map((v: VideoArticle) => (
-                <VideoCard key={v.id} video={v} variant="small" />
+                <Link key={v.id} href={`/video/${v.code}`} className="block w-full">
+                  <VideoCard video={v} variant="small" />
+                </Link>
               ))}
             </div>
           </div>
