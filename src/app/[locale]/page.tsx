@@ -130,7 +130,7 @@ export default async function Home({
   }));
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-8">
+    <main className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-3 lg:gap-5">
       {/* Hero / Main News Grid section Layout */}
       <MainLayout />
 
