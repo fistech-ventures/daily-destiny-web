@@ -1,21 +1,29 @@
+
+// src/components/gallery/related-images.tsx
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 // import { formatRelativeTime } from "@/utils/date-formatter";
-import { Article } from "@/lib/types";
+import { imageArticle } from "@/lib/api";
 
 interface IProps {
-  item: Article;
+  item: imageArticle;
 }
 
 export default function ImageCard({ item }: IProps) {
+  const thumbnail = item.coverImage || item.images?.[0]?.url || "/placeholder.jpg";
+  const altText = item.images?.[0]?.caption || item.title;
 
   return (
-    <div className="group cursor-pointer overflow-hidden rounded-2xl bg-[#F8F9FA] p-3 transition-all hover:shadow-md">
+    <Link
+      href={`/gallery/${item.code}`}
+      className="group block cursor-pointer overflow-hidden rounded-2xl bg-[#F8F9FA] p-3 transition-all hover:shadow-md"
+    >
       {/* Image Container */}
       <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl">
         <Image
-          src={item.coverImage || item.medias?.[0]?.url || "/placeholder.jpg"}
-          alt={item.medias?.[0]?.caption || item.title}
+          src={thumbnail}
+          alt={altText}
           fill
           className="object-contain transition-transform duration-500 group-hover:scale-110"
         />
@@ -30,6 +38,6 @@ export default function ImageCard({ item }: IProps) {
           {item.title}
         </h3>
       </div>
-    </div>
+    </Link>
   );
 }

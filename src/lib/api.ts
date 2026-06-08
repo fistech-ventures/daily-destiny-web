@@ -54,7 +54,7 @@ export interface VideoArticle {
 }
 
 export interface imageArticle {
-  id: number;
+  id: string | number;
   title: string;
   slug: string;
   createdAt: string;
@@ -62,8 +62,9 @@ export interface imageArticle {
   description: string;
   code: string;
   coverImage?: string;
+  category?: any;
   images: {
-    id: number;
+    id: string | number;
     url: string;
     caption: string;
   }[];
@@ -245,7 +246,7 @@ export async function getVideoByCode(code: string): Promise<VideoArticle | null>
 }
 
 // Get images
-export async function getImages(query?: { page?: number; limit?: number }) {
+export async function getImages(query?: { page?: number; limit?: number }): Promise<{ data: imageArticle[]; meta: any }> {
   try {
     const response = await api.get("/web/articles?type=photo", {
       params: query,
@@ -286,7 +287,7 @@ export async function getImages(query?: { page?: number; limit?: number }) {
 }
 
 // Get single image
-export async function getSingleImage(code: string) {
+export async function getSingleImage(code: string): Promise<imageArticle | null> {
   try {
     const response = await api.get(`/web/articles/by-code/${code}`);
     const article = response.data?.data || response.data;
@@ -316,7 +317,7 @@ export async function getSingleImage(code: string) {
 }
 
 // Get related images
-export async function getRelatedImages(id: number | string) {
+export async function getRelatedImages(id: number | string): Promise<imageArticle[]> {
   try {
     const response = await api.get(`/web/articles/${id}/related`);
     const dataObj = response.data?.data || response.data || [];

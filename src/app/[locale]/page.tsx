@@ -33,7 +33,7 @@ interface GalleryApiItem {
   title: string;
   description?: string;
   date?: string;
-  code?: string;
+  code: string;
 }
 
 export default async function Home({
