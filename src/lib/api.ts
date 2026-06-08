@@ -144,11 +144,11 @@ export async function getArticleByCode(code: string) {
   }
 }
 
-// Get related articles
-export async function getRelatedArticles(id: string) {
+// Get related articles by article code
+export async function getRelatedArticles(code: string) {
   try {
-    const response = await api.get(`/web/articles/${id}/related`);
-    return response.data.data;
+    const response = await api.get(`/web/articles/${code}/related`);
+    return response.data.data; 
   } catch (error) {
     console.error("Error fetching related articles:", error);
     throw error;
