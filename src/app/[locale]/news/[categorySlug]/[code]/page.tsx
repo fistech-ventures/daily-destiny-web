@@ -101,7 +101,7 @@ async function CustomNews404({ categorySlug }: { categorySlug: string }) {
             </h2>
           </div>
           <div className="flex flex-col divide-y divide-gray-100">
-            {fallbackArticles.map((article) => (
+            {fallbackArticles.map(article => (
               <div key={article.id} className="py-2">
                 <HorizontalArticleCard article={article} />
               </div>
@@ -136,10 +136,18 @@ export default async function NewsDetailsPage({
     globalConfig = configRes?.data ?? null;
 
     if (article) {
-      const relatedRes = await getRelatedArticles(article.id);
-      relatedArticles =
-        relatedRes?.articles.slice(0, 5) ||
-        (Array.isArray(relatedRes) ? relatedRes.slice(0, 5) : []);
+      // 💡 FIXED: Changed from article.id to article.code to match backend expectation
+      const relatedRes = await getRelatedArticles(article.code);
+
+      // Safely check if the backend responded with data.articles object or a clean array fallback
+      let articlesArray: Article[] = [];
+      if (relatedRes && Array.isArray(relatedRes.articles)) {
+        articlesArray = relatedRes.articles;
+      } else if (Array.isArray(relatedRes)) {
+        articlesArray = relatedRes;
+      }
+
+      relatedArticles = articlesArray.slice(0, 5);
     }
   } catch (error) {
     console.error("Error fetching article details:", error);

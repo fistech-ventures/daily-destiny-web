@@ -33,39 +33,39 @@ export function Footer() {
         };
 
   return (
-    <footer className="bg-[#121212] border-t border-gray-800 pt-12 pb-6 text-gray-400 select-none">
+    <footer className="border-t border-gray-800 pt-12 pb-6 text-gray-400 select-none">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         {/* Main Grid Area */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-10 border-b border-gray-800">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-16 pb-10 border-b border-gray-800">
           {/* Section 1: Brand Logo & Short Intro */}
           <div className="lg:col-span-3 space-y-4">
             <Link href="/" className="inline-block">
               <img
-                src="/images/logo.png"
+                src="/images/footerlogo.png"
                 alt="Ekhon TV"
                 height={70}
                 width={140}
-                className="h-auto w-auto brightness-0 invert" // Auto transforms black logos smoothly for dark themes
+                className="h-auto w-auto  "
               />
             </Link>
-            <p className="text-sm text-gray-400 leading-relaxed font-medium">
+            <p className="text-base text-primary leading-relaxed font-medium">
               {companyInfo.subtitle}
             </p>
           </div>
 
           {/* Section 2: Contact Info */}
           <div className="lg:col-span-3 flex flex-col gap-2">
-            <h3 className="font-bold text-white text-sm md:text-base tracking-wide uppercase border-l-2 border-red-600 pl-3">
+            <h3 className="font-bold text-black text-base md:text-base tracking-wide uppercase border-l-2 border-red-600 pl-3">
               {companyInfo.name}
             </h3>
-            <p className="text-xs text-gray-500 whitespace-pre-line leading-relaxed mt-1">
+            <p className="text-base text-black whitespace-pre-line leading-relaxed mt-1">
               {companyInfo.address}
             </p>
-            <div className="mt-2 flex flex-col gap-1 text-xs text-gray-400 font-mono">
-              <span className="hover:text-white transition-colors">
+            <div className="mt-2 flex flex-col gap-1 text-base text-black">
+              <span className="hover:text-primary transition-colors cursor-pointer">
                 {companyInfo.phone}
               </span>
-              <span className="hover:text-white transition-colors">
+              <span className="hover:text-primary transition-colors cursor-pointer text-nowrap">
                 {companyInfo.email}
               </span>
             </div>
@@ -73,7 +73,7 @@ export function Footer() {
 
           {/* Section 3: Quick Links */}
           <div className="lg:col-span-3 flex flex-col gap-3">
-            <h3 className="font-bold text-white text-sm md:text-base tracking-wide uppercase border-l-2 border-red-600 pl-3">
+            <h3 className="font-bold text-black text-base md:text-base tracking-wide uppercase border-l-2 border-red-600 pl-3">
               {locale === "bn" ? "কুইক লিংক" : "Quick Links"}
             </h3>
             <div className="grid grid-cols-1 gap-2 mt-1">
@@ -83,7 +83,7 @@ export function Footer() {
                   <Link
                     key={index}
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 block"
+                    className="text-base text-black hover:translate-x-1 transition-all duration-200 block"
                   >
                     {link.name}
                   </Link>
@@ -93,7 +93,7 @@ export function Footer() {
 
           {/* Section 4: Social Communities Hub */}
           <div className="lg:col-span-3 flex flex-col gap-4">
-            <h3 className="font-bold text-white text-sm md:text-base tracking-wide uppercase border-l-2 border-red-600 pl-3">
+            <h3 className="font-bold text-black text-base md:text-base tracking-wide uppercase border-l-2 border-red-600 pl-3">
               {tFooter("socialLabel") || "আমাদের সাথে যুক্ত থাকুন"}
             </h3>
 
@@ -124,7 +124,7 @@ export function Footer() {
                   <Link
                     key={index}
                     href={link.href}
-                    className="text-xs text-gray-500 hover:text-white transition-colors"
+                    className="text-base text-gray-500 hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -134,7 +134,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar: Copyright & Developer Credits */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-3 text-xs text-gray-500 font-medium">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-3 text-base text-gray-500 font-medium">
           <p>
             {tFooter("copyright", { year: new Date().getFullYear() }) ||
               `© ${new Date().getFullYear()} সর্বস্বত্ব সংরক্ষিত`}
@@ -142,11 +142,11 @@ export function Footer() {
           <Link
             href="https://fistech.org"
             target="_blank"
-            className="hover:text-white transition-colors flex items-center gap-1"
+            className="hover:text-primary transition-colors flex items-center gap-1"
           >
             <span>{tFooter("developed") || "Developed by"}</span>
             <span className="text-gray-400 font-bold hover:underline">
-              Fistech Ventures 
+              Fistech Ventures
             </span>
           </Link>
         </div>

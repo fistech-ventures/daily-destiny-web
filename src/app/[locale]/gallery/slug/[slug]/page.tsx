@@ -1,6 +1,7 @@
+//src/app/[locale]/gallery/[slug]/page.tsx
 import ImageCard from "@/components/gallery/related-image";
 import SocialShare from "@/components/shared/social-share";
-import { getArticleByCode, getRelatedArticles } from "@/lib/api";
+import { getRelatedImages, getSingleImage, imageArticle } from "@/lib/api";
 import { generateArticleMetadata } from "@/lib/metadata";
 import { Article } from "@/lib/types";
 import { formatRelativeTime } from "@/utils/date-formatter";
@@ -15,14 +16,21 @@ export async function generateMetadata({
   const { slug, locale } = await params;
   const decodedSlug = decodeURIComponent(slug);
 
-  const { data: gallery } = await getArticleByCode(decodedSlug);
+  const gallery = await getSingleImage(decodedSlug);
 
   if (!gallery) return {}; // fallback to layout metadata
 
-  return generateArticleMetadata(gallery, {
-    path: `/gallery/${decodedSlug}`,
-    locale,
-  });
+  return generateArticleMetadata(
+    {
+      ...gallery,
+      excerpt: gallery.description,
+      medias: gallery.images,
+    } as unknown as Article,
+    {
+      path: `/gallery/${decodedSlug}`,
+      locale,
+    },
+  );
 }
 
 export default async function GalleryDetails({
@@ -33,35 +41,31 @@ export default async function GalleryDetails({
   const param = await params;
   const decodedSlug = decodeURIComponent(param.slug);
 
-  const { data: gallery } = await getArticleByCode(decodedSlug);
-  const relatedImageArticles = await getRelatedArticles(gallery?.id);
+  const gallery = await getSingleImage(decodedSlug);
+  if (!gallery) return null;
 
+  const relatedImageArticles = await getRelatedImages(gallery.id);
   const t = await getTranslations("gallery");
 
   return (
     <div className="grid grid-cols-3 lg:gap-6 gap-3 items-start">
       <div className="lg:space-y-3 space-y-2 lg:col-span-2 col-span-3">
-        <h2 className="text-base md:text-xl lg:text-2xl">{gallery?.title}</h2>
-        <p>{formatRelativeTime(gallery?.date)}</p>
-        <SocialShare title={gallery?.title} />
+        <h2 className="text-base md:text-xl lg:text-2xl">{gallery.title}</h2>
+        {gallery.date && <p>{formatRelativeTime(gallery.date)}</p>}
+        <SocialShare title={gallery.title} />
         <div className="p-3 bg-background rounded-md space-y-3 lg:space-y-6 relative w-full">
-          {gallery?.medias.map(
-            (
-              image: { id: number; url: string; caption: string },
-              index: number,
-            ) => (
-              <div key={index} className="space-y-2">
-                <img
-                  src={image.url}
-                  alt={image.caption}
-                  className="rounded-md w-full aspect-video object-contain"
-                />
-                <h3 className="text-sm md:text-base lg:text-lg">
-                  {image.caption}
-                </h3>
-              </div>
-            ),
-          )}
+          {gallery.images.map((image, index) => (
+            <div key={index} className="space-y-2">
+              <img
+                src={image.url}
+                alt={image.caption}
+                className="rounded-md w-full aspect-video object-contain"
+              />
+              <h3 className="text-sm md:text-base lg:text-lg">
+                {image.caption}
+              </h3>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -71,7 +75,7 @@ export default async function GalleryDetails({
           <h2 className="text-xl font-bold text-gray-900">{t("more")}</h2>
         </div>
         <div className="grid grid-cols-2 gap-2">
-          {relatedImageArticles?.articles?.map((image: Article) => (
+          {relatedImageArticles?.map((image: imageArticle) => (
             <ImageCard key={image.id} item={image} />
           ))}
         </div>

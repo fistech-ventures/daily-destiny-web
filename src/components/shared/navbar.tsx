@@ -72,13 +72,13 @@ export function Navbar({
       {/* ════════════════════════════════════════════════
           TOP BAR — Logo (Left) | Social Icons (Right)
           ════════════════════════════════════════════════ */}
-      <div className="border-b border-gray-200 bg-primary">
+      <div className="border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-2.5">
             {/* Logo Container placed exactly like 'আমার দেশ' in image_c17a08.png */}
             <Link href="/" className="shrink-0 flex flex-col items-center">
               <img
-                src="/images/logo.png"
+                src="/images/logoblack.png"
                 alt="Logo"
                 width={200}
                 height={64}
@@ -89,21 +89,21 @@ export function Navbar({
             {/* Social Icons — Exact Serial Matching image_c17a08.png */}
             <div className="relative flex items-center gap-1.5 md:gap-2.5">
               {/* ════════════════════════════════════════════════
-          ১. মোস্ট ইম্পর্ট্যান্ট ৩টি আইকন (মোবাইল ও ডেস্কটপ সবখানেই দেখাবে)
-          ════════════════════════════════════════════════ */}
+                  ১. মোস্ট ইম্পর্ট্যান্ট ৩টি আইকন (মোবাইল ও ডেস্কটপ সবখানেই দেখাবে)
+                  ════════════════════════════════════════════════ */}
 
               {/* Facebook */}
-              <SocialIcon bgColor="#1877F2" href="https://facebook.com">
+              <SocialIcon bgColor="#1877F2" href="https://www.facebook.com/DailyDestinyBD">
                 <Facebook
                   size={16}
                   color="#ffffff"
                   fill="#ffffff"
                   className="stroke-[1] md:h-[18px] md:w-[18px]"
-                />
+                /> 
               </SocialIcon>
 
               {/* YouTube */}
-              <SocialIcon bgColor="#FF0000" href="https://youtube.com">
+              <SocialIcon bgColor="#FF0000" href="https://www.youtube.com/@DailyDestinyBD">
                 <Youtube
                   size={16}
                   color="#FF0000"
@@ -123,8 +123,9 @@ export function Navbar({
               </SocialIcon>
 
               {/* ════════════════════════════════════════════════
-          ২. বাকি আইকনগুলো (মোবাইলে হাইড থাকবে, শুধু md স্ক্রিন থেকে দেখাবে)
-          ════════════════════════════════════════════════ */}
+                  ২. বাকি আইকনগুলো (মোবাইলে হাইড থাকবে, শুধু md স্ক্রিন থেকে দেখাবে)
+                  ════════════════════════════════════════════════ 
+                */}
 
               {/* Facebook Group */}
               <div className="hidden md:block">
@@ -201,9 +202,9 @@ export function Navbar({
                 </SocialIcon>
               </div>
 
-              {/* ════════════════════════════════════════════════
-          ৩. "More" রাউন্ড বাটন (শুধু মোবাইলে দেখাবে, md স্ক্রিনে হাইড হবে)
-          ════════════════════════════════════════════════ */}
+                {/* ════════════════════════════════════════════════
+                  ৩. "More" রাউন্ড বাটন (শুধু মোবাইলে দেখাবে, md স্ক্রিনে হাইড হবে)
+                  ════════════════════════════════════════════════ */}
               <button
                 onClick={() => setIsPopupOpen(!isPopupOpen)}
                 className="md:hidden w-9 h-9 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-transform active:scale-95 text-white shadow-sm"
@@ -213,8 +214,8 @@ export function Navbar({
               </button>
 
               {/* ════════════════════════════════════════════════
-          ৪. মোবাইল পপ-আপ ওভারলে মেনু (বাকি আইকনগুলোর জন্য)
-          ════════════════════════════════════════════════ */}
+                ৪. মোবাইল পপ-আপ ওভারলে মেনু (বাকি আইকনগুলোর জন্য)
+                ════════════════════════════════════════════════ */}
               {isPopupOpen && (
                 <>
                   {/* ব্যাকড্রপ ক্লিক করলে পপ-আপ বন্ধ হবে */}
@@ -292,7 +293,7 @@ export function Navbar({
                   </div>
                 </>
               )}
-            </div>
+            </div>  
           </div>
         </div>
       </div>
