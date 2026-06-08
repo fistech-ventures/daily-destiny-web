@@ -41,7 +41,7 @@ export default function VideoGallery({
     <div className="w-full bg-[#1e1e1e] p-4 md:p-6 rounded-md select-none text-white">
       {/* 1. Header Bar Section */}
       <div className="flex items-center justify-between border-b border-gray-800 pb-3 mb-5">
-        <Link href="/videos" className="flex items-center gap-1.5 group">
+        <Link href="/video" className="flex items-center gap-1.5 group">
           <h2 className="text-xl font-bold border-b-2 border-orange-500 pb-3 -mb-[14px]">
             ভিডিও
           </h2>

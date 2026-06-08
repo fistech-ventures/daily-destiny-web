@@ -79,7 +79,7 @@ export default function VideoList({
                 <Link
                   key={video.code}
                   href={`/video/${video.code}`}
-                  className="relative block w-full aspect-video rounded-md overflow-hidden group shadow-xs"
+                  className="block w-full"
                 >
                   <VideoCard video={video} variant="featured" />
                 </Link>
@@ -93,8 +93,8 @@ export default function VideoList({
               {gridVideos.map(video => (
                 <Link
                   key={video.code}
-                  href={`/videos/${video.code}`}
-                  className="relative block w-full aspect-video rounded-md overflow-hidden group shadow-xs"
+                  href={`/video/${video.code}`}
+                  className="block w-full"
                 >
                   {/* CHANGED variant="grid" to variant="default" to pass TypeScript validation */}
                   <VideoCard video={video} variant="default" />

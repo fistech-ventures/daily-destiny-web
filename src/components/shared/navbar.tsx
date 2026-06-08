@@ -2,7 +2,21 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Search, Menu, Video, X, Newspaper, Globe, User } from "lucide-react";
+import {
+  Search,
+  Menu,
+  X,
+  Newspaper,
+  Globe,
+  User,
+  Users,
+  Facebook,
+  Youtube,
+  Instagram,
+  Linkedin,
+  MessageCircle,
+  MoreHorizontal,
+} from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -15,8 +29,18 @@ import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { Category } from "@/lib/types";
 import { VideoArticle } from "@/lib/api";
+import SocialIcon from "./SocialIcon";
+import Headline from "./headline";
 
-export function Navbar({ categories, videos }: { categories: Category[]; videos: VideoArticle[] }) {
+export function Navbar({
+  categories,
+  videos,
+  headlines = [],
+}: {
+  categories: Category[];
+  videos: VideoArticle[];
+  headlines?: { title: string; code: string; category: string }[];
+}) {
   const tSearch = useTranslations("search");
 
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
@@ -25,6 +49,8 @@ export function Navbar({ categories, videos }: { categories: Category[]; videos:
   const router = useRouter();
   const pathname = usePathname();
   const isSearchPage = pathname.includes("/search");
+
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
   const locales = ["en", "bn"];
   const strippedPathname = locales.reduce(
@@ -44,57 +70,240 @@ export function Navbar({ categories, videos }: { categories: Category[]; videos:
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       {/* ════════════════════════════════════════════════
-          TOP BAR — Logo (left)  |  3 Featured Videos (right)
+          TOP BAR — Logo (Left) | Social Icons (Right)
           ════════════════════════════════════════════════ */}
       <div className="border-b border-gray-200 bg-primary">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-3 gap-6">
-            {/* Logo */}
-            <Link href="/" className="shrink-0">
+          <div className="flex items-center justify-between py-2.5">
+            {/* Logo Container placed exactly like 'আমার দেশ' in image_c17a08.png */}
+            <Link href="/" className="shrink-0 flex flex-col items-center">
               <img
                 src="/images/logo.png"
                 alt="Logo"
                 width={200}
                 height={64}
-                className="h-12 w-auto object-contain"
+                className="h-11 w-auto object-contain"
               />
             </Link>
 
-            {/* Featured videos — desktop only, pushed to the right */}
-            <div className="hidden lg:flex items-center gap-6">
-              {videos.map((video) => (
-                <Link
-                  key={video.id}
-                  href={`/video/${video.code}`}
-                  className="flex items-center gap-3 group"
+            {/* Social Icons — Exact Serial Matching image_c17a08.png */}
+            <div className="relative flex items-center gap-1.5 md:gap-2.5">
+              {/* ════════════════════════════════════════════════
+          ১. মোস্ট ইম্পর্ট্যান্ট ৩টি আইকন (মোবাইল ও ডেস্কটপ সবখানেই দেখাবে)
+          ════════════════════════════════════════════════ */}
+
+              {/* Facebook */}
+              <SocialIcon bgColor="#1877F2" href="https://facebook.com">
+                <Facebook
+                  size={16}
+                  color="#ffffff"
+                  fill="#ffffff"
+                  className="stroke-[1] md:h-[18px] md:w-[18px]"
+                />
+              </SocialIcon>
+
+              {/* YouTube */}
+              <SocialIcon bgColor="#FF0000" href="https://youtube.com">
+                <Youtube
+                  size={16}
+                  color="#FF0000"
+                  fill="#ffffff"
+                  className="stroke-[1] md:h-[18px] md:w-[18px]"
+                />
+              </SocialIcon>
+
+              {/* LinkedIn */}
+              <SocialIcon bgColor="#0A66C2" href="https://linkedin.com">
+                <Linkedin
+                  size={16}
+                  color="#ffffff"
+                  fill="#ffffff"
+                  className="stroke-[1] md:h-[18px] md:w-[18px]"
+                />
+              </SocialIcon>
+
+              {/* ════════════════════════════════════════════════
+          ২. বাকি আইকনগুলো (মোবাইলে হাইড থাকবে, শুধু md স্ক্রিন থেকে দেখাবে)
+          ════════════════════════════════════════════════ */}
+
+              {/* Facebook Group */}
+              <div className="hidden md:block">
+                <SocialIcon
+                  bgColor="#1877F2"
+                  href="https://facebook.com/groups"
                 >
-                  {/* Thumbnail with red play badge */}
-                  <div className="relative shrink-0 w-22 h-14.5 rounded overflow-hidden bg-gray-100">
-                    <img
-                      src={video.coverImage}
-                      alt={video.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                    <span className="absolute top-1 left-1 bg-red-600 rounded-sm px-1 py-px flex items-center">
-                      <Video className="h-2.5 w-2.5 fill-white stroke-white" />
-                    </span>
+                  <Users
+                    size={16}
+                    color="#ffffff"
+                    className="stroke-[2] md:h-[18px] md:w-[18px]"
+                  />
+                </SocialIcon>
+              </div>
+
+              {/* TikTok */}
+              <div className="hidden md:block">
+                <SocialIcon bgColor="#000000" href="https://tiktok.com">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-3.5 w-3.5 md:h-4 md:w-4"
+                    fill="#ffffff"
+                  >
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.18 1.15 1.21 2.76 1.93 4.41 2.02v3.62c-1.68-.03-3.32-.57-4.68-1.57-.18-.13-.34-.28-.5-.43v6.33c.03 2.87-1.4 5.63-3.89 7.07-2.73 1.63-6.29 1.41-8.79-.54-2.58-1.95-3.64-5.39-2.54-8.5 1.01-2.99 3.94-5.07 7.13-5.05.12 0 .24 0 .36.01v3.74c-1.3-.12-2.6.43-3.41 1.45-.96 1.16-1.12 2.84-.41 4.17.67 1.34 2.14 2.13 3.64 1.94 1.52-.14 2.76-1.34 2.96-2.85.04-.31.05-.62.05-.93V.02z" />
+                  </svg>
+                </SocialIcon>
+              </div>
+
+              {/* WhatsApp */}
+              <div className="hidden md:block">
+                <SocialIcon bgColor="#25D366" href="https://wa.me/yournumber">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-4 w-4 md:h-[18px] md:w-[18px]"
+                    fill="#ffffff"
+                  >
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.292 1.481 4.757 1.482 5.327 0 9.663-4.329 9.665-9.645.001-2.577-1.002-5.001-2.822-6.822-1.82-1.82-4.244-2.822-6.824-2.823-5.332 0-9.669 4.33-9.672 9.648-.001 1.55.422 3.064 1.223 4.385l-.973 3.553 3.646-.956zM17.41 14.39c-.314-.157-1.857-.916-2.143-1.02-.287-.104-.496-.157-.704.157-.208.313-.807 1.02-1.01 1.25-.202.23-.404.26-.718.103-1.385-.694-2.43-1.226-3.394-2.875-.253-.432.253-.4.723-1.343.078-.157.039-.294-.02-.41-.058-.117-.496-1.196-.679-1.64-.179-.43-.362-.372-.496-.372l-.423-.008c-.147 0-.387.055-.589.274-.202.219-.77.752-.77 1.833 0 1.08.788 2.124.898 2.274.11.15 1.55 2.366 3.753 3.32.524.227.933.363 1.253.465.527.168 1.006.144 1.384.088.422-.062 1.857-.76 2.119-1.458.262-.697.262-1.294.183-1.42-.078-.125-.287-.203-.6-.36z" />
+                  </svg>
+                </SocialIcon>
+              </div>
+
+              {/* Pinterest */}
+              <div className="hidden lg:block">
+                <SocialIcon bgColor="#BD081C" href="https://pinterest.com">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-3.5 w-3.5 md:h-4 md:w-4"
+                    fill="#ffffff"
+                  >
+                    <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.091.377-.293 1.194-.332 1.358-.052.211-.174.256-.401.151-1.495-.696-2.43-2.882-2.43-4.636 0-3.774 2.743-7.24 7.907-7.24 4.152 0 7.379 2.959 7.379 6.913 0 4.123-2.599 7.44-6.207 7.44-1.212 0-2.35-.63-2.74-1.373l-.748 2.848c-.27 1.039-1.001 2.342-1.488 3.132C10.166 23.889 11.066 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
+                  </svg>
+                </SocialIcon>
+              </div>
+
+              {/* Instagram */}
+              <div className="hidden md:block">
+                <SocialIcon bgColor="#E1306C" href="https://instagram.com">
+                  <Instagram
+                    size={16}
+                    color="#ffffff"
+                    className="stroke-[2] md:h-[18px] md:w-[18px]"
+                  />
+                </SocialIcon>
+              </div>
+
+              {/* Google News */}
+              <div className="hidden md:block">
+                <SocialIcon bgColor="#4285F4" href="https://news.google.com">
+                  <Newspaper
+                    size={16}
+                    color="#ffffff"
+                    className="stroke-[2] md:h-[18px] md:w-[18px]"
+                  />
+                </SocialIcon>
+              </div>
+
+              {/* ════════════════════════════════════════════════
+          ৩. "More" রাউন্ড বাটন (শুধু মোবাইলে দেখাবে, md স্ক্রিনে হাইড হবে)
+          ════════════════════════════════════════════════ */}
+              <button
+                onClick={() => setIsPopupOpen(!isPopupOpen)}
+                className="md:hidden w-9 h-9 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-transform active:scale-95 text-white shadow-sm"
+                aria-label="Show more social links"
+              >
+                {isPopupOpen ? <X size={18} /> : <MoreHorizontal size={18} />}
+              </button>
+
+              {/* ════════════════════════════════════════════════
+          ৪. মোবাইল পপ-আপ ওভারলে মেনু (বাকি আইকনগুলোর জন্য)
+          ════════════════════════════════════════════════ */}
+              {isPopupOpen && (
+                <>
+                  {/* ব্যাকড্রপ ক্লিক করলে পপ-আপ বন্ধ হবে */}
+                  <div
+                    className="fixed inset-0 z-40 md:hidden"
+                    onClick={() => setIsPopupOpen(false)}
+                  />
+
+                  {/* ছোট পপ-আপ বক্স */}
+                  <div className="absolute right-0 top-50 z-50 md:hidden bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl p-3 shadow-xl flex items-center gap-3 animate-in fade-in zoom-in-95 duration-150">
+                    {/* Facebook Group */}
+                    <SocialIcon
+                      bgColor="#1877F2"
+                      href="https://facebook.com/groups"
+                    >
+                      <Users size={16} color="#ffffff" className="stroke-[2]" />
+                    </SocialIcon>
+
+                    {/* TikTok */}
+                    <SocialIcon bgColor="#000000" href="https://tiktok.com">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4"
+                        fill="#ffffff"
+                      >
+                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.18 1.15 1.21 2.76 1.93 4.41 2.02v3.62c-1.68-.03-3.32-.57-4.68-1.57-.18-.13-.34-.28-.5-.43v6.33c.03 2.87-1.4 5.63-3.89 7.07-2.73 1.63-6.29 1.41-8.79-.54-2.58-1.95-3.64-5.39-2.54-8.5 1.01-2.99 3.94-5.07 7.13-5.05.12 0 .24 0 .36.01v3.74c-1.3-.12-2.6.43-3.41 1.45-.96 1.16-1.12 2.84-.41 4.17.67 1.34 2.14 2.13 3.64 1.94 1.52-.14 2.76-1.34 2.96-2.85.04-.31.05-.62.05-.93V.02z" />
+                      </svg>
+                    </SocialIcon>
+
+                    {/* WhatsApp */}
+                    <SocialIcon
+                      bgColor="#25D366"
+                      href="https://wa.me/yournumber"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4"
+                        fill="#ffffff"
+                      >
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.292 1.481 4.757 1.482 5.327 0 9.663-4.329 9.665-9.645.001-2.577-1.002-5.001-2.822-6.822-1.82-1.82-4.244-2.822-6.824-2.823-5.332 0-9.669 4.33-9.672 9.648-.001 1.55.422 3.064 1.223 4.385l-.973 3.553 3.646-.956zM17.41 14.39c-.314-.157-1.857-.916-2.143-1.02-.287-.104-.496-.157-.704.157-.208.313-.807 1.02-1.01 1.25-.202.23-.404.26-.718.103-1.385-.694-2.43-1.226-3.394-2.875-.253-.432.253-.4.723-1.343.078-.157.039-.294-.02-.41-.058-.117-.496-1.196-.679-1.64-.179-.43-.362-.372-.496-.372l-.423-.008c-.147 0-.387.055-.589.274-.202.219-.77.752-.77 1.833 0 1.08.788 2.124.898 2.274.11.15 1.55 2.366 3.753 3.32.524.227.933.363 1.253.465.527.168 1.006.144 1.384.088.422-.062 1.857-.76 2.119-1.458.262-.697.262-1.294.183-1.42-.078-.125-.287-.203-.6-.36z" />
+                      </svg>
+                    </SocialIcon>
+
+                    {/* Pinterest */}
+                    <SocialIcon bgColor="#BD081C" href="https://pinterest.com">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4"
+                        fill="#ffffff"
+                      >
+                        <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.091.377-.293 1.194-.332 1.358-.052.211-.174.256-.401.151-1.495-.696-2.43-2.882-2.43-4.636 0-3.774 2.743-7.24 7.907-7.24 4.152 0 7.379 2.959 7.379 6.913 0 4.123-2.599 7.44-6.207 7.44-1.212 0-2.35-.63-2.74-1.373l-.748 2.848c-.27 1.039-1.001 2.342-1.488 3.132C10.166 23.889 11.066 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
+                      </svg>
+                    </SocialIcon>
+
+                    {/* Instagram */}
+                    <SocialIcon bgColor="#E1306C" href="https://instagram.com">
+                      <Instagram
+                        size={16}
+                        color="#ffffff"
+                        className="stroke-[2]"
+                      />
+                    </SocialIcon>
+
+                    {/* Google News */}
+                    <SocialIcon
+                      bgColor="#4285F4"
+                      href="https://news.google.com"
+                    >
+                      <Newspaper
+                        size={16}
+                        color="#ffffff"
+                        className="stroke-[2]"
+                      />
+                    </SocialIcon>
                   </div>
-                  {/* Title */}
-                  <p className="text-sm font-medium text-white leading-snug line-clamp-2 w-28 group-hover:text-white/80 transition-colors">
-                    {video.title}
-                  </p>
-                </Link>
-              ))}
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       {/* ════════════════════════════════════════════════
-          BOTTOM BAR — Categories (left)  |  Actions (right)
+          Headline  s Banner 
+          ════════════════════════════════════════════════ */}
+      <Headline headlines={headlines} />
+
+      {/* ════════════════════════════════════════════════
+          BOTTOM BAR — Categories (Left) | Actions (Right)
           ════════════════════════════════════════════════ */}
       <div className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4">
@@ -237,7 +446,7 @@ export function Navbar({ categories, videos }: { categories: Category[]; videos:
                         {[
                           { label: "প্রচ্ছদ", href: "/" },
                           { label: "সর্বশেষ", href: "/recent" },
-                          { label: "বিশেষ সংবাদ", href: "/special" },
+                          { label: "विशेष সংবাদ", href: "/special" },
                           { label: "রাজনীতি", href: "/politics" },
                           { label: "রস+আলো", href: "/ros-alo" },
                           { label: "ছবি", href: "/photo" },

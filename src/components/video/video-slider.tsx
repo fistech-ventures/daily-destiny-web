@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 import { VideoArticle } from "@/lib/api";
 import VideoCard from "./video-card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 interface VideoSliderProps {
   videos: VideoArticle[];
@@ -150,12 +151,13 @@ export default function VideoSlider({
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {videos.map(video => (
-          <div
+          <Link
             key={video.id || video.slug}
-            className="w-[260px] sm:w-[280px] md:w-[300px] lg:w-[calc((100%-40px)/3)] shrink-0 snap-start bg-[#eef6fc] p-3 rounded-md transition-shadow hover:shadow-sm"
+            href={`/video/${video.code}`}
+            className="w-[260px] sm:w-[280px] md:w-[300px] lg:w-[calc((100%-40px)/3)] shrink-0 snap-start bg-[#eef6fc] p-3 rounded-md transition-shadow hover:shadow-sm block"
           >
             <VideoCard video={video} variant="default" />
-          </div>
+          </Link>
         ))}
       </div>
 
