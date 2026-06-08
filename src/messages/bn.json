@@ -23,7 +23,7 @@
     "haveAcc": "অ্যাকাউন্ট আছে? লগ ইন করুন"
   },
   "search": {
-    "placeholder": "যা খুঁজতে চান...",
+    "placeholder": "খুঁজুন...",
     "resultsFound": "প্রাপ্ত ফলাফল: {count}",
     "showingResults": "\"{query}\" এর জন্য ফলাফল দেখানো হচ্ছে...",
     "noResults": "কোনো ফলাফল পাওয়া যায়নি"
@@ -163,14 +163,14 @@
       "subtitle": "Trusted | Timely | True ",
       "address": "Daily Destiny, SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
       "phone": "Phone: +880 ############",
-      "email": "Email: contact@dailydestiny.com"
+      "email": "Email:  news.dainikdestiny@gmail.com"
     },
     "companyInfoBn": {
       "name": "ডেইলি ডেস্টিনি লিমিটেড",
       "subtitle": "বিশ্বস্ত | সময়োপযোগী | সত্য",
       "address": "ডেইলি ডেস্টিনি, সাহারা সেন্টার (৫ম তলা), ৩৭/এ, কাকরাইল ভিআইপি রোড , ঢাকা-১০০০",
       "phone": "ফোন: +৮৮০ ############",
-      "email": "ই-মেইল: contact@dailydestiny.com"
+      "email": "ই-মেইল:  news.dainikdestiny@gmail.com"
     },
     "social": [
       {
@@ -277,7 +277,7 @@
     "contactInfoTitle": "যোগাযোগের তথ্য",
     "addressLabel": "ঠিকানা",
     "phone": "+৮৮০ ##########",
-    "email": "contact@dailydestiny.com",
+    "email": " news.dainikdestiny@gmail.com",
     "address": "ডেইলি ডেস্টিনি, এসকে সেন্টার, জি. পি- জ-৪, মহাখালী টিবি গেট, গুলশান, ঢাকা-১২১২",
     "mapTitle": "মানচিত্রে আমাদের খুঁজুন",
     "mapEmbed": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1929.5705510992548!2d90.40754866306354!3d23.78065484991673!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7c5d92d43c5%3A0xcc41df18e517d66!2sDaily%20Destiny!5e1!3m2!1sen!2sbd!4v1777093385827!5m2!1sen!2sbd"
