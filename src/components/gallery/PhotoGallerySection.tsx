@@ -11,7 +11,7 @@ interface GalleryItem {
   description?: string;
   timeAgo: string;
   photographer?: string;
-  code?: string;
+  code: string;
 }
 
 interface PhotoGallerySectionProps {
@@ -76,11 +76,13 @@ export default function PhotoGallerySection({
           <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden group shadow-md">
             
             {/* Live Media Layer */}
-            <img
-              src={activeItem.url}
-              alt={activeItem.title}
-              className="w-full h-full object-contain mx-auto"
-            />
+            <Link href={`/gallery/${activeItem.code}`} className="block w-full h-full">
+              <img
+                src={activeItem.url}
+                alt={activeItem.title}
+                className="w-full h-full object-contain mx-auto"
+              />
+            </Link>
 
             {/* Top-Left Index Counter Fragment */}
             <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded text-xs font-medium text-white tracking-wider">
@@ -125,7 +127,7 @@ export default function PhotoGallerySection({
 
           {/* Context Footer Metadata Stack */}
           <div className="flex flex-col gap-1 mt-1">
-            <Link href={`/gallery/${activeItem.code || activeItem.id}`}>
+            <Link href={`/gallery/${activeItem.code}`}>
               <h3 className="text-lg font-extrabold text-gray-900 leading-snug hover:text-red-600 transition-colors cursor-pointer line-clamp-2">
                 {activeItem.title}
               </h3>

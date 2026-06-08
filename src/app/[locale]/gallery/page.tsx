@@ -1,3 +1,4 @@
+//src/app/[locale]/gallery/page.tsx
 import GalleryList from "@/components/gallery/gallery-list";
 import ArticleSidebar from "@/components/home/article/article-sidebar";
 import { getImages } from "@/lib/api";
