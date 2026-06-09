@@ -6,7 +6,7 @@ const SITE_NAME =
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dailydestiny.com";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 const MEDIA_URL = process.env.NEXT_PUBLIC_MEDIA_URL || "";
-const FALLBACK_IMAGE = "/images/logo.png";
+const FALLBACK_IMAGE = "/images/logoblack.png";
 const DEFAULT_DESCRIPTION =
   "Read today's breaking news of bangladesh on politics, sports, business, entertainment, weather, lifestyle, education and bd news from popular bangla news portal Daily Destiny";
 const SUPPORTED_LOCALES = ["en", "bn"] as const;
