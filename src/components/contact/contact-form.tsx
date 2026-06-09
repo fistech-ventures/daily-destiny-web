@@ -10,6 +10,7 @@ interface ContactFormProps {
     emailLabel: string;
     phoneLabel: string;
     purposeLabel: string;
+    messageLabel: string;
     submitButton: string;
   };
 }
@@ -19,6 +20,7 @@ interface FormData {
   email: string;
   phoneNumber: string;
   purpose: string;
+  message: string;
 }
 
 interface FormErrors {
@@ -26,6 +28,7 @@ interface FormErrors {
   email?: string;
   phoneNumber?: string;
   purpose?: string;
+  message?: string;
   general?: string;
 }
 
@@ -35,6 +38,7 @@ export default function ContactForm({ messages }: ContactFormProps) {
     email: "",
     phoneNumber: "",
     purpose: "",
+    message: "",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -66,15 +70,22 @@ export default function ContactForm({ messages }: ContactFormProps) {
     // Purpose validation
     if (!formData.purpose.trim()) {
       newErrors.purpose = "Purpose is required";
-    } else if (formData.purpose.trim().length < 10) {
-      newErrors.purpose = "Please provide more details (minimum 10 characters)";
+    }
+
+    // Message validation
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -106,6 +117,7 @@ export default function ContactForm({ messages }: ContactFormProps) {
         email: formData.email.trim(),
         phoneNumber: formData.phoneNumber.trim(),
         purpose: formData.purpose.trim(),
+        message: formData.message.trim(),
       });
 
       setIsSubmitted(true);
@@ -114,6 +126,7 @@ export default function ContactForm({ messages }: ContactFormProps) {
         email: "",
         phoneNumber: "",
         purpose: "",
+        message: "",
       });
     } catch (error) {
       console.error("Form submission error:", error);
@@ -236,21 +249,49 @@ export default function ContactForm({ messages }: ContactFormProps) {
           <label htmlFor="purpose" className="block text-base lg:text-lg font-medium mb-2">
             {messages.purposeLabel} *
           </label>
-          <textarea
+          <select
             id="purpose"
             name="purpose"
             value={formData.purpose}
             onChange={handleInputChange}
-            rows={4}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none ${
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white ${
               errors.purpose
                 ? "border-red-500 focus:ring-red-500"
                 : "border-gray-300"
             }`}
             disabled={isSubmitting}
-          />
+          >
+            <option value="">উদ্দেশ্য নির্বাচন করুন</option>
+            <option value="complain">অভিযোগ</option>
+            <option value="general">সাধারণ</option>
+            <option value="appointment">অ্যাপয়েন্টমেন্ট</option>
+            <option value="advertisement">বিজ্ঞাপন</option>
+            <option value="news-publication">সংবাদ প্রকাশনা</option>
+          </select>
           {errors.purpose && (
             <p className="mt-1 text-sm text-red-600">{errors.purpose}</p>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="message" className="block text-base lg:text-lg font-medium mb-2">
+            {messages.messageLabel} *
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            rows={4}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none ${
+              errors.message
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-300"
+            }`}
+            disabled={isSubmitting}
+          />
+          {errors.message && (
+            <p className="mt-1 text-sm text-red-600">{errors.message}</p>
           )}
         </div>
 
