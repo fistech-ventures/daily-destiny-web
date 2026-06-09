@@ -29,8 +29,12 @@ import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { Category } from "@/lib/types";
 import { VideoArticle } from "@/lib/api";
+import { getMarketPrice } from "@/lib/api";
 import SocialIcon from "./SocialIcon";
 import Headline from "./headline";
+import MarketPriceListClient from "../market-price/market-price-list-client";
+import MarketPriceTicker from "../market-price/market-price-ticker";
+import MarketPriceWidget from "../market-price/market-price-ticker";
 
 export function Navbar({
   categories,
@@ -333,11 +337,12 @@ export function Navbar({
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Category links — scrollable */}
-            <nav className="flex items-center overflow-x-auto scrollbar-none">
+            {/* Category links — scrollable */}
+            <nav className="flex items-center overflow-x-auto scrollbar-none h-full">
               <Link
                 href={`/recent`}
                 className={cn(
-                  "shrink-0 px-3 py-3 text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                  "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                   strippedPathname === `/recent`
                     ? "border-red-600 text-red-600"
                     : "border-transparent text-gray-700 hover:text-red-600",
@@ -345,24 +350,33 @@ export function Navbar({
               >
                 সর্বশেষ
               </Link>
-              {categories.slice(0, 10).map((category) => (
-                <Link
-                  key={category.id}
-                  href={`/${category.slug}`}
-                  className={cn(
-                    "shrink-0 px-3 py-3 text-base font-bold whitespace-nowrap border-b-2 transition-colors",
-                    strippedPathname === `/${category.slug}`
-                      ? "border-red-600 text-red-600"
-                      : "border-transparent text-gray-700 hover:text-red-600",
-                  )}
-                >
-                  {category.titleBn || category.title}
-                </Link>
-              ))}
+
+              {/* Filter out duplicates dynamically by title text */}
+              {categories
+                .slice(0, 10)
+                .filter((category, index, self) => {
+                  const title = category.titleBn || category.title;
+                  return self.findIndex(c => (c.titleBn || c.title) === title) === index;
+                })
+                .map((category) => (
+                  <Link
+                    key={category.id}
+                    href={`/${category.slug}`}
+                    className={cn(
+                      "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                      strippedPathname === `/${category.slug}`
+                        ? "border-red-600 text-red-600"
+                        : "border-transparent text-gray-700 hover:text-red-600",
+                    )}
+                  >
+                    {category.titleBn || category.title}
+                  </Link>
+                ))}
+
               <Link
                 href={`/video`}
                 className={cn(
-                  "shrink-0 px-3 py-3 text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                  "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                   strippedPathname === `/video`
                     ? "border-red-600 text-red-600"
                     : "border-transparent text-gray-700 hover:text-red-600",
@@ -373,12 +387,12 @@ export function Navbar({
             </nav>
 
             {/* Right actions */}
-            <div className="flex items-center shrink-0 divide-x divide-gray-200">
+            <div className="flex items-center shrink-0 h-full divide-x divide-gray-200 border-l border-gray-200">
               {/* Search — desktop inline form */}
               {!isSearchPage && (
                 <form
                   onSubmit={handleSearchSubmit}
-                  className="hidden lg:flex items-center gap-2 px-4 py-2 group"
+                  className="hidden lg:flex items-center gap-2 px-4 h-full group"
                 >
                   <Search className="h-4 w-4 text-gray-500 group-focus-within:text-gray-800" />
                   <Input
@@ -395,11 +409,16 @@ export function Navbar({
               <button
                 aria-label="Search"
                 onClick={() => setIsSearchOpen(true)}
-                className="lg:hidden flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-red-600 transition-colors"
+                className="lg:hidden flex items-center gap-1.5 px-3 h-full text-sm text-gray-700 hover:text-red-600 transition-colors"
               >
                 <Search className="h-4 w-4" />
                 <span className="font-medium">খুঁজুন</span>
               </button>
+
+              {/* Market Widget Placement Wrapped with precise matching inline height styles */}
+              <div className="hidden sm:flex h-full items-center">
+                <MarketPriceWidget />
+              </div>
 
               {/* ই-পেপার */}
               <Link
@@ -410,23 +429,7 @@ export function Navbar({
                 <span>ই-পেপার</span>
               </Link>
 
-              {/* Eng */}
-              <Link
-                href="/en"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-red-600 transition-colors"
-              >
-                <Globe className="h-4 w-4" />
-                <span>Eng</span>
-              </Link>
 
-              {/* Login */}
-              <Link
-                href="/login"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-red-600 transition-colors"
-              >
-                <User className="h-4 w-4" />
-                <span>Login</span>
-              </Link>
 
               {/* Hamburger → Mega Menu */}
               <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -470,7 +473,7 @@ export function Navbar({
                         {[
                           { label: "প্রচ্ছদ", href: "/" },
                           { label: "সর্বশেষ", href: "/recent" },
-                          { label: "विशेष সংবাদ", href: "/special" },
+                          { label: "বিশেষ সংবাদ", href: "/special" },
                           { label: "রাজনীতি", href: "/politics" },
                           { label: "রস+আলো", href: "/ros-alo" },
                           { label: "ছবি", href: "/photo" },
@@ -505,30 +508,30 @@ export function Navbar({
                               </Link>
                               {(category as Category).subCategories?.length >
                                 0 && (
-                                <span className="text-red-600 font-bold ml-1">
-                                  ›
-                                </span>
-                              )}
+                                  <span className="text-red-600 font-bold ml-1">
+                                    ›
+                                  </span>
+                                )}
                             </div>
 
                             {/* Subcategory links */}
                             {(category as Category).subCategories?.length >
                               0 && (
-                              <div className="flex flex-wrap gap-x-5 gap-y-1.5">
-                                {(category as Category).subCategories.map(
-                                  (sub: Category) => (
-                                    <Link
-                                      key={sub.id}
-                                      href={`/${sub.slug}`}
-                                      onClick={() => setIsSheetOpen(false)}
-                                      className="text-sm text-gray-600 hover:text-red-600 transition-colors whitespace-nowrap"
-                                    >
-                                      {sub.titleBn || sub.title}
-                                    </Link>
-                                  ),
-                                )}
-                              </div>
-                            )}
+                                <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+                                  {(category as Category).subCategories.map(
+                                    (sub: Category) => (
+                                      <Link
+                                        key={sub.id}
+                                        href={`/${sub.slug}`}
+                                        onClick={() => setIsSheetOpen(false)}
+                                        className="text-sm text-gray-600 hover:text-red-600 transition-colors whitespace-nowrap"
+                                      >
+                                        {sub.titleBn || sub.title}
+                                      </Link>
+                                    ),
+                                  )}
+                                </div>
+                              )}
                           </div>
                         ))}
                       </div>

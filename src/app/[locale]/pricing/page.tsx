@@ -14,6 +14,8 @@ export async function generateMetadata({
     path: "/pricing",
     locale,
   });
+
+  console.log(getMarketPrice);
 }
 
 export default async function PricingPage() {
