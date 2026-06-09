@@ -51,6 +51,7 @@ export function Navbar({
   const isSearchPage = pathname.includes("/search");
 
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [hideTopBar, setHideTopBar] = React.useState(false);
 
   const locales = ["en", "bn"];
   const strippedPathname = locales.reduce(
@@ -58,6 +59,16 @@ export function Navbar({
       p.startsWith(`/${locale}`) ? p.replace(`/${locale}`, "") || "/" : p,
     pathname,
   );
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setHideTopBar(window.scrollY > 120);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +83,13 @@ export function Navbar({
       {/* ════════════════════════════════════════════════
           TOP BAR — Logo (Left) | Social Icons (Right)
           ════════════════════════════════════════════════ */}
-      <div className="border-b border-gray-200">
+      {/* <div className="border-b border-gray-200"> */}
+      <div
+        className={cn(
+          "border-b border-gray-200 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          hideTopBar ? "max-h-0 opacity-0" : "max-h-[100px] opacity-100",
+        )}
+      >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-2.5">
             {/* Logo Container placed exactly like 'আমার দেশ' in image_c17a08.png */}
@@ -93,17 +110,23 @@ export function Navbar({
                   ════════════════════════════════════════════════ */}
 
               {/* Facebook */}
-              <SocialIcon bgColor="#1877F2" href="https://www.facebook.com/DailyDestinyBD">
+              <SocialIcon
+                bgColor="#1877F2"
+                href="https://www.facebook.com/DailyDestinyBD"
+              >
                 <Facebook
                   size={16}
                   color="#ffffff"
                   fill="#ffffff"
                   className="stroke-[1] md:h-[18px] md:w-[18px]"
-                /> 
+                />
               </SocialIcon>
 
               {/* YouTube */}
-              <SocialIcon bgColor="#FF0000" href="https://www.youtube.com/@DailyDestinyBD">
+              <SocialIcon
+                bgColor="#FF0000"
+                href="https://www.youtube.com/@DailyDestinyBD"
+              >
                 <Youtube
                   size={16}
                   color="#FF0000"
@@ -202,7 +225,7 @@ export function Navbar({
                 </SocialIcon>
               </div>
 
-                {/* ════════════════════════════════════════════════
+              {/* ════════════════════════════════════════════════
                   ৩. "More" রাউন্ড বাটন (শুধু মোবাইলে দেখাবে, md স্ক্রিনে হাইড হবে)
                   ════════════════════════════════════════════════ */}
               <button
@@ -293,7 +316,7 @@ export function Navbar({
                   </div>
                 </>
               )}
-            </div>  
+            </div>
           </div>
         </div>
       </div>
@@ -536,7 +559,7 @@ export function Navbar({
                       </div>
 
                       {/* Social */}
-                      <div>
+                      {/* <div>
                         <p className="text-sm font-semibold text-gray-700 mb-3">
                           অনুসরণ করুন
                         </p>
@@ -585,10 +608,90 @@ export function Navbar({
                             </a>
                           ))}
                         </div>
+                      </div> */}
+
+                      <div className="relative flex items-center gap-1.5 md:gap-2.5">
+                        {/* ════════════════════════════════════════════════
+                                                      ১. মোস্ট ইম্পর্ট্যান্ট ৩টি আইকন (মোবাইল ও ডেস্কটপ সবখানেই দেখাবে)
+                                                      ════════════════════════════════════════════════ */}
+
+                        {/* Facebook */}
+                        <SocialIcon
+                          bgColor="#1877F2"
+                          href="https://www.facebook.com/DailyDestinyBD"
+                        >
+                          <Facebook
+                            size={16}
+                            color="#ffffff"
+                            fill="#ffffff"
+                            className="stroke-[1] md:h-[18px] md:w-[18px]"
+                          />
+                        </SocialIcon>
+
+                        {/* YouTube */}
+                        <SocialIcon
+                          bgColor="#FF0000"
+                          href="https://www.youtube.com/@DailyDestinyBD"
+                        >
+                          <Youtube
+                            size={16}
+                            color="#FF0000"
+                            fill="#ffffff"
+                            className="stroke-[1] md:h-[18px] md:w-[18px]"
+                          />
+                        </SocialIcon>
+
+                        {/* LinkedIn */}
+                        <SocialIcon
+                          bgColor="#0A66C2"
+                          href="https://linkedin.com"
+                        >
+                          <Linkedin
+                            size={16}
+                            color="#ffffff"
+                            fill="#ffffff"
+                            className="stroke-[1] md:h-[18px] md:w-[18px]"
+                          />
+                        </SocialIcon>
+
+                        {/* ════════════════════════════════════════════════
+                                                      ২. বাকি আইকনগুলো (মোবাইলে হাইড থাকবে, শুধু md স্ক্রিন থেকে দেখাবে)
+                                                      ════════════════════════════════════════════════ 
+                                                    */}
+
+                        {/* Facebook Group */}
+                        <div className="hidden md:block">
+                          <SocialIcon
+                            bgColor="#1877F2"
+                            href="https://facebook.com/groups"
+                          >
+                            <Users
+                              size={16}
+                              color="#ffffff"
+                              className="stroke-[2] md:h-[18px] md:w-[18px]"
+                            />
+                          </SocialIcon>
+                        </div>
+
+                        {/* TikTok */}
+                        <div className="hidden md:block">
+                          <SocialIcon
+                            bgColor="#000000"
+                            href="https://tiktok.com"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              className="h-3.5 w-3.5 md:h-4 md:w-4"
+                              fill="#ffffff"
+                            >
+                              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.18 1.15 1.21 2.76 1.93 4.41 2.02v3.62c-1.68-.03-3.32-.57-4.68-1.57-.18-.13-.34-.28-.5-.43v6.33c.03 2.87-1.4 5.63-3.89 7.07-2.73 1.63-6.29 1.41-8.79-.54-2.58-1.95-3.64-5.39-2.54-8.5 1.01-2.99 3.94-5.07 7.13-5.05.12 0 .24 0 .36.01v3.74c-1.3-.12-2.6.43-3.41 1.45-.96 1.16-1.12 2.84-.41 4.17.67 1.34 2.14 2.13 3.64 1.94 1.52-.14 2.76-1.34 2.96-2.85.04-.31.05-.62.05-.93V.02z" />
+                            </svg>
+                          </SocialIcon>
+                        </div>
                       </div>
 
                       {/* App download */}
-                      <div>
+                      {/* <div>
                         <p className="text-sm font-semibold text-gray-700 mb-3">
                           মোবাইল অ্যাপস ডাউনলোড করুন
                         </p>
@@ -626,10 +729,10 @@ export function Navbar({
                             </div>
                           </a>
                         </div>
-                      </div>
+                      </div> */}
 
                       {/* Footer links */}
-                      <div className="flex flex-wrap gap-x-4 gap-y-1.5 pt-3 border-t border-gray-100">
+                      {/* <div className="flex flex-wrap gap-x-4 gap-y-1.5 pt-3 border-t border-gray-100">
                         {[
                           "আমাদের সম্পর্কে",
                           "বিজ্ঞাপন",
@@ -647,7 +750,7 @@ export function Navbar({
                             • {l}
                           </Link>
                         ))}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </SheetContent>

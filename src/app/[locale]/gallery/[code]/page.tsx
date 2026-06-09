@@ -1,6 +1,7 @@
 // src/[locale]/gallery/[code]/page.tsx
+import ImageCard from "@/components/gallery/related-image";
 import SocialShare from "@/components/shared/social-share";
-import { getSingleImage } from "@/lib/api";
+import { getSingleImage, imageArticle } from "@/lib/api";
 import { generateArticleMetadata } from "@/lib/metadata";
 import { Article } from "@/lib/types";
 import { formatRelativeTime } from "@/utils/date-formatter";
@@ -63,20 +64,32 @@ export default async function GalleryCodePage({
 
       <SocialShare title={gallery.title} />
 
-      <div className="flex flex-col gap-2">
-        {gallery.images.map((image, index) => (
-          <div key={index} className="space-y-2">
-            <img
-              src={image.url}
-              alt={image.caption}
-              className="rounded-md w-full object-contain max-h-[70vh] mx-auto"
-            />
-            <p className="text-sm md:text-base text-gray-800">
-              {image.caption}
-            </p>
-          </div>
-        ))}
+        <div className="flex flex-col gap-2">
+            {gallery.images.map((image, index) => (
+            <div key={index} className="space-y-2">
+                <img
+                src={image.url}
+                alt={image.caption}
+                className="rounded-md w-full object-contain max-h-[70vh] mx-auto"
+                />
+                <p className="text-sm md:text-base text-gray-800">
+                {image.caption}
+                </p>
+            </div>
+            ))}
       </div>
+
+{/* Related Gallery Part */}
+      {/* <div className="lg:col-span-1 col-span-3 bg-background rounded-md p-3 no-print">
+        <div className="flex items-center gap-3 border-l-4 border-primary pl-3 m-4">
+          <h2 className="text-xl font-bold text-gray-900">{t("more")}</h2>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {relatedImageArticles?.map((image: imageArticle) => (
+            <ImageCard key={image.id} item={image} />
+          ))}
+        </div>
+      </div> */}
     </div>
   );
 }
