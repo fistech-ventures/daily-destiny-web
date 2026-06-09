@@ -29,8 +29,12 @@ import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { Category } from "@/lib/types";
 import { VideoArticle } from "@/lib/api";
+import { getMarketPrice } from "@/lib/api";
 import SocialIcon from "./SocialIcon";
 import Headline from "./headline";
+import MarketPriceListClient from "../market-price/market-price-list-client";
+import MarketPriceTicker from "../market-price/market-price-ticker";
+import MarketPriceWidget from "../market-price/market-price-ticker";
 
 export function Navbar({
   categories,
@@ -401,6 +405,12 @@ export function Navbar({
                 <span className="font-medium">খুঁজুন</span>
               </button>
 
+
+
+              <div className="hidden sm:block h-full align-middle">
+                <MarketPriceWidget />
+              </div>
+
               {/* ই-পেপার */}
               <Link
                 href="/epaper"
@@ -410,23 +420,7 @@ export function Navbar({
                 <span>ই-পেপার</span>
               </Link>
 
-              {/* Eng */}
-              <Link
-                href="/en"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-red-600 transition-colors"
-              >
-                <Globe className="h-4 w-4" />
-                <span>Eng</span>
-              </Link>
 
-              {/* Login */}
-              <Link
-                href="/login"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-red-600 transition-colors"
-              >
-                <User className="h-4 w-4" />
-                <span>Login</span>
-              </Link>
 
               {/* Hamburger → Mega Menu */}
               <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -470,7 +464,7 @@ export function Navbar({
                         {[
                           { label: "প্রচ্ছদ", href: "/" },
                           { label: "সর্বশেষ", href: "/recent" },
-                          { label: "विशेष সংবাদ", href: "/special" },
+                          { label: "বিশেষ সংবাদ", href: "/special" },
                           { label: "রাজনীতি", href: "/politics" },
                           { label: "রস+আলো", href: "/ros-alo" },
                           { label: "ছবি", href: "/photo" },
@@ -505,30 +499,30 @@ export function Navbar({
                               </Link>
                               {(category as Category).subCategories?.length >
                                 0 && (
-                                <span className="text-red-600 font-bold ml-1">
-                                  ›
-                                </span>
-                              )}
+                                  <span className="text-red-600 font-bold ml-1">
+                                    ›
+                                  </span>
+                                )}
                             </div>
 
                             {/* Subcategory links */}
                             {(category as Category).subCategories?.length >
                               0 && (
-                              <div className="flex flex-wrap gap-x-5 gap-y-1.5">
-                                {(category as Category).subCategories.map(
-                                  (sub: Category) => (
-                                    <Link
-                                      key={sub.id}
-                                      href={`/${sub.slug}`}
-                                      onClick={() => setIsSheetOpen(false)}
-                                      className="text-sm text-gray-600 hover:text-red-600 transition-colors whitespace-nowrap"
-                                    >
-                                      {sub.titleBn || sub.title}
-                                    </Link>
-                                  ),
-                                )}
-                              </div>
-                            )}
+                                <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+                                  {(category as Category).subCategories.map(
+                                    (sub: Category) => (
+                                      <Link
+                                        key={sub.id}
+                                        href={`/${sub.slug}`}
+                                        onClick={() => setIsSheetOpen(false)}
+                                        className="text-sm text-gray-600 hover:text-red-600 transition-colors whitespace-nowrap"
+                                      >
+                                        {sub.titleBn || sub.title}
+                                      </Link>
+                                    ),
+                                  )}
+                                </div>
+                              )}
                           </div>
                         ))}
                       </div>
