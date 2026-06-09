@@ -379,6 +379,7 @@ export async function submitContactForm(data: {
   email: string;
   phoneNumber: string;
   purpose: string;
+  message: string;
 }) {
   try {
     const response = await api.post("/web/query", data);
