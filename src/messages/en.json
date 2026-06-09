@@ -240,6 +240,7 @@
     "emailLabel": "Email Address",
     "phoneLabel": "Phone Number",
     "purposeLabel": "Purpose of Contact",
+    "messageLabel": "Message",
     "submitButton": "Send Message",
     "contactInfoTitle": "Contact Information",
     "addressLabel": "Address",
@@ -247,6 +248,6 @@
     "email": "contact@dailydestiny.com",
     "address": "Daily Destiny, SK Center, G. P- Ja-4, Mohakhali TB gate, Gulshan, Dhaka-1212",
     "mapTitle": "Find Us on Map",
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1929.5705510992548!2d90.40754866306354!3d23.78065484991673!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7c5d92d43c5%3A0xcc41df18e517d66!2sDaily%20Destiny!5e1!3m2!1sen!2sbd!4v1777093385827!5m2!1sen!2sbd"
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.332122867586!2d90.40791811114438!3d23.735533089257476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xadf7135b284d5c1d%3A0xb9d30ee49bf0f895!2sDainik%20Destiny!5e0!3m2!1sen!2sbd!4v1780995412073!5m2!1sen!2sbd"
   }
 }
