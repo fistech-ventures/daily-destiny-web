@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
-import { Facebook, Youtube } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Newspaper, Users, Youtube } from "lucide-react";
+import SocialIcon from "./SocialIcon";
 
 interface FooterLink {
   name: string;
@@ -97,7 +98,7 @@ export function Footer() {
               {tFooter("socialLabel") || "আমাদের সাথে যুক্ত থাকুন"}
             </h3>
 
-            <div className="flex items-center gap-3 mt-1">
+            {/* <div className="flex items-center gap-3 mt-1">
               <Link
                 href="https://www.facebook.com/DailyDestinyBD"
                 target="_blank"
@@ -114,6 +115,82 @@ export function Footer() {
               >
                 <Youtube className="h-4 w-4" />
               </Link>
+            </div> */}
+
+            <div className="relative flex items-center gap-1.5 md:gap-2.5">
+              {/* ════════════════════════════════════════════════
+                                ১. মোস্ট ইম্পর্ট্যান্ট ৩টি আইকন (মোবাইল ও ডেস্কটপ সবখানেই দেখাবে)
+                                ════════════════════════════════════════════════ */}
+
+              {/* Facebook */}
+              <SocialIcon
+                bgColor="#1877F2"
+                href="https://www.facebook.com/DailyDestinyBD"
+              >
+                <Facebook
+                  size={16}
+                  color="#ffffff"
+                  fill="#ffffff"
+                  className="stroke-[1] md:h-[18px] md:w-[18px]"
+                />
+              </SocialIcon>
+
+              {/* YouTube */}
+              <SocialIcon
+                bgColor="#FF0000"
+                href="https://www.youtube.com/@DailyDestinyBD"
+              >
+                <Youtube
+                  size={16}
+                  color="#FF0000"
+                  fill="#ffffff"
+                  className="stroke-[1] md:h-[18px] md:w-[18px]"
+                />
+              </SocialIcon>
+
+              {/* LinkedIn */}
+              <SocialIcon bgColor="#0A66C2" href="https://linkedin.com">
+                <Linkedin
+                  size={16}
+                  color="#ffffff"
+                  fill="#ffffff"
+                  className="stroke-[1] md:h-[18px] md:w-[18px]"
+                />
+              </SocialIcon>
+
+              {/* ════════════════════════════════════════════════
+                                ২. বাকি আইকনগুলো (মোবাইলে হাইড থাকবে, শুধু md স্ক্রিন থেকে দেখাবে)
+                                ════════════════════════════════════════════════ 
+                              */}
+
+              {/* Facebook Group */}
+              <div className="hidden md:block">
+                <SocialIcon
+                  bgColor="#1877F2"
+                  href="https://facebook.com/groups"
+                >
+                  <Users
+                    size={16}
+                    color="#ffffff"
+                    className="stroke-[2] md:h-[18px] md:w-[18px]"
+                  />
+                </SocialIcon>
+              </div>
+
+              {/* TikTok */}
+              <div className="hidden md:block">
+                <SocialIcon bgColor="#000000" href="https://tiktok.com">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-3.5 w-3.5 md:h-4 md:w-4"
+                    fill="#ffffff"
+                  >
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.18 1.15 1.21 2.76 1.93 4.41 2.02v3.62c-1.68-.03-3.32-.57-4.68-1.57-.18-.13-.34-.28-.5-.43v6.33c.03 2.87-1.4 5.63-3.89 7.07-2.73 1.63-6.29 1.41-8.79-.54-2.58-1.95-3.64-5.39-2.54-8.5 1.01-2.99 3.94-5.07 7.13-5.05.12 0 .24 0 .36.01v3.74c-1.3-.12-2.6.43-3.41 1.45-.96 1.16-1.12 2.84-.41 4.17.67 1.34 2.14 2.13 3.64 1.94 1.52-.14 2.76-1.34 2.96-2.85.04-.31.05-.62.05-.93V.02z" />
+                  </svg>
+                </SocialIcon>
+              </div>
+
+              
             </div>
 
             {/* Sub Legal Row under Social Block */}
@@ -124,7 +201,7 @@ export function Footer() {
                   <Link
                     key={index}
                     href={link.href}
-                    className="text-base text-gray-500 hover:text-white transition-colors"
+                    className="text-base text-gray-500 hover:text-primary transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -145,7 +222,7 @@ export function Footer() {
             className="hover:text-primary transition-colors flex items-center gap-1"
           >
             <span>{tFooter("developed") || "Developed by"}</span>
-            <span className="text-gray-400 font-bold hover:underline">
+            <span className="text-gray-400 font-bold hover:underline hover:text-primary">
               Fistech Ventures
             </span>
           </Link>
