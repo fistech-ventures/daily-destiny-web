@@ -475,7 +475,6 @@ export function Navbar({
                           { label: "সর্বশেষ", href: "/recent" },
                           { label: "বিশেষ সংবাদ", href: "/special" },
                           { label: "রাজনীতি", href: "/politics" },
-                          { label: "রস+আলো", href: "/ros-alo" },
                           { label: "ছবি", href: "/photo" },
                           { label: "ভিডিও", href: "/video" },
                         ].map((item) => (
@@ -492,31 +491,37 @@ export function Navbar({
 
                       {/* Category rows */}
                       <div className="divide-y divide-gray-100">
-                        {categories.map((category) => (
-                          <div
-                            key={category.id}
-                            className="flex items-start py-3 gap-4"
-                          >
-                            {/* Category name */}
-                            <div className="flex items-center gap-0.5 w-32 shrink-0">
-                              <Link
-                                href={`/${category.slug}`}
-                                onClick={() => setIsSheetOpen(false)}
-                                className="text-[15px] font-bold text-gray-900 hover:text-red-600 transition-colors"
-                              >
-                                {category.titleBn || category.title}
-                              </Link>
-                              {(category as Category).subCategories?.length >
-                                0 && (
-                                  <span className="text-red-600 font-bold ml-1">
-                                    ›
-                                  </span>
-                                )}
-                            </div>
+                        {categories
+                          .filter((category, index, self) => {
+                            const title = category.titleBn || category.title;
+                            return (
+                              self.findIndex(
+                                (c) => (c.titleBn || c.title) === title
+                              ) === index
+                            );
+                          })
+                          .map((category) => (
+                            <div
+                              key={category.id}
+                              className="flex items-start py-3 gap-4"
+                            >
+                              {/* Category name */}
+                              <div className="flex items-center gap-0.5 w-32 shrink-0">
+                                <Link
+                                  href={`/${category.slug}`}
+                                  onClick={() => setIsSheetOpen(false)}
+                                  className="text-[15px] font-bold text-gray-900 hover:text-red-600 transition-colors"
+                                >
+                                  {category.titleBn || category.title}
+                                </Link>
 
-                            {/* Subcategory links */}
-                            {(category as Category).subCategories?.length >
-                              0 && (
+                                {(category as Category).subCategories?.length > 0 && (
+                                  <span className="text-red-600 font-bold ml-1">›</span>
+                                )}
+                              </div>
+
+                              {/* Subcategory links */}
+                              {(category as Category).subCategories?.length > 0 && (
                                 <div className="flex flex-wrap gap-x-5 gap-y-1.5">
                                   {(category as Category).subCategories.map(
                                     (sub: Category) => (
@@ -528,12 +533,12 @@ export function Navbar({
                                       >
                                         {sub.titleBn || sub.title}
                                       </Link>
-                                    ),
+                                    )
                                   )}
                                 </div>
                               )}
-                          </div>
-                        ))}
+                            </div>
+                          ))}
                       </div>
                     </div>
 
@@ -615,8 +620,8 @@ export function Navbar({
 
                       <div className="relative flex items-center gap-1.5 md:gap-2.5">
                         {/* ════════════════════════════════════════════════
-                                                      ১. মোস্ট ইম্পর্ট্যান্ট ৩টি আইকন (মোবাইল ও ডেস্কটপ সবখানেই দেখাবে)
-                                                      ════════════════════════════════════════════════ */}
+                          ১. মোস্ট ইম্পর্ট্যান্ট ৩টি আইকন (মোবাইল ও ডেস্কটপ সবখানেই দেখাবে)
+                          ════════════════════════════════════════════════ */}
 
                         {/* Facebook */}
                         <SocialIcon

@@ -17,7 +17,7 @@ const FeaturedNewsCard = ({ article }: { article: Article }) => (
             {article.coverImageCredit}
           </p>
         </div>
-        <div className="p-4">
+        <div className="px-4">
           <h1 className="text-lg md:text-2xl font-bold mb-2">
             {article.title}
           </h1>
@@ -65,16 +65,15 @@ const NewsGrid = ({ articles }: { articles: Article[] }) => (
         href={`/news/${article.category?.slug || "others"}/${article.code}`}
       >
         <div
-          className={`${
-            index === 0 ? "md:pr-2 md:border-r md:border-gray-300" : "md:pl-2"
-          }`}
+          className={`${index === 0 ? "md:pr-2 md:border-r md:border-gray-300" : "md:pl-2"
+            }`}
         >
           <img
             src={article.coverImage}
             alt={article.title}
             className="w-full aspect-video object-contain"
           />
-          <div className="p-4">
+          <div className="p-2">
             <h3 className="text-sm md:text-md font-semibold mb-1">
               {article.title}
             </h3>
