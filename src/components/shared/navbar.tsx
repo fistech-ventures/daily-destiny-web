@@ -431,7 +431,7 @@ export function Navbar({
 
               {/* Market Widget Placement Wrapped with precise matching inline height styles */}
               <div className="hidden sm:flex h-full items-center">
-                <MarketPriceWidget marketPrices={marketPrices} />
+                <MarketPriceWidget marketPricing={marketPrices} />
               </div>
 
               {/* ই-পেপার */}
