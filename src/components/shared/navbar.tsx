@@ -27,7 +27,7 @@ import { useTranslations } from "next-intl";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
-import { Category } from "@/lib/types";
+import { Category, MarketPrice } from "@/lib/types";
 import { VideoArticle } from "@/lib/api";
 import { getMarketPrice } from "@/lib/api";
 import SocialIcon from "./SocialIcon";
@@ -48,6 +48,20 @@ export function Navbar({
   const tSearch = useTranslations("search");
 
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const [marketPrices, setMarketPrices] = React.useState<MarketPrice[]>([]);
+
+  React.useEffect(() => {
+    async function loadPrices() {
+      try {
+        const response = await getMarketPrice({ page: 1, limit: 10 });
+        const data = Array.isArray(response) ? response : response.data || [];
+        setMarketPrices(data);
+      } catch (error) {
+        console.error("Failed to fetch market prices for widget in navbar:", error);
+      }
+    }
+    loadPrices();
+  }, []);
   const [isSheetOpen, setIsSheetOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const router = useRouter();
@@ -417,12 +431,12 @@ export function Navbar({
 
               {/* Market Widget Placement Wrapped with precise matching inline height styles */}
               <div className="hidden sm:flex h-full items-center">
-                <MarketPriceWidget />
+                <MarketPriceWidget marketPrices={marketPrices} />
               </div>
 
               {/* ই-পেপার */}
               <Link
-                href="/epaper"
+                href="/e-paper"
                 className="hidden sm:flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-red-600 transition-colors"
               >
                 <Newspaper className="h-4 w-4" />

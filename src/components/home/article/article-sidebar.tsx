@@ -11,9 +11,9 @@ export default async function ArticleSidebar() {
   const marketPricing = marketPricingRes?.data || [];
   return (
     <div className="lg:space-y-3 space-y-2 w-full overflow-hidden">
-      <div className="hidden lg:block">
+      {/* <div className="hidden lg:block">
         <Trending trendingTopics={trendingTopics} />
-      </div>
+      </div> */}
       <BazarPricing marketPricing={marketPricing} />
       <LiveUpdate />
     </div>
