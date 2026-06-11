@@ -137,10 +137,10 @@ export default async function Home({
       {/* Slider Carousel Block Layout (Uses dedicated payload sliderVideos) */}
       <VideoSlider videos={sliderVideos} title="ভিডিও গ্যালারি" />
 
-      <SingleCategoryNewsGrid slug="international" limit={4} />
+      <SingleCategoryNewsGrid slug="international" limit={7} />
       {/* Asymmetric Gallery Layout (Passes data & pagination meta seamlessly) */}
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
-      <SingleCategoryNewsGrid slug="sports" limit={4} />
+      <SingleCategoryNewsGrid slug="sports" limit={7} />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
 
       {/* Category sections with subcategories grids */}

@@ -24,6 +24,7 @@ export default async function SingleCategoryNewsGrid({
         (category) => category.slug === slug
     );
 
+
     if (!currentCat) return null;
 
     // Fetch articles
