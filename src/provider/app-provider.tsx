@@ -42,8 +42,14 @@ export default function AppProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Navbar categories={categories} videos={videos} headlines={headlines} />
+      {/* <Navbar categories={categories} videos={videos} headlines={headlines} /> */}
       {/* <Headline headlines={headlines} /> */}
+
+      <Navbar 
+          categories={categories} 
+          videos={videos} 
+          headlines={headlines}
+        />
 
       <div className="md:pb-0 pb-16">
         {isSearchPage ? (
