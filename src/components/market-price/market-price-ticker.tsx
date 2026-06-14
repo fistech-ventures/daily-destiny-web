@@ -16,7 +16,6 @@ export default function MarketPriceWidget({
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Mark as ready after first client render
     setIsReady(true);
   }, []);
 
