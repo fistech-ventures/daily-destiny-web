@@ -1,5 +1,5 @@
 import MainLayout from "@/components/home/main-layout";
-import VideoSlider from "@/components/video/video-slider"; 
+import VideoSlider from "@/components/video/video-slider";
 import VideoGallery from "@/components/home/video-gallery";
 import FourCategoryGrid from "@/components/category/ThreeColumnCategoryFeatured";
 import CategoryWithSubcategories from "@/components/category/CategoryWithSubcategories";
@@ -26,7 +26,7 @@ export async function generateMetadata({
 
 export const revalidate = 60;
 
-// Create a safe, strict structure type interface for the incoming images response 
+// Create a safe, strict structure type interface for the incoming images response
 interface GalleryApiItem {
   id: string | number;
   coverImage?: string;
@@ -117,7 +117,7 @@ export default async function Home({
   // Fetch recent photo gallery articles
   const galleryRes = await getImages({ page: 1, limit: 5 });
   const galleryArticles: GalleryApiItem[] = galleryRes?.data || [];
-  
+
   // Clean type assignment instead of using forbidden 'any'
   const galleryItems = galleryArticles.map((article: GalleryApiItem) => ({
     id: article.id,
@@ -125,7 +125,7 @@ export default async function Home({
     title: article.title,
     description: article.description,
     timeAgo: article.date ? formatRelativeTime(article.date) : "",
-    photographer: "নিজস্ব প্রতিবেদক", 
+    photographer: "নিজস্ব প্রতিবেদক",
     code: article.code,
   }));
 
@@ -135,19 +135,18 @@ export default async function Home({
       <MainLayout />
 
       {/* Slider Carousel Block Layout (Uses dedicated payload sliderVideos) */}
-      <VideoSlider videos={sliderVideos} title="ভিডিও গ্যালারি" />
+      {/* <VideoSlider videos={sliderVideos} title="ভিডিও গ্যালারি" /> */}
 
-      <SingleCategoryNewsGrid slug="international" limit={7} />
+      <SingleCategoryNewsGrid slug="education" limit={7} />
       {/* Asymmetric Gallery Layout (Passes data & pagination meta seamlessly) */}
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
-      <SingleCategoryNewsGrid slug="sports" limit={7} />
+      <SingleCategoryNewsGrid slug="weather" limit={7} />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
 
       {/* Category sections with subcategories grids */}
 
       {/* 4 Column Category Matrix Section Component Layout */}
       <FourCategoryGrid categories={categoriesData} sectionTitle="অন্যান্য" />
-
     </main>
   );
 }
