@@ -32,8 +32,6 @@ import { VideoArticle } from "@/lib/api";
 import { getMarketPrice } from "@/lib/api";
 import SocialIcon from "./SocialIcon";
 import Headline from "./headline";
-import MarketPriceListClient from "../market-price/market-price-list-client";
-import MarketPriceTicker from "../market-price/market-price-ticker";
 import MarketPriceWidget from "../market-price/market-price-ticker";
 
 export function Navbar({

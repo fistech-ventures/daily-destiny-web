@@ -1,4 +1,3 @@
-// src/[locale]/gallery/[code]/page.tsx
 import ImageCard from "@/components/gallery/related-image";
 import SocialShare from "@/components/shared/social-share";
 import RelatedNewsCard from "@/components/news/related-news-card";
