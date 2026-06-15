@@ -67,7 +67,29 @@ export function Navbar({
   const isSearchPage = pathname.includes("/search");
 
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [hideNavbar, setHideNavbar] = React.useState(false);
   const [hideTopBar, setHideTopBar] = React.useState(false);
+  const lastScrollY = React.useRef(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY > lastScrollY.current;
+
+      // Hide top bar after a small scroll, and hide the navbar on a larger downward scroll.
+      if (isScrollingDown && currentScrollY > 100) {
+        setHideNavbar(true);
+      } else if (!isScrollingDown) {
+        setHideNavbar(false);
+      }
+
+      setHideTopBar(currentScrollY > 80);
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const locales = ["en", "bn"];
   const strippedPathname = locales.reduce(
@@ -76,15 +98,7 @@ export function Navbar({
     pathname,
   );
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setHideTopBar(window.scrollY > 120);
-    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,7 +109,13 @@ export function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+    <header 
+      className={cn(
+        "sticky top-0 z-50 w-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
+        // Hide by translating up on mobile, but force translate-y-0 on md (tablet/desktop)
+        hideNavbar ? "-translate-y-full md:translate-y-0" : "translate-y-0"
+      )}
+    >
       {/* ════════════════════════════════════════════════
           TOP BAR — Logo (Left) | Social Icons (Right)
           ════════════════════════════════════════════════ */}
