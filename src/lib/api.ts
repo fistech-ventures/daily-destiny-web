@@ -16,8 +16,8 @@ const api = axios.create({
 
 // Normalize API errors into standard ApiError objects
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (axios.isAxiosError(error) && error.response) {
       const statusCode = error.response.status;
       const message = error.response.data?.message || error.message;
@@ -111,10 +111,28 @@ export async function getMarketPrice(query?: {
 }
 
 // Get articles
-export async function getArticles(query?: ArticleQueryParams) {
+export async function getArticles(
+  query?: ArticleQueryParams & { useLocationApi?: boolean },
+) {
   try {
-    const response = await api.get("/web/articles?type=news", {
-      params: query,
+    const { useLocationApi, ...params } = query || {};
+
+    // 1. Establish path roots without mixing string flags with object configurations
+    const baseUrl = useLocationApi
+      ? `${process.env.NEXT_PUBLIC_LOCATION_API_URL}/web/articles`
+      : "/web/articles";
+
+    // 2. Build the exact parameters object dynamically
+    const finalParams: any = { ...params };
+
+    // Only bind standard news types if we aren't routing to the remote locations instance
+    if (!useLocationApi) {
+      finalParams.type = "news";
+    }
+
+    // 3. Clean network execution passing variables inside the designated config scope
+    const response = await api.get(baseUrl, {
+      params: finalParams,
     });
     return response.data;
   } catch (error) {
@@ -149,7 +167,7 @@ export async function getArticleByCode(code: string) {
 export async function getRelatedArticles(code: string) {
   try {
     const response = await api.get(`/web/articles/${code}/related`);
-    return response.data.data; 
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching related articles:", error);
     throw error;
@@ -209,7 +227,9 @@ export async function getVideos(query?: { page?: number; limit?: number }) {
 }
 
 // Get single video by code (with full media details)
-export async function getVideoByCode(code: string): Promise<VideoArticle | null> {
+export async function getVideoByCode(
+  code: string,
+): Promise<VideoArticle | null> {
   try {
     const response = await getArticleByCode(code);
     const article = response?.data || response;
@@ -246,7 +266,10 @@ export async function getVideoByCode(code: string): Promise<VideoArticle | null>
 }
 
 // Get images
-export async function getImages(query?: { page?: number; limit?: number }): Promise<{ data: imageArticle[]; meta: any }> {
+export async function getImages(query?: {
+  page?: number;
+  limit?: number;
+}): Promise<{ data: imageArticle[]; meta: any }> {
   try {
     const response = await api.get("/web/articles?type=photo", {
       params: query,
@@ -287,7 +310,9 @@ export async function getImages(query?: { page?: number; limit?: number }): Prom
 }
 
 // Get single image
-export async function getSingleImage(code: string): Promise<imageArticle | null> {
+export async function getSingleImage(
+  code: string,
+): Promise<imageArticle | null> {
   try {
     const response = await api.get(`/web/articles/by-code/${code}`);
     const article = response.data?.data || response.data;
@@ -317,12 +342,13 @@ export async function getSingleImage(code: string): Promise<imageArticle | null>
 }
 
 // Get related images
-export async function getRelatedImages(id: number | string): Promise<imageArticle[]> {
+export async function getRelatedImages(
+  id: number | string,
+): Promise<imageArticle[]> {
   try {
     const response = await api.get(`/web/articles/${id}/related`);
     const dataObj = response.data?.data || response.data || [];
 
-    // The API might return an object with an 'articles' array instead of a direct array
     const items = Array.isArray(dataObj)
       ? dataObj
       : Array.isArray(dataObj.articles)
@@ -386,6 +412,17 @@ export async function submitContactForm(data: {
     return response.data;
   } catch (error) {
     console.error("Error submitting contact form:", error);
+    throw error;
+  }
+}
+
+export async function getLocationTree(): Promise<any[]> {
+  try {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/locations/tree`);
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Error fetching location tree:", error);
     throw error;
   }
 }
