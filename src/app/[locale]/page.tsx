@@ -169,7 +169,7 @@ export default async function Home({
   }));
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-3 lg:gap-5">
+    <main className="max-w-7xl mx-auto px-1.5 py-6 flex flex-col gap-3 lg:gap-5">
       <MainLayout />
       <SingleCategoryNewsGrid slug="education" limit={7} />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
