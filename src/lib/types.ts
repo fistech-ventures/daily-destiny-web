@@ -19,8 +19,20 @@ export interface Category {
   seoMetaData?: SeoMetaData;
 }
 
+export interface Location {
+  id: string;
+  name: string;
+  nameBn: string;
+  slug: string;
+  type: "division" | "district" | "upazila";
+  parentId: string;
+  position: number;
+  children?: Location[];
+}
+
 export interface ArticleQueryParams {
   page?: number;
+  locationId?: string;
   limit?: number;
   searchTerm?: string;
   isActive?: boolean;

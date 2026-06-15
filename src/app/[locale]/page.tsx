@@ -1,8 +1,6 @@
 import MainLayout from "@/components/home/main-layout";
-import VideoSlider from "@/components/video/video-slider";
 import VideoGallery from "@/components/home/video-gallery";
 import FourCategoryGrid from "@/components/category/ThreeColumnCategoryFeatured";
-import CategoryWithSubcategories from "@/components/category/CategoryWithSubcategories";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
 import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
@@ -10,6 +8,8 @@ import { Category } from "@/lib/types";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
 import { formatRelativeTime } from "@/utils/date-formatter";
 import SingleCategoryNewsGrid from "@/components/category/SingleCategoryNewsGrid";
+import NewsListClient from "@/components/news/news-list-client";
+import LocationFilter from "@/components/category/categoryfilter";
 
 export async function generateMetadata({
   params,
@@ -26,7 +26,6 @@ export async function generateMetadata({
 
 export const revalidate = 60;
 
-// Create a safe, strict structure type interface for the incoming images response
 interface GalleryApiItem {
   id: string | number;
   coverImage?: string;
@@ -38,16 +37,61 @@ interface GalleryApiItem {
 
 export default async function Home({
   params,
+  searchParams, 
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ locationId?: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  // 1. Fetch data allocations for both video components in parallel
+  const resolvedSearchParams = await searchParams;
+  const locationId = resolvedSearchParams.locationId;
+
+  if (locationId) {
+    const response = await getArticles({
+      locationId,
+      limit: 10,
+      useLocationApi: true, 
+    });
+
+    const articlesList = response?.data || [];
+    const meta = response?.meta;
+
+    return (
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        <div className="container mx-auto">
+          <h2 className="lg:text-2xl text-xl font-bold border-b pb-2 border-gray-100 text-[#1a66ca]">
+            আমার এলাকার খবর
+          </h2>
+
+          <div className="mt-6 flex flex-col lg:flex-row gap-6 items-start">
+            <div className="flex-1 w-full pr-2 border-r border-gray-100">
+              <NewsListClient
+                key={`location-global-${locationId}`}
+                initialData={articlesList}
+                initialMeta={meta}
+                fetchParams={{
+                  locationId,
+                  limit: 10,
+                  useLocationApi: true,
+                }}
+              />
+            </div>
+
+            <div className="w-full lg:w-80 shrink-0 sticky top-4">
+              <LocationFilter />
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // 👈 3. Fallback to normal standard homepage view when NO location parameters exist
   const [sliderResponse, galleryResponse] = await Promise.all([
-    getVideos({ page: 1, limit: 9 }), // Fetch 9 items for a clean 3-page non-looping slider layout
-    getVideos({ page: 1, limit: 5 }), // Fetch 5 items strictly for the Asymmetric Gallery
+    getVideos({ page: 1, limit: 9 }),
+    getVideos({ page: 1, limit: 5 }),
   ]);
 
   const sliderVideos = sliderResponse?.data || [];
@@ -59,11 +103,9 @@ export default async function Home({
     totalPages: 1,
   };
 
-  // 2. Fetch active production categories matrix from the database
   const categoriesRes = await getAllcategories();
   const categoriesList: Category[] = categoriesRes?.data || [];
 
-  // Reusable optimized data-fetching method block
   const getCategoryData = async (slug: string) => {
     const cat = categoriesList.find(c => c.slug === slug);
 
@@ -106,7 +148,6 @@ export default async function Home({
     }
   };
 
-  // 3. Query the 4 valid production data categories from your payload list
   const categoriesData = await Promise.all([
     getCategoryData("international"),
     getCategoryData("sports"),
@@ -114,11 +155,9 @@ export default async function Home({
     getCategoryData("business"),
   ]);
 
-  // Fetch recent photo gallery articles
   const galleryRes = await getImages({ page: 1, limit: 5 });
   const galleryArticles: GalleryApiItem[] = galleryRes?.data || [];
 
-  // Clean type assignment instead of using forbidden 'any'
   const galleryItems = galleryArticles.map((article: GalleryApiItem) => ({
     id: article.id,
     url: article.coverImage || "",
@@ -131,21 +170,11 @@ export default async function Home({
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-3 lg:gap-5">
-      {/* Hero / Main News Grid section Layout */}
       <MainLayout />
-
-      {/* Slider Carousel Block Layout (Uses dedicated payload sliderVideos) */}
-      {/* <VideoSlider videos={sliderVideos} title="ভিডিও গ্যালারি" /> */}
-
       <SingleCategoryNewsGrid slug="education" limit={7} />
-      {/* Asymmetric Gallery Layout (Passes data & pagination meta seamlessly) */}
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
       <SingleCategoryNewsGrid slug="weather" limit={7} />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
-
-      {/* Category sections with subcategories grids */}
-
-      {/* 4 Column Category Matrix Section Component Layout */}
       <FourCategoryGrid categories={categoriesData} sectionTitle="অন্যান্য" />
     </main>
   );

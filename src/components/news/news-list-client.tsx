@@ -6,10 +6,11 @@ import HorizontalArticleCard from "@/components/category/horizontal-article-card
 import { getArticles } from "@/lib/api";
 import { Article, ArticleQueryParams } from "@/lib/types";
 
+// 1. Extend the local props interface to expect the domain switch flag
 interface NewsListClientProps {
   initialData: Article[];
   initialMeta: { total: number; page: number; limit: number };
-  fetchParams?: ArticleQueryParams;
+  fetchParams?: ArticleQueryParams & { useLocationApi?: boolean }; // 👈 Added custom field support
   noDataMessage?: string;
 }
 
@@ -20,6 +21,7 @@ export default function NewsListClient({
   noDataMessage = "কোনো সংবাদ পাওয়া যায়নি",
 }: NewsListClientProps) {
   const fetchMore = async (page: number) => {
+    // 2. Destructure the params so they transfer perfectly over deep pagination calls
     return getArticles({
       ...fetchParams,
       page,
@@ -36,7 +38,6 @@ export default function NewsListClient({
       wrapperClassName="w-full"
       noDataMessage={noDataMessage}
       renderItem={(article: Article, index: number) => {
-
         let layoutType: "featured" | "side" | "grid" = "grid";
         if (index === 0) layoutType = "featured";
         if (index === 1) layoutType = "side";
