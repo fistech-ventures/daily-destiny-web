@@ -256,81 +256,89 @@ export function Navbar({
                 ৪. মোবাইল পপ-আপ ওভারলে মেনু (বাকি আইকনগুলোর জন্য)
                 ════════════════════════════════════════════════ */}
               {isPopupOpen && (
-                <>
-                  {/* ব্যাকড্রপ ক্লিক করলে পপ-আপ বন্ধ হবে */}
+                <div className="fixed inset-0 z-50 flex items-center justify-center md:hidden">
+                  {/* ব্যাকড্রপ: ক্লিক করলে পপ-আপ বন্ধ হবে + ফেইড ইন এনিমেশন */}
                   <div
-                    className="fixed inset-0 z-40 md:hidden"
+                    className="absolute inset-0 bg-black/20 backdrop-blur-sm animate-in fade-in duration-300"
                     onClick={() => setIsPopupOpen(false)}
                   />
 
-                  {/* ছোট পপ-আপ বক্স */}
-                  <div className="absolute right-0 top-50 z-50 md:hidden bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl p-3 shadow-xl flex items-center gap-3 animate-in fade-in zoom-in-95 duration-150">
-                    {/* Facebook Group */}
-                    <SocialIcon
-                      bgColor="#1877F2"
-                      href="https://facebook.com/groups"
-                    >
-                      <Users size={16} color="#ffffff" className="stroke-[2]" />
-                    </SocialIcon>
-
-                    {/* TikTok */}
-                    <SocialIcon bgColor="#000000" href="https://tiktok.com">
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="h-4 w-4"
-                        fill="#ffffff"
+                  {/* সেন্ট্রাল পপ-আপ বক্স: ২টা রো (Row) সহ */}
+                  <div className="relative z-10 bg-white border border-gray-200 rounded-[24px] p-12 shadow-2xl flex flex-col items-center gap-4 animate-in fade-in zoom-in-75 slide-in-from-bottom-4 duration-300 ease-out">
+                    
+                    {/* Row 1: Top 5 Icons */}
+                    <div className="flex items-center justify-center gap-3 sm:gap-4">
+                      {/* Facebook Group */}
+                      <SocialIcon
+                        bgColor="#1877F2"
+                        href="https://facebook.com/groups"
                       >
-                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.18 1.15 1.21 2.76 1.93 4.41 2.02v3.62c-1.68-.03-3.32-.57-4.68-1.57-.18-.13-.34-.28-.5-.43v6.33c.03 2.87-1.4 5.63-3.89 7.07-2.73 1.63-6.29 1.41-8.79-.54-2.58-1.95-3.64-5.39-2.54-8.5 1.01-2.99 3.94-5.07 7.13-5.05.12 0 .24 0 .36.01v3.74c-1.3-.12-2.6.43-3.41 1.45-.96 1.16-1.12 2.84-.41 4.17.67 1.34 2.14 2.13 3.64 1.94 1.52-.14 2.76-1.34 2.96-2.85.04-.31.05-.62.05-.93V.02z" />
-                      </svg>
-                    </SocialIcon>
+                        <Users size={18} color="#ffffff" className="stroke-[2]" />
+                      </SocialIcon>
 
-                    {/* WhatsApp */}
-                    <SocialIcon
-                      bgColor="#25D366"
-                      href="https://wa.me/yournumber"
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="h-4 w-4"
-                        fill="#ffffff"
+                      {/* TikTok */}
+                      <SocialIcon bgColor="#000000" href="https://tiktok.com">
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-4 w-4"
+                          fill="#ffffff"
+                        >
+                          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.18 1.15 1.21 2.76 1.93 4.41 2.02v3.62c-1.68-.03-3.32-.57-4.68-1.57-.18-.13-.34-.28-.5-.43v6.33c.03 2.87-1.4 5.63-3.89 7.07-2.73 1.63-6.29 1.41-8.79-.54-2.58-1.95-3.64-5.39-2.54-8.5 1.01-2.99 3.94-5.07 7.13-5.05.12 0 .24 0 .36.01v3.74c-1.3-.12-2.6.43-3.41 1.45-.96 1.16-1.12 2.84-.41 4.17.67 1.34 2.14 2.13 3.64 1.94 1.52-.14 2.76-1.34 2.96-2.85.04-.31.05-.62.05-.93V.02z" />
+                        </svg>
+                      </SocialIcon>
+
+                      {/* WhatsApp */}
+                      <SocialIcon
+                        bgColor="#25D366"
+                        href="https://wa.me/yournumber"
                       >
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.292 1.481 4.757 1.482 5.327 0 9.663-4.329 9.665-9.645.001-2.577-1.002-5.001-2.822-6.822-1.82-1.82-4.244-2.822-6.824-2.823-5.332 0-9.669 4.33-9.672 9.648-.001 1.55.422 3.064 1.223 4.385l-.973 3.553 3.646-.956zM17.41 14.39c-.314-.157-1.857-.916-2.143-1.02-.287-.104-.496-.157-.704.157-.208.313-.807 1.02-1.01 1.25-.202.23-.404.26-.718.103-1.385-.694-2.43-1.226-3.394-2.875-.253-.432.253-.4.723-1.343.078-.157.039-.294-.02-.41-.058-.117-.496-1.196-.679-1.64-.179-.43-.362-.372-.496-.372l-.423-.008c-.147 0-.387.055-.589.274-.202.219-.77.752-.77 1.833 0 1.08.788 2.124.898 2.274.11.15 1.55 2.366 3.753 3.32.524.227.933.363 1.253.465.527.168 1.006.144 1.384.088.422-.062 1.857-.76 2.119-1.458.262-.697.262-1.294.183-1.42-.078-.125-.287-.203-.6-.36z" />
-                      </svg>
-                    </SocialIcon>
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          fill="#ffffff"
+                        >
+                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.292 1.481 4.757 1.482 5.327 0 9.663-4.329 9.665-9.645.001-2.577-1.002-5.001-2.822-6.822-1.82-1.82-4.244-2.822-6.824-2.823-5.332 0-9.669 4.33-9.672 9.648-.001 1.55.422 3.064 1.223 4.385l-.973 3.553 3.646-.956zM17.41 14.39c-.314-.157-1.857-.916-2.143-1.02-.287-.104-.496-.157-.704.157-.208.313-.807 1.02-1.01 1.25-.202.23-.404.26-.718.103-1.385-.694-2.43-1.226-3.394-2.875-.253-.432.253-.4.723-1.343.078-.157.039-.294-.02-.41-.058-.117-.496-1.196-.679-1.64-.179-.43-.362-.372-.496-.372l-.423-.008c-.147 0-.387.055-.589.274-.202.219-.77.752-.77 1.833 0 1.08.788 2.124.898 2.274.11.15 1.55 2.366 3.753 3.32.524.227.933.363 1.253.465.527.168 1.006.144 1.384.088.422-.062 1.857-.76 2.119-1.458.262-.697.262-1.294.183-1.42-.078-.125-.287-.203-.6-.36z" />
+                        </svg>
+                      </SocialIcon>
 
-                    {/* Pinterest */}
-                    <SocialIcon bgColor="#BD081C" href="https://pinterest.com">
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="h-4 w-4"
-                        fill="#ffffff"
+                    </div>
+
+                    {/* Row 2: Bottom 1 Icon Centered */}
+                    <div className="flex items-center justify-center gap-3">
+                      {/* Pinterest */}
+                      <SocialIcon bgColor="#BD081C" href="https://pinterest.com">
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-4 w-4"
+                          fill="#ffffff"
+                        >
+                          <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.091.377-.293 1.194-.332 1.358-.052.211-.174.256-.401.151-1.495-.696-2.43-2.882-2.43-4.636 0-3.774 2.743-7.24 7.907-7.24 4.152 0 7.379 2.959 7.379 6.913 0 4.123-2.599 7.44-6.207 7.44-1.212 0-2.35-.63-2.74-1.373l-.748 2.848c-.27 1.039-1.001 2.342-1.488 3.132C10.166 23.889 11.066 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
+                        </svg>
+                      </SocialIcon>
+
+                      {/* Instagram */}
+                      <SocialIcon bgColor="#E1306C" href="https://instagram.com">
+                        <Instagram
+                          size={18}
+                          color="#ffffff"
+                          className="stroke-[2]"
+                        />
+                      </SocialIcon>
+                      {/* Google News */}
+                      <SocialIcon
+                        bgColor="#4285F4"
+                        href="https://news.google.com"
                       >
-                        <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.091.377-.293 1.194-.332 1.358-.052.211-.174.256-.401.151-1.495-.696-2.43-2.882-2.43-4.636 0-3.774 2.743-7.24 7.907-7.24 4.152 0 7.379 2.959 7.379 6.913 0 4.123-2.599 7.44-6.207 7.44-1.212 0-2.35-.63-2.74-1.373l-.748 2.848c-.27 1.039-1.001 2.342-1.488 3.132C10.166 23.889 11.066 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
-                      </svg>
-                    </SocialIcon>
+                        <Newspaper
+                          size={18}
+                          color="#ffffff"
+                          className="stroke-[2]"
+                        />
+                      </SocialIcon>
+                    </div>
 
-                    {/* Instagram */}
-                    <SocialIcon bgColor="#E1306C" href="https://instagram.com">
-                      <Instagram
-                        size={16}
-                        color="#ffffff"
-                        className="stroke-[2]"
-                      />
-                    </SocialIcon>
-
-                    {/* Google News */}
-                    <SocialIcon
-                      bgColor="#4285F4"
-                      href="https://news.google.com"
-                    >
-                      <Newspaper
-                        size={16}
-                        color="#ffffff"
-                        className="stroke-[2]"
-                      />
-                    </SocialIcon>
                   </div>
-                </>
+                </div>
               )}
             </div>
           </div>
@@ -348,7 +356,6 @@ export function Navbar({
       <div className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            {/* Category links — scrollable */}
             {/* Category links — scrollable */}
             <nav className="flex items-center overflow-x-auto scrollbar-none h-full">
               <Link
@@ -467,13 +474,7 @@ export function Navbar({
                         className="h-10 w-auto object-contain"
                       />
                     </Link>
-                    <button
-                      onClick={() => setIsSheetOpen(false)}
-                      className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
-                      aria-label="Close menu"
-                    >
-                      <X className="h-6 w-6" strokeWidth={1.5} />
-                    </button>
+                    
                   </div>
 
                   {/* Mega menu body */}
@@ -558,14 +559,7 @@ export function Navbar({
                     <div className="lg:w-72 shrink-0 space-y-6 lg:border-l border-gray-200 lg:pl-8">
                       {/* Login + Search */}
                       <div className="flex gap-3">
-                        <Link
-                          href="/login"
-                          onClick={() => setIsSheetOpen(false)}
-                          className="flex-1 flex items-center justify-center gap-2 border border-gray-300 rounded px-4 py-2 text-sm font-medium text-gray-700 hover:border-red-500 hover:text-red-600 transition-colors"
-                        >
-                          <User className="h-4 w-4" />
-                          Login
-                        </Link>
+                        
                         <button
                           onClick={() => {
                             setIsSheetOpen(false);
@@ -578,57 +572,7 @@ export function Navbar({
                         </button>
                       </div>
 
-                      {/* Social */}
-                      {/* <div>
-                        <p className="text-sm font-semibold text-gray-700 mb-3">
-                          অনুসরণ করুন
-                        </p>
-                        <div className="flex gap-2">
-                          {[
-                            {
-                              label: "Facebook",
-                              href: "https://facebook.com",
-                              bg: "bg-blue-600",
-                              icon: "f",
-                            },
-                            {
-                              label: "X",
-                              href: "https://x.com",
-                              bg: "bg-black",
-                              icon: "𝕏",
-                            },
-                            {
-                              label: "Instagram",
-                              href: "https://instagram.com",
-                              bg: "bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600",
-                              icon: "◈",
-                            },
-                            {
-                              label: "YouTube",
-                              href: "https://youtube.com",
-                              bg: "bg-red-600",
-                              icon: "▶",
-                            },
-                            {
-                              label: "News",
-                              href: "#",
-                              bg: "bg-blue-400",
-                              icon: "N",
-                            },
-                          ].map((s) => (
-                            <a
-                              key={s.label}
-                              href={s.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={s.label}
-                              className={`${s.bg} text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold hover:opacity-80 transition-opacity`}
-                            >
-                              {s.icon}
-                            </a>
-                          ))}
-                        </div>
-                      </div> */}
+                      
 
                       <div className="relative flex items-center gap-1.5 md:gap-2.5">
                         {/* ════════════════════════════════════════════════
@@ -710,67 +654,7 @@ export function Navbar({
                         </div>
                       </div>
 
-                      {/* App download */}
-                      {/* <div>
-                        <p className="text-sm font-semibold text-gray-700 mb-3">
-                          মোবাইল অ্যাপস ডাউনলোড করুন
-                        </p>
-                        <div className="flex flex-col gap-2">
-                          <a
-                            href="https://play.google.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 border border-gray-300 rounded px-4 py-2 hover:border-gray-500 transition-colors"
-                          >
-                            <span className="text-xl">▶</span>
-                            <div className="leading-tight">
-                              <p className="text-[10px] text-gray-500">
-                                GET IT ON
-                              </p>
-                              <p className="text-sm font-semibold text-gray-800">
-                                Google Play
-                              </p>
-                            </div>
-                          </a>
-                          <a
-                            href="https://apps.apple.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 border border-gray-300 rounded px-4 py-2 hover:border-gray-500 transition-colors"
-                          >
-                            <span className="text-xl"></span>
-                            <div className="leading-tight">
-                              <p className="text-[10px] text-gray-500">
-                                Download on the
-                              </p>
-                              <p className="text-sm font-semibold text-gray-800">
-                                App Store
-                              </p>
-                            </div>
-                          </a>
-                        </div>
-                      </div> */}
-
-                      {/* Footer links */}
-                      {/* <div className="flex flex-wrap gap-x-4 gap-y-1.5 pt-3 border-t border-gray-100">
-                        {[
-                          "আমাদের সম্পর্কে",
-                          "বিজ্ঞাপন",
-                          "সার্কুলেশন",
-                          "নীতি ও শর্ত",
-                          "যোগাযোগ",
-                          "নিউজলেটার",
-                        ].map((l) => (
-                          <Link
-                            key={l}
-                            href="#"
-                            onClick={() => setIsSheetOpen(false)}
-                            className="text-xs text-gray-500 hover:text-red-600 transition-colors"
-                          >
-                            • {l}
-                          </Link>
-                        ))}
-                      </div> */}
+                      
                     </div>
                   </div>
                 </SheetContent>
