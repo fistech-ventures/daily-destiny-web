@@ -59,7 +59,7 @@ export default async function Home({
     const meta = response?.meta;
 
     return (
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-4 ">
         <div className="container mx-auto">
           <h2 className="lg:text-2xl text-xl font-bold border-b pb-2 border-gray-100 text-[#1a66ca]">
             আমার এলাকার খবর
@@ -169,7 +169,7 @@ export default async function Home({
   }));
 
   return (
-    <main className="max-w-7xl mx-auto px-1.5 py-6 flex flex-col gap-3 lg:gap-5">
+    <main className="max-w-7xl mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
       <MainLayout />
       <SingleCategoryNewsGrid slug="education" limit={7} />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />

@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { Category } from "@/lib/types";
 import Headline from "@/components/shared/headline";
 import { VideoArticle } from "@/lib/api";
+import ShareMarket from "@/components/shared/share-market";
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -50,12 +51,13 @@ export default function AppProvider({
           videos={videos} 
           headlines={headlines}
         />
+        <ShareMarket />
 
       <div className="md:pb-0 pb-16">
         {isSearchPage ? (
           <main>{children}</main>
         ) : (
-          <div className="container mx-auto lg:py-8">
+          <div className="container mx-auto lg:py-1">
             <main>{children}</main>
           </div>
         )}
