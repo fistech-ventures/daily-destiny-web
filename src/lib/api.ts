@@ -70,6 +70,24 @@ export interface imageArticle {
   }[];
 }
 
+export interface EpaperPage {
+  id: string;
+  isActive: boolean;
+  date: string; // "YYYY-MM-DD"
+  pageNumber: number;
+  imageUrl: string;
+  imageKey: string;
+  thumbnailUrl: string;
+  thumbnailKey: string;
+  publicationName: string;
+  title: string;
+  mimetype: string;
+  extension: string;
+  fileSize: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // Get categories
 export async function getAllcategories(query?: CategoryQueryParam) {
   try {
@@ -423,6 +441,98 @@ export async function getLocationTree(): Promise<any[]> {
     return response.data?.data || [];
   } catch (error) {
     console.error("Error fetching location tree:", error);
+    throw error;
+  }
+}
+
+
+
+// Get all active e-papers with filters
+export async function getEpapers(query?: {
+  page?: number;
+  limit?: number;
+  publicationName?: string;
+  date?: string;
+}): Promise<{ data: EpaperPage[]; meta: any }> {
+  try {
+    const response = await api.get("/web/epapers", { params: query });
+    return {
+      data: response.data?.data || [],
+      meta: response.data?.meta || {},
+    };
+  } catch (error) {
+    console.error("Error fetching e-papers:", error);
+    throw error;
+  }
+}
+
+// Get a single e-paper page by ID
+export async function getEpaperById(id: string): Promise<EpaperPage | null> {
+  try {
+    const response = await api.get(`/web/epapers/${id}`);
+    return response.data?.data || null;
+  } catch (error) {
+    console.error("Error fetching e-paper by id:", error);
+    throw error;
+  }
+}
+
+// Get e-papers by date range
+export async function getEpapersByDateRange(query: {
+  dateFrom: string;
+  dateTo: string;
+  publicationName?: string;
+}): Promise<EpaperPage[]> {
+  try {
+    const response = await api.get("/web/epapers/date-range", {
+      params: query,
+    });
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Error fetching e-papers by date range:", error);
+    throw error;
+  }
+}
+
+// Get all available dates for e-papers (used to find the latest edition and
+// to populate the date picker)
+export async function getEpaperDates(
+  publicationName?: string,
+): Promise<string[]> {
+  try {
+    const response = await api.get("/web/epapers/dates", {
+      params: publicationName ? { publicationName } : undefined,
+    });
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Error fetching e-paper dates:", error);
+    throw error;
+  }
+}
+
+// Get all pages for a specific date
+export async function getEpaperPagesByDate(
+  date: string,
+  publicationName?: string,
+): Promise<EpaperPage[]> {
+  try {
+    const response = await api.get(`/web/epapers/pages/${date}`, {
+      params: publicationName ? { publicationName } : undefined,
+    });
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Error fetching e-paper pages by date:", error);
+    throw error;
+  }
+}
+
+// Get all publication names
+export async function getEpaperPublications(): Promise<string[]> {
+  try {
+    const response = await api.get("/web/epapers/publications");
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Error fetching e-paper publications:", error);
     throw error;
   }
 }
