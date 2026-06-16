@@ -107,7 +107,7 @@ export default async function ArticleSection() {
   });
 
   return (
-    <section className="py-4">
+    <section className="!p-0">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
         {/* Left Sidebar - Moves to 2nd position on mobile, resets on desktop */}
         <div className="col-span-12 md:col-span-3 md:pr-4 order-2 md:order-1">
@@ -119,7 +119,7 @@ export default async function ArticleSection() {
         {/* Center Main Column - Jumps to the top on mobile, sits 2nd on desktop */}
         <div className="col-span-12 md:col-span-6 md:px-4 md:border-x-2 md:border-gray-300 order-1 md:order-2">
           {articles[0] && (
-            <div className="pb-4 border-b border-gray-300">
+            <div className=" border-b border-gray-300">
               <FeaturedNewsCard article={exclusiveArticles[0]} />
             </div>
           )}
