@@ -2,17 +2,18 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
-import { SAMPLE_PAGES } from "./PaperSlider";
+import type { EpaperViewPage } from "./PaperSlider";
 
 interface MainPageProps {
+  pages: EpaperViewPage[];
   activeIndex: number;
 }
 
 // Zoom steps the user can cycle through
 const ZOOM_LEVELS = [75, 100, 125, 150, 200];
 
-const MainPage: React.FC<MainPageProps> = ({ activeIndex }) => {
-  const currentPage = SAMPLE_PAGES[activeIndex];
+const MainPage: React.FC<MainPageProps> = ({ pages, activeIndex }) => {
+  const currentPage = pages[activeIndex];
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [zoomIndex, setZoomIndex] = useState(1); // default = 100%
