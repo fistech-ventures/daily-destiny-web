@@ -455,7 +455,8 @@ export async function getEpapers(query?: {
   date?: string;
 }): Promise<{ data: EpaperPage[]; meta: any }> {
   try {
-    const response = await api.get("/web/epapers", { params: query });
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epapers`, { params: query });
     return {
       data: response.data?.data || [],
       meta: response.data?.meta || {},
@@ -469,7 +470,8 @@ export async function getEpapers(query?: {
 // Get a single e-paper page by ID
 export async function getEpaperById(id: string): Promise<EpaperPage | null> {
   try {
-    const response = await api.get(`/web/epapers/${id}`);
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epapers/${id}`);
     return response.data?.data || null;
   } catch (error) {
     console.error("Error fetching e-paper by id:", error);
@@ -484,7 +486,8 @@ export async function getEpapersByDateRange(query: {
   publicationName?: string;
 }): Promise<EpaperPage[]> {
   try {
-    const response = await api.get("/web/epapers/date-range", {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epapers/date-range`, {
       params: query,
     });
     return response.data?.data || [];
@@ -500,7 +503,8 @@ export async function getEpaperDates(
   publicationName?: string,
 ): Promise<string[]> {
   try {
-    const response = await api.get("/web/epapers/dates", {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epapers/dates`, {
       params: publicationName ? { publicationName } : undefined,
     });
     return response.data?.data || [];
@@ -516,7 +520,8 @@ export async function getEpaperPagesByDate(
   publicationName?: string,
 ): Promise<EpaperPage[]> {
   try {
-    const response = await api.get(`/web/epapers/pages/${date}`, {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epapers/pages/${date}`, {
       params: publicationName ? { publicationName } : undefined,
     });
     return response.data?.data || [];
@@ -529,7 +534,8 @@ export async function getEpaperPagesByDate(
 // Get all publication names
 export async function getEpaperPublications(): Promise<string[]> {
   try {
-    const response = await api.get("/web/epapers/publications");
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_UTL;
+    const response = await api.get(`${locationBaseUrl}/web/epapers/publications`);
     return response.data?.data || [];
   } catch (error) {
     console.error("Error fetching e-paper publications:", error);
