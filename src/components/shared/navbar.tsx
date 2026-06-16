@@ -389,13 +389,13 @@ export function Navbar({
                 {/* ── Full-screen mega menu ── */}
                 <SheetContent
                   side="top"
-                  className="w-full h-screen max-h-screen p-0 overflow-y-auto bg-white"
+                  className="w-full h-screen max-h-screen px-0 py-6 overflow-y-auto bg-white"
                 >
                   {/* Mega menu header */}
-                  <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                  <div className="flex items-center justify-between px-6 py-0 border-b border-gray-200">
                     <Link href="/" onClick={() => setIsSheetOpen(false)}>
                       <img
-                        src="/images/logo.png"
+                        src="/images/footerlogo.png"
                         alt="Logo"
                         className="h-10 w-auto object-contain"
                       />
