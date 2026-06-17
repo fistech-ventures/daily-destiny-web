@@ -1,13 +1,7 @@
 import { generateHomeMetadata } from "@/lib/metadata";
 import { SchemaGenerator } from "@/lib/schema";
-import localFont from "next/font/local"; // 1. Swapped from next/font/google
 import "./global.css";
-
-// 2. Configure Siyam Rupali locally
-const siyamRupali = localFont({
-  src: "./fonts/SiyamRupali.woff2",
-  variable: "--font-siyam-rupali", // Clear, semantic CSS variable name
-});
+import { solaimanLipi } from "@/fonts";
 
 import { getGlobalConfigs } from "@/lib/api";
 import { GlobalConfig } from "@/lib/types";
@@ -45,10 +39,9 @@ export default async function RootLayout({
   });
 
   return (
-    <html lang="bn" className={siyamRupali.variable} suppressHydrationWarning>
+    <html lang="bn" className={solaimanLipi.variable} suppressHydrationWarning>
       <body
-        /* 3. Applied the new local font className here */
-        className={`${siyamRupali.className} antialiased overflow-x-hidden`}
+        className={`${solaimanLipi.className} antialiased overflow-x-hidden`}
       >
         <script
           id="organization-ld-json"
