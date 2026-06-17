@@ -7,14 +7,11 @@ import {
   Menu,
   X,
   Newspaper,
-  Globe,
-  User,
-  Users,
   Facebook,
   Youtube,
   Instagram,
   Linkedin,
-  MessageCircle,
+  Users,
   MoreHorizontal,
 } from "lucide-react";
 import {
