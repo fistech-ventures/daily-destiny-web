@@ -8,6 +8,7 @@ import {
   getAllcategories,
   getArticles,
   getVideos,
+  getMarketPrice,
 } from "@/lib/api";
 import { Article } from "@/lib/types";
 
@@ -49,6 +50,14 @@ export default async function LocaleLayout({
     console.error("Failed to fetch articles for layout:", error);
   }
 
+  let marketPrices = [];
+  try {
+    const res = await getMarketPrice({ page: 1, limit: 10 });
+    marketPrices = res?.data || [];
+  } catch (error) {
+    console.error("Failed to fetch market prices for layout:", error);
+  }
+
   const videoAticles = await getVideos();
 
   const headlines = articles.map((article) => ({
@@ -63,6 +72,7 @@ export default async function LocaleLayout({
         categories={categories}
         headlines={headlines}
         videos={videoAticles.data.slice(0, 3)}
+        marketPrices={marketPrices}
       >
         {children}
         <Toaster position="top-center" duration={1000} />

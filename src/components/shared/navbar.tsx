@@ -38,17 +38,20 @@ export function Navbar({
   categories,
   videos,
   headlines = [],
+  marketPrices: initialMarketPrices = [],
 }: {
   categories: Category[];
   videos: VideoArticle[];
   headlines?: { title: string; code: string; category: string }[];
+  marketPrices?: MarketPrice[];
 }) {
   const tSearch = useTranslations("search");
 
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
-  const [marketPrices, setMarketPrices] = React.useState<MarketPrice[]>([]);
+  const [marketPrices, setMarketPrices] = React.useState<MarketPrice[]>(initialMarketPrices);
 
   React.useEffect(() => {
+    if (initialMarketPrices && initialMarketPrices.length > 0) return;
     async function loadPrices() {
       try {
         const response = await getMarketPrice({ page: 1, limit: 10 });
@@ -59,7 +62,7 @@ export function Navbar({
       }
     }
     loadPrices();
-  }, []);
+  }, [initialMarketPrices]);
   const [isSheetOpen, setIsSheetOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const router = useRouter();
