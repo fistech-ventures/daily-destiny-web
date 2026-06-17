@@ -19,7 +19,6 @@ export default function MarketPriceListClient({
     return getMarketPrice({ page, limit: initialMeta?.limit || 24 });
   };
 
-console.log(initialData);
 
   return (
     <PaginatedList<MarketPrice>

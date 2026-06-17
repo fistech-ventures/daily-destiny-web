@@ -44,7 +44,7 @@ export default function ShareMarket() {
   const tickerData = [...stocks, ...stocks];
 
   return (
-    <div className=" w-full overflow-hidden py-2 lg:py-6">
+    <div className=" w-full overflow-hidden  pb-2 lg:pb-4">
       <div className="relative flex h-14 w-full items-center overflow-hidden   border-y bg-white shadow-sm">
         <div className="z-20 flex h-full items-center whitespace-nowrap bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-[4px_0px_10px_rgba(0,0,0,0.1)]">
           {tShare("title")}

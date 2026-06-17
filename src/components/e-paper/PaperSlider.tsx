@@ -1,13 +1,9 @@
-
-
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import MainPage from "./MainPage";
-// 👉 Adjust this import to wherever api.ts actually lives in your project
-// (e.g. "@/lib/api" or "@/services/api") if it's not at this path.
 import { EpaperPage } from "@/lib/api";
 import { formatBengaliDate, toBengaliNumber } from "./bengali-utils";
 
@@ -27,7 +23,7 @@ function mapToViewPages(pages: EpaperPage[]): EpaperViewPage[] {
       id: p.id,
       pageNumber: toBengaliNumber(p.pageNumber),
       section: p.title || `পাতা ${toBengaliNumber(p.pageNumber)}`,
-      thumbnail: p.thumbnailUrl,
+      thumbnail: p.thumbnailUrl || p.imageUrl,
       fullImage: p.imageUrl,
     }));
 }
