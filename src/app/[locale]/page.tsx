@@ -94,7 +94,6 @@ export default async function Home({
     getVideos({ page: 1, limit: 5 }),
   ]);
 
-  const sliderVideos = sliderResponse?.data || [];
   const galleryVideos = galleryResponse?.data || [];
   const galleryMeta = galleryResponse?.meta || {
     total: 0,

@@ -1,5 +1,5 @@
 import React from "react";
-import { getVideos, getImages } from "@/lib/api";
+import { getVideos } from "@/lib/api";
 import VideoList from "@/components/video/video-list";
 import { getTranslations } from "next-intl/server";
 import { generateHomeMetadata } from "@/lib/metadata";
