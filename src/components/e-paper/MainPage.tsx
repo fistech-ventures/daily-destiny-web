@@ -19,19 +19,35 @@ const MainPage: React.FC<MainPageProps> = ({ pages, activeIndex }) => {
   const [zoomIndex, setZoomIndex] = useState(1); // default = 100%
   const prevIndexRef = useRef(activeIndex);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
-  // Reset state on page change
+  // Reset state and handle cached / instantly loaded images
   useEffect(() => {
     if (prevIndexRef.current !== activeIndex) {
       prevIndexRef.current = activeIndex;
-      setLoaded(false);
-      setError(false);
       // Scroll back to top-left on page change
       if (scrollContainerRef.current) {
         scrollContainerRef.current.scrollTo({ top: 0, left: 0 });
       }
     }
-  }, [activeIndex]);
+
+    if (imageRef.current) {
+      if (imageRef.current.complete) {
+        if (imageRef.current.naturalWidth === 0) {
+          setError(true);
+        } else {
+          setError(false);
+        }
+        setLoaded(true);
+      } else {
+        setLoaded(false);
+        setError(false);
+      }
+    } else {
+      setLoaded(false);
+      setError(false);
+    }
+  }, [activeIndex, currentPage?.fullImage]);
 
   if (!currentPage) return null;
 
@@ -143,6 +159,7 @@ const MainPage: React.FC<MainPageProps> = ({ pages, activeIndex }) => {
             className="bg-white shadow-xl transition-[width] duration-200"
           >
             <img
+              ref={imageRef}
               key={currentPage.fullImage}
               src={currentPage.fullImage}
               alt={`পৃষ্ঠা ${currentPage.pageNumber}`}
@@ -152,7 +169,10 @@ const MainPage: React.FC<MainPageProps> = ({ pages, activeIndex }) => {
               loading="eager"
               decoding="async"
               draggable={false}
-              onLoad={() => setLoaded(true)}
+              onLoad={() => {
+                setLoaded(true);
+                setError(false);
+              }}
               onError={() => {
                 setLoaded(true);
                 setError(true);
