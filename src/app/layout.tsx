@@ -1,7 +1,14 @@
 import { generateHomeMetadata } from "@/lib/metadata";
 import { SchemaGenerator } from "@/lib/schema";
 import "./global.css";
-import { solaimanLipi } from "@/fonts";
+// import { solaimanLipi } from "@/fonts";
+import { Noto_Serif_Bengali } from "next/font/google";
+
+const poppins = Noto_Serif_Bengali({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
+});
 
 import { getGlobalConfigs } from "@/lib/api";
 import { GlobalConfig } from "@/lib/types";
@@ -28,9 +35,9 @@ export default async function RootLayout({
     name: siteName as string,
     url: siteUrl as string,
     logo: globalConfigs?.identity?.logo,
-    sameAs: Object.values(globalConfigs?.identity?.socialUrls || {}).filter(
+    sameAs: (Object.values(globalConfigs?.identity?.socialUrls || {}).filter(
       Boolean,
-    ),
+    ) as string[]),
   });
   const websiteSchema = SchemaGenerator.website({
     name: siteName as string,
@@ -39,9 +46,13 @@ export default async function RootLayout({
   });
 
   return (
-    <html lang="bn" className={solaimanLipi.variable} suppressHydrationWarning>
+    // <html lang="bn" className={solaimanLipi.variable} suppressHydrationWarning>
+    //   <body
+    //     className={`${solaimanLipi.className} antialiased overflow-x-hidden`}
+    //   >
+    <html suppressHydrationWarning>
       <body
-        className={`${solaimanLipi.className} antialiased overflow-x-hidden`}
+        className={`${poppins.className} antialiased overflow-x-hidden`}
       >
         <script
           id="organization-ld-json"
