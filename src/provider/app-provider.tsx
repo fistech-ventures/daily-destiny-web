@@ -6,7 +6,7 @@ import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import { MobileBottomNav } from "@/components/shared/mobile-bottom-nav";
 import { usePathname } from "next/navigation";
-import { Category } from "@/lib/types";
+import { Category, MarketPrice } from "@/lib/types";
 import Headline from "@/components/shared/headline";
 import { VideoArticle } from "@/lib/api";
 import ShareMarket from "@/components/shared/share-market";
@@ -16,6 +16,7 @@ interface AppProviderProps {
   categories: Category[];
   headlines: { title: string; code: string; category: string }[];
   videos: VideoArticle[];
+  marketPrices?: MarketPrice[];
 }
 
 export default function AppProvider({
@@ -23,6 +24,7 @@ export default function AppProvider({
   categories,
   headlines,
   videos,
+  marketPrices = [],
 }: AppProviderProps) {
   const queryClient = useMemo(
     () =>
@@ -50,6 +52,7 @@ export default function AppProvider({
           categories={categories} 
           videos={videos} 
           headlines={headlines}
+          marketPrices={marketPrices}
         />
         <ShareMarket />
 
