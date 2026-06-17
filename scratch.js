@@ -18,11 +18,5 @@ while ((match = scriptRegex.exec(html)) !== null) {
   const asyncMatch = fullTag.match(/\basync\b/);
   const deferMatch = fullTag.match(/\bdefer\b/);
   
-  console.log({
-    fullTag,
-    innerContent,
-    src: srcMatch ? srcMatch[1] : null,
-    async: !!asyncMatch,
-    defer: !!deferMatch
-  });
+
 }

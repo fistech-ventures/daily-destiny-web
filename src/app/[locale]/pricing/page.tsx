@@ -15,7 +15,6 @@ export async function generateMetadata({
     locale,
   });
 
-  console.log(getMarketPrice);
 }
 
 export default async function PricingPage() {
