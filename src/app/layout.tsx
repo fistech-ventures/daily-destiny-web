@@ -1,12 +1,13 @@
 import { generateHomeMetadata } from "@/lib/metadata";
 import { SchemaGenerator } from "@/lib/schema";
-import localFont from "next/font/local"; // 1. Swapped from next/font/google
 import "./global.css";
+// import { solaimanLipi } from "@/fonts";
+import { Noto_Serif_Bengali } from "next/font/google";
 
-// 2. Configure Siyam Rupali locally
-const siyamRupali = localFont({
-  src: "./fonts/SiyamRupali.woff2",
-  variable: "--font-siyam-rupali", // Clear, semantic CSS variable name
+const poppins = Noto_Serif_Bengali({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
 });
 
 import { getGlobalConfigs } from "@/lib/api";
@@ -34,9 +35,9 @@ export default async function RootLayout({
     name: siteName as string,
     url: siteUrl as string,
     logo: globalConfigs?.identity?.logo,
-    sameAs: Object.values(globalConfigs?.identity?.socialUrls || {}).filter(
+    sameAs: (Object.values(globalConfigs?.identity?.socialUrls || {}).filter(
       Boolean,
-    ),
+    ) as string[]),
   });
   const websiteSchema = SchemaGenerator.website({
     name: siteName as string,
@@ -45,10 +46,13 @@ export default async function RootLayout({
   });
 
   return (
-    <html lang="bn" className={siyamRupali.variable} suppressHydrationWarning>
+    // <html lang="bn" className={solaimanLipi.variable} suppressHydrationWarning>
+    //   <body
+    //     className={`${solaimanLipi.className} antialiased overflow-x-hidden`}
+    //   >
+    <html suppressHydrationWarning>
       <body
-        /* 3. Applied the new local font className here */
-        className={`${siyamRupali.className} antialiased overflow-x-hidden`}
+        className={`${poppins.className} antialiased overflow-x-hidden`}
       >
         <script
           id="organization-ld-json"
