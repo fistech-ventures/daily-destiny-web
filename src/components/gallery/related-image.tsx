@@ -17,7 +17,7 @@ export default function ImageCard({ item }: IProps) {
   return (
     <Link
       href={`/gallery/${item.code}`}
-      className="group block cursor-pointer overflow-hidden rounded-2xl bg-[#F8F9FA] p-3 transition-all hover:shadow-md"
+      className="group block cursor-pointer overflow-hidden rounded-2xl bg-brand-light p-3 transition-all hover:shadow-md"
     >
       {/* Image Container */}
       <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl">
@@ -34,7 +34,7 @@ export default function ImageCard({ item }: IProps) {
         {/* <p className="text-sm font-medium text-[#B37B2F]">
           {formatRelativeTime(item.date)}
         </p> */}
-        <h3 className="line-clamp-2 text-xs md:text-base font-semibold text-[#1A1A1A] transition-colors group-hover:text-blue-600">
+        <h3 className="line-clamp-2 text-xs md:text-base font-semibold text-[#1A1A1A] transition-colors group-hover:text-brand">
           {item.title}
         </h3>
       </div>

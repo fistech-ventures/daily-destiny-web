@@ -44,10 +44,10 @@ const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
   return (
     <div className="w-75 mx-auto p-6 bg-white rounded-xl shadow-sm">
       <div className="mb-6">
-        <h2 className="text-[#1a66ca] text-2xl font-bold tracking-wide mb-1">
+          <h2 className="text-brand text-2xl font-bold tracking-wide mb-1">
           আমার এলাকার খবর
         </h2>
-        <div className="w-16 h-1.5 bg-[#3b82f6] rounded-full"></div>
+          <div className="w-16 h-1.5 bg-brand rounded-full"></div>
       </div>
 
       <form onSubmit={handleSearch} className="space-y-5">
@@ -95,11 +95,11 @@ const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
           </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={!selectedDivision}
-          className="w-full bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 text-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        >
+          <button
+            type="submit"
+            disabled={!selectedDivision}
+            className="w-full bg-brand hover-bg-brand text-white font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 text-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
           <Search size={22} strokeWidth={2} />
           <span>খুঁজুন</span>
         </button>

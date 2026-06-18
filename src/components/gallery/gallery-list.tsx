@@ -95,7 +95,7 @@ export default function GalleryList({
                 onClick={handleLoadMore}
                 disabled={loading}
                 variant="outline"
-                className="group px-8 rounded-full bg-[#fde190] hover:bg-[#fbd360] border-none text-gray-900 font-bold text-lg transition-all active:scale-95 shadow-md"
+                className="group px-8 rounded-full bg-brand text-white hover-bg-brand border-none font-bold text-lg transition-all active:scale-95 shadow-md"
               >
                 {loading ? (
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />

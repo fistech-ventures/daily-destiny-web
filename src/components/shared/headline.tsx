@@ -50,7 +50,7 @@ export default function Headline({ headlines }: { headlines: { title: string, co
 
   return (
     <div className="no-print sticky top-0 z-50 w-full bg-background flex items-center overflow-hidden h-8 lg:h-10 border-b border-primary">
-      <div className="z-10 flex bg-primary px-2 lg:px-10 h-full items-center gap-2 shrink-0 shadow-[4px_0_10px_rgba(0,0,0,0.1)]">
+      <div className="z-10 flex bg-[#000058] px-2 lg:px-10 h-full items-center gap-2 shrink-0 shadow-[4px_0_10px_rgba(0,0,0,0.1)]">
         <h2 className="text-primary-foreground text-sm lg:text-base font-bold uppercase tracking-wider">
           {tCommon("headline")}
         </h2>

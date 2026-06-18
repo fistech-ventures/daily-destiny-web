@@ -127,7 +127,7 @@ export default function VideoSlider({
           <button
             onClick={() => handleStepScroll("left")}
             disabled={activePage === 0}
-            className="flex items-center justify-center h-8 w-8 rounded border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-white active:scale-95 transition-all"
+            className="flex items-center justify-center h-8 w-8 rounded border border-gray-200 bg-white text-gray-700 shadow-sm hover-bg-brand disabled:opacity-40 disabled:hover:bg-white active:scale-95 transition-all"
             aria-label="Previous Page"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -135,7 +135,7 @@ export default function VideoSlider({
           <button
             onClick={() => handleStepScroll("right")}
             disabled={activePage === totalPages - 1}
-            className="flex items-center justify-center h-8 w-8 rounded border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-white active:scale-95 transition-all"
+            className="flex items-center justify-center h-8 w-8 rounded border border-gray-200 bg-white text-gray-700 shadow-sm hover-bg-brand disabled:opacity-40 disabled:hover:bg-white active:scale-95 transition-all"
             aria-label="Next Page"
           >
             <ChevronRight className="h-4 w-4" />
@@ -154,7 +154,7 @@ export default function VideoSlider({
           <Link
             key={video.id || video.slug}
             href={`/video/${video.code}`}
-            className="w-[260px] sm:w-[280px] md:w-[300px] lg:w-[calc((100%-40px)/3)] shrink-0 snap-start bg-[#eef6fc] p-3 rounded-md transition-shadow hover:shadow-sm block"
+            className="w-[260px] sm:w-[280px] md:w-[300px] lg:w-[calc((100%-40px)/3)] shrink-0 snap-start bg-brand-light p-3 rounded-md transition-shadow hover:shadow-sm block"
           >
             <VideoCard video={video} variant="default" />
           </Link>
@@ -175,7 +175,7 @@ export default function VideoSlider({
                 className={`block h-2 w-2 rounded-full transition-all duration-300 ${
                   idx === activePage
                     ? "bg-gray-800 scale-125 shadow-sm"
-                    : "bg-gray-300 hover:bg-gray-400"
+                    : "bg-gray-300 hover-bg-brand"
                 }`}
               />
             </button>
