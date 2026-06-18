@@ -59,7 +59,7 @@ export default async function SingleCategoryNewsGrid({
                         {displayTitle}
                     </h2>
 
-                    <ChevronRight className="h-5 w-5 text-red-600 mt-0.5 transition-transform group-hover:translate-x-0.5" />
+                    <ChevronRight className="h-5 w-5 text-[#000058] mt-0.5 transition-transform group-hover:translate-x-0.5" />
                 </Link>
             </div>
 
@@ -82,7 +82,7 @@ export default async function SingleCategoryNewsGrid({
                                 />
                             </div>
 
-                            <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors">
+                            <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#000058] transition-colors">
                                 {featuredArticle.title}
                             </h3>
 
@@ -96,7 +96,7 @@ export default async function SingleCategoryNewsGrid({
                         <div className="absolute bottom-4 right-4">
                             <Link
                                 href={`/news/${featuredArticle.category.slug || featuredArticle.category.slugBn}/${featuredArticle.code}`}
-                                className="inline-flex items-center justify-center bg-primary hover:bg-primary/80 text-white text-xs font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
+                                className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white text-xs font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
                             >
                                 বিস্তারিত
                             </Link>
@@ -122,7 +122,7 @@ export default async function SingleCategoryNewsGrid({
                             </div>
 
                             <div className="flex-1 min-w-0">
-                                <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-primary transition-colors line-clamp-2 sm:line-clamp-3">
+                                <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
                                     {article.title}
                                 </h4>
 
@@ -133,7 +133,7 @@ export default async function SingleCategoryNewsGrid({
                                 )}
 
                                 <div className="mt-2.5">
-                                    <span className="inline-flex items-center justify-center bg-primary text-white text-[11px] font-medium px-3 py-1 rounded">
+                                    <span className="inline-flex items-center justify-center bg-[#000058] text-white text-[11px] font-medium px-3 py-1 rounded">
                                         বিস্তারিত
                                     </span>
                                 </div>
@@ -160,7 +160,7 @@ export default async function SingleCategoryNewsGrid({
                             </div>
 
                             <div className="flex-1 min-w-0">
-                                <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-primary transition-colors line-clamp-2 sm:line-clamp-3">
+                                <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
                                     {article.title}
                                 </h4>
 
@@ -171,7 +171,7 @@ export default async function SingleCategoryNewsGrid({
                                 )}
 
                                 <div className="mt-2.5">
-                                    <span className="inline-flex items-center justify-center bg-primary text-white text-[11px] font-medium px-3 py-1 rounded">
+                                    <span className="inline-flex items-center justify-center bg-[#000058] text-white text-[11px] font-medium px-3 py-1 rounded">
                                         বিস্তারিত
                                     </span>
                                 </div>

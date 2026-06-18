@@ -289,8 +289,8 @@ export function Navbar({
                   className={cn(
                     "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                     strippedPathname === `/recent`
-                      ? "border-red-600 text-red-600"
-                      : "border-transparent text-gray-700 hover:text-red-600",
+                      ? "border-red-600 text-primary"
+                      : "border-transparent text-gray-700 hover:text-primary/80",
                   )}
                 >
                   সর্বশেষ
@@ -323,8 +323,8 @@ export function Navbar({
                   className={cn(
                     "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                     strippedPathname === `/video`
-                      ? "border-red-600 text-red-600"
-                      : "border-transparent text-gray-700 hover:text-red-600",
+                      ? "border-primary text-text-primary/80"
+                      : "border-transparent text-gray-700 hover:text-primary/80",
                   )}
                 >
                   ভিডিও
@@ -343,7 +343,7 @@ export function Navbar({
                 {/* ই-পেপার */}
                 <Link
                   href="/e-paper"
-                  className="hidden sm:flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-red-600 transition-colors"
+                  className="hidden sm:flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-primary/80 transition-colors"
                 >
                   <Newspaper className="h-4 w-4" />
                   <span>ই-পেপার</span>
@@ -356,7 +356,7 @@ export function Navbar({
                   <SheetTitle className="sr-only">Menu</SheetTitle>
                   <SheetTrigger
                     aria-label="Open menu"
-                    className="flex items-center justify-center px-3 py-3 text-gray-700 hover:text-red-600 transition-colors"
+                    className="flex items-center justify-center px-3 py-3 text-gray-700 cursor-pointer hover:text-primary/80 transition-colors"
                   >
                     <Menu className="h-5 w-5" />
                   </SheetTrigger>
@@ -397,7 +397,7 @@ export function Navbar({
                               key={item.href}
                               href={item.href}
                               onClick={() => setIsSheetOpen(false)}
-                              className="text-[15px] font-bold text-gray-900 hover:text-red-600 transition-colors"
+                              className="text-[15px] font-bold text-gray-900 hover:text-primary transition-colors"
                             >
                               {item.label}
                             </Link>

@@ -206,9 +206,9 @@ const PaperSlider = ({ pages, currentDate, availableDates }: PaperSliderProps) =
           disabled={isFirst}
           aria-label="আগের পৃষ্ঠা"
           className={`absolute left-3 md:left-5 top-1/2 -translate-y-1/2 z-20
-            p-2.5 md:p-3 rounded-full bg-red-600 text-white shadow-lg
+            p-2.5 md:p-3 rounded-full bg-brand text-white shadow-lg
             transition-all duration-200 will-change-transform cursor-pointer
-            ${isFirst ? "opacity-0 pointer-events-none" : "hover:bg-red-700 active:scale-95"}`}
+            ${isFirst ? "opacity-0 pointer-events-none" : "hover-bg-brand active:scale-95"}`}
         >
           <ChevronLeft size={22} />
         </button>
@@ -224,9 +224,9 @@ const PaperSlider = ({ pages, currentDate, availableDates }: PaperSliderProps) =
           disabled={isLast}
           aria-label="পরের পৃষ্ঠা"
           className={`absolute right-3 md:right-5 top-1/2 -translate-y-1/2 z-20
-            p-2.5 md:p-3 rounded-full bg-red-600 text-white shadow-lg
+            p-2.5 md:p-3 rounded-full bg-brand text-white shadow-lg
             transition-all duration-200 will-change-transform cursor-pointer
-            ${isLast ? "opacity-0 pointer-events-none" : "hover:bg-red-700 active:scale-95"}`}
+            ${isLast ? "opacity-0 pointer-events-none" : "hover-bg-brand active:scale-95"}`}
         >
           <ChevronRight size={22} />
         </button>

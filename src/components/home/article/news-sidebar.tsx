@@ -40,21 +40,21 @@ export default async function NewsSidebar() {
         <div className="space-y-2">
           <Link
             href="/video"
-            className="flex items-center justify-between p-2 hover:bg-accent rounded transition-colors"
+            className="flex items-center justify-between p-2 hover-bg-brand rounded transition-colors"
           >
             <span className="text-sm font-medium">ভিডিও</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href="/gallery"
-            className="flex items-center justify-between p-2 hover:bg-accent rounded transition-colors"
+            className="flex items-center justify-between p-2 hover-bg-brand rounded transition-colors"
           >
             <span className="text-sm font-medium">গ্যালারি</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href="/pricing"
-            className="flex items-center justify-between p-2 hover:bg-accent rounded transition-colors"
+            className="flex items-center justify-between p-2 hover-bg-brand rounded transition-colors"
           >
             <span className="text-sm font-medium">বাজার দর</span>
             <ArrowRight className="h-4 w-4" />
@@ -72,7 +72,7 @@ export default async function NewsSidebar() {
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 bg-blue-600 text-white text-center py-2 rounded text-sm font-medium hover:bg-blue-700 transition-colors"
+            className="flex-1 bg-brand text-white text-center py-2 rounded text-sm font-medium hover-bg-brand transition-colors"
           >
             Facebook
           </a>
@@ -80,7 +80,7 @@ export default async function NewsSidebar() {
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 bg-sky-500 text-white text-center py-2 rounded text-sm font-medium hover:bg-sky-600 transition-colors"
+            className="flex-1 bg-brand text-white text-center py-2 rounded text-sm font-medium hover-bg-brand transition-colors"
           >
             Twitter
           </a>
@@ -88,7 +88,7 @@ export default async function NewsSidebar() {
             href="https://youtube.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 bg-red-600 text-white text-center py-2 rounded text-sm font-medium hover:bg-red-700 transition-colors"
+            className="flex-1 bg-brand text-white text-center py-2 rounded text-sm font-medium hover-bg-brand transition-colors"
           >
             YouTube
           </a>

@@ -52,7 +52,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
       {/* Facebook - Light Blue Bg */}
       <button
         onClick={() => openPopup(shareLinks.facebook)}
-        className="p-2 lg:p-3 rounded-full bg-[#E7F0FF] text-[#1877F2] hover:bg-blue-200 transition-all cursor-pointer"
+        className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on Facebook"
       >
         <Facebook size={20} fill="currentColor" stroke="none" />
@@ -61,7 +61,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
       {/* X (Twitter) - Light Gray Bg */}
       <button
         onClick={() => openPopup(shareLinks.x)}
-        className="p-2 lg:p-3 rounded-full bg-[#E7E7E8] text-black hover:bg-gray-300 transition-all cursor-pointer"
+        className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on X"
       >
         <XIcon size={16} />
@@ -70,7 +70,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
       {/* LinkedIn - Specific Blue Bg */}
       <button
         onClick={() => openPopup(shareLinks.linkedin)}
-        className="p-2 lg:p-3 rounded-full bg-[#E5EEFF] text-[#0077B5] hover:bg-blue-200 transition-all cursor-pointer"
+        className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on LinkedIn"
       >
         <Linkedin size={20} fill="currentColor" stroke="none" />
@@ -79,7 +79,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
       {/* WhatsApp - Light Green Bg */}
       <button
         onClick={() => openPopup(shareLinks.whatsapp)}
-        className="p-2 lg:p-3 rounded-full bg-[#E7F9ED] text-[#24b459] hover:bg-green-200 transition-all cursor-pointer"
+        className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on WhatsApp"
       >
         <MessageCircleMore size={20} />
@@ -88,7 +88,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
       {/* Print - Classic Gray Bg */}
       <button
         onClick={() => window.print()}
-        className="p-2 lg:p-3 rounded-full bg-[#EBECEF] text-[#374151] hover:bg-gray-300 transition-all cursor-pointer"
+        className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Print Article"
       >
         <Printer size={20} />
@@ -97,7 +97,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
       {/* Copy Link - White/Gray Bg */}
       <button
         onClick={copyToClipboard}
-        className="p-2 lg:p-3 rounded-full bg-[#F3F4F6] text-[#4B5563] hover:bg-gray-200 transition-all cursor-pointer"
+        className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Copy Link"
       >
         <LinkIcon size={20} />

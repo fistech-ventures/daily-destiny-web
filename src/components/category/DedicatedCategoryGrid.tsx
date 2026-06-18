@@ -95,7 +95,7 @@ export default function DedicatedCategoryGrid({
               <div className="w-full flex justify-center mt-6 pt-2">
                 <Link
                   href={`/${mainCategorySlug}/${subCat.slug}`}
-                  className="inline-flex items-center justify-center bg-[#0066da] hover:bg-[#0052b4] text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
+                  className="inline-flex items-center justify-center bg-brand hover-bg-brand text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
                 >
                   আরও
                 </Link>
