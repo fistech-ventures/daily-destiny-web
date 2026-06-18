@@ -67,7 +67,7 @@ const MainPage: React.FC<MainPageProps> = ({ pages, activeIndex }) => {
           onClick={() => setZoomIndex(i => Math.max(i - 1, 0))}
           disabled={!canZoomOut}
           title="জুম কমান"
-          className="p-1.5 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 rounded-full hover-bg-brand disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ZoomOut size={16} className="text-gray-700" />
         </button>
@@ -82,7 +82,7 @@ const MainPage: React.FC<MainPageProps> = ({ pages, activeIndex }) => {
           }
           disabled={!canZoomIn}
           title="জুম বাড়ান"
-          className="p-1.5 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 rounded-full hover-bg-brand disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ZoomIn size={16} className="text-gray-700" />
         </button>
@@ -92,7 +92,7 @@ const MainPage: React.FC<MainPageProps> = ({ pages, activeIndex }) => {
         <button
           onClick={() => setZoomIndex(1)}
           title="রিসেট"
-          className="p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+          className="p-1.5 rounded-full hover-bg-brand transition-colors"
         >
           <Maximize2 size={16} className="text-gray-700" />
         </button>

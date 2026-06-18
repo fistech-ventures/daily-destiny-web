@@ -28,10 +28,10 @@ export default function FourCategoryGrid({
       {/* 1. Main Global Section Header (Like "অন্যান্য" in the screenshot) */}
       <div className="flex items-center justify-between border-b border-gray-100 pb-2">
         <div className="flex items-center gap-1.5 group cursor-pointer">
-          <h2 className="text-xl font-bold text-gray-900 border-b-2 border-red-600 pb-2 -mb-[10px]">
+          <h2 className="text-xl font-bold text-gray-900 border-b-2 border-[#000058] pb-2 -mb-[10px]">
             {sectionTitle}
           </h2>
-          <ChevronRight className="h-5 w-5 text-red-600 mt-0.5 transition-transform group-hover:translate-x-0.5" />
+          <ChevronRight className="h-5 w-5 text-[#000058] mt-0.5 transition-transform group-hover:translate-x-0.5" />
         </div>
       </div>
 
@@ -84,7 +84,7 @@ export default function FourCategoryGrid({
               <div className="w-full flex justify-center mt-6 pt-2">
                 <Link
                   href={`/${cat.slug}`}
-                  className="inline-flex items-center justify-center bg-primary hover:bg-primary text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
+                  className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 !hover:text-white text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
                 >
                   আরও
                 </Link>
