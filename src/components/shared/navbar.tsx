@@ -5,8 +5,6 @@ import Link from "next/link";
 import {
   Menu,
   Newspaper,
-  MoreHorizontal,
-  X,
 } from "lucide-react";
 import {
   Sheet,
