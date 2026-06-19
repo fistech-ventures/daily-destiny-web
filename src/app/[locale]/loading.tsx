@@ -15,17 +15,18 @@ export default function Loading() {
             loading="eager"
           />
           {/* Circular Spinner around the logo */}
-          <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary border-l-primary animate-spin opacity-50"></div>
+          <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#000058] border-l-[#000058] animate-spin opacity-50"></div>
         </div>
-        
+
         {/* Loading Text / Bar */}
         <div className="w-48 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-primary rounded-full animate-[progress_1.5s_ease-in-out_infinite]"></div>
+          <div className="h-full bg-[#000058] rounded-full animate-[progress_1.5s_ease-in-out_infinite]"></div>
         </div>
       </div>
-      
+
       {/* Required keyframe animation for the progress bar */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes progress {
           0% {
             width: 0%;
