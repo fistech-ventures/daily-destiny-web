@@ -4,7 +4,7 @@ import FourCategoryGrid from "@/components/category/ThreeColumnCategoryFeatured"
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
 import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
-import { Category } from "@/lib/types";
+import { Category, Article } from "@/lib/types";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
 import { formatRelativeTime } from "@/utils/date-formatter";
 import SingleCategoryNewsGrid from "@/components/category/SingleCategoryNewsGrid";
@@ -89,10 +89,13 @@ export default async function Home({
   }
 
   // 👈 3. Fallback to normal standard homepage view when NO location parameters exist
-  const [sliderResponse, galleryResponse] = await Promise.all([
+  const [sliderResponse, galleryResponse, recentNewsResponse] = await Promise.all([
     getVideos({ page: 1, limit: 9 }),
     getVideos({ page: 1, limit: 5 }),
+    getArticles({ page: 1, limit: 4, status: "Published" }),
   ]);
+
+  const recentArticles: Article[] = recentNewsResponse?.data || [];
 
   const galleryVideos = galleryResponse?.data || [];
   const galleryMeta = galleryResponse?.meta || {
@@ -170,6 +173,98 @@ export default async function Home({
   return (
     <main className="max-w-7xl mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
       <MainLayout />
+
+      {/* Location Filter + Recent News Section */}
+      <section className="w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left: Location Filter (4 columns) */}
+          <div className="lg:col-span-4">
+            <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl p-5 lg:p-6 shadow-sm border border-blue-100 h-full">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center justify-center w-9 h-9 rounded-full bg-brand text-white shadow-sm shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">
+                    আপনার এলাকার খবর
+                  </h2>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    বিভাগ ও জেলা নির্বাচন করুন
+                  </p>
+                </div>
+              </div>
+              <LocationFilter />
+            </div>
+          </div>
+
+          {/* Right: Recent News (8 columns) */}
+          <div className="lg:col-span-8">
+            <div className="bg-white rounded-xl p-5 lg:p-6 shadow-sm border border-gray-100 h-full">
+              <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-6 bg-red-500 rounded-full"></div>
+                  <h3 className="text-lg font-bold text-gray-900">সর্বশেষ সংবাদ</h3>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {recentArticles.length > 0 ? (
+                  recentArticles.map((article: Article, idx: number) => (
+                    <a
+                      key={article.id || article.code || idx}
+                      href={`/news/${article.category?.slug || article.category?.slugBn || ""}/${article.code}`}
+                      className="group flex flex-col rounded-lg overflow-hidden border border-gray-100 hover:border-gray-200 bg-white shadow-xs hover:shadow-sm transition-all duration-200"
+                    >
+                      {/* Thumbnail */}
+                      {article.coverImage && (
+                        <div className="relative w-full h-36 sm:h-40 overflow-hidden bg-gray-100">
+                          <img
+                            src={article.coverImage}
+                            alt={article.title}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+
+                      {/* Content */}
+                      <div className="flex-1 p-3">
+                        <h4 className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2">
+                          {article.title}
+                        </h4>
+                        <div className="flex items-center gap-2 mt-2">
+                          {article.category?.titleBn && (
+                            <span className="text-[10px] font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
+                              {article.category.titleBn}
+                            </span>
+                          )}
+                          {article.date && (
+                            <span className="text-[10px] text-gray-400">
+                              {new Date(article.date).toLocaleDateString("bn-BD", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              })}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </a>
+                  ))
+                ) : (
+                  <div className="col-span-full py-10 text-center text-gray-400 text-sm">
+                    কোনো সংবাদ পাওয়া যায়নি
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <SingleCategoryNewsGrid slug="education" limit={7} />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
       <SingleCategoryNewsGrid slug="weather" limit={7} />
