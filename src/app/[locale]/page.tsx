@@ -37,7 +37,7 @@ interface GalleryApiItem {
 
 export default async function Home({
   params,
-  searchParams, 
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ locationId?: string }>;
@@ -52,7 +52,7 @@ export default async function Home({
     const response = await getArticles({
       locationId,
       limit: 10,
-      useLocationApi: true, 
+      useLocationApi: true,
     });
 
     const articlesList = response?.data || [];

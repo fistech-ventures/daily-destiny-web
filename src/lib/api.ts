@@ -534,7 +534,7 @@ export async function getEpaperPagesByDate(
 // Get all publication names
 export async function getEpaperPublications(): Promise<string[]> {
   try {
-    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_UTL;
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
     const response = await api.get(`${locationBaseUrl}/web/epapers/publications`);
     return response.data?.data || [];
   } catch (error) {

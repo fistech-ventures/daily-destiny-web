@@ -6,6 +6,7 @@ import {
 import { Category, ArticleQueryParams } from "@/lib/types";
 import { Metadata } from "next";
 import React from "react";
+import Link from "next/link";
 import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
 
@@ -20,7 +21,24 @@ export async function generateMetadata({
 
   try {
     const { data: categories } = await getAllcategories();
-    const category = categories.find((c: Category) => c.slug === decodedSlug);
+    let category = categories.find(
+      (c: Category) => c.slug === decodedSlug || c.slugBn === decodedSlug
+    );
+    let activeSubCategory: Category | undefined = undefined;
+
+    if (!category) {
+      for (const parent of categories) {
+        const sub = parent.subCategories?.find(
+          (s: Category) => s.slug === decodedSlug || s.slugBn === decodedSlug
+        );
+        if (sub) {
+          category = parent;
+          activeSubCategory = sub;
+          break;
+        }
+      }
+    }
+
     if (!category) {
       return generateFallbackMetadata({
         locale,
@@ -28,7 +46,7 @@ export async function generateMetadata({
         noIndex: true,
       });
     }
-    return generateCategoryMetadata(category, {
+    return generateCategoryMetadata(activeSubCategory || category, {
       locale,
       path: metadataPath,
     });
@@ -62,17 +80,31 @@ export default async function CategoryPage({
     locationId?: string;
   }>;
 }) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const decodedSlug = decodeURIComponent(slug);
 
   const { data: categories } = await getAllcategories();
 
-  const category = categories.find(
-    (category: Category) => category.slug === decodedSlug,
+  let category = categories.find(
+    (c: Category) => c.slug === decodedSlug || c.slugBn === decodedSlug,
   );
+  let resolvedSubCategoryId: string | undefined = undefined;
+
+  if (!category) {
+    for (const parent of categories) {
+      const sub = parent.subCategories?.find(
+        (s: Category) => s.slug === decodedSlug || s.slugBn === decodedSlug,
+      );
+      if (sub) {
+        category = parent;
+        resolvedSubCategoryId = sub.id;
+        break;
+      }
+    }
+  }
 
   const resolvedSearchParams = await searchParams;
-  const subCategoryId = resolvedSearchParams.subCategoryId;
+  const subCategoryId = resolvedSubCategoryId || resolvedSearchParams.subCategoryId;
   const locationId = resolvedSearchParams.locationId;
 
   // 2. Initialize the query configuration with strict typing instead of 'any'
@@ -95,21 +127,74 @@ export default async function CategoryPage({
   // 4. Request items passing down the safe object reference directly
   const response = await getArticles(apiQuery);
 
-  const subCategoryTitle = category?.subCategories?.find(
-    (subCategory: Category) => subCategory.id === subCategoryId,
-  )?.titleBn;
+  const isBn = locale === "bn";
+  const parentTitle = isBn ? category?.titleBn : category?.title;
 
-  const defaultHeading = subCategoryTitle || category?.titleBn;
-  const targetHeading = locationId ? "আমার এলাকার খবর" : defaultHeading;
+  const subCategoryObj = category?.subCategories?.find(
+    (subCategory: Category) => subCategory.id === subCategoryId,
+  );
+  const subTitle = subCategoryObj
+    ? (isBn ? subCategoryObj.titleBn : subCategoryObj.title)
+    : undefined;
+
+  const targetHeading = locationId
+    ? (isBn ? "আমার এলাকার খবর" : "My Area News")
+    : (subTitle || parentTitle || "");
 
   const articlesList = response?.data || [];
   const meta = response?.meta;
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h2 className="lg:text-2xl text-xl font-bold border-b pb-2 border-gray-100 text-[#1a66ca]">
-        {targetHeading}
-      </h2>
+      {/* Category header section */}
+      <div className="border-b border-gray-100 pb-3 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h1 className="lg:text-2xl text-xl font-bold text-[#1a66ca] flex items-center flex-wrap gap-2">
+          {locationId ? (
+            targetHeading
+          ) : parentTitle && subTitle ? (
+            <>
+              <Link href={`/${category?.slug}`} className="hover:underline">
+                {parentTitle}
+              </Link>
+              <span className="text-gray-400 font-normal">→</span>
+              <span className="text-gray-600">{subTitle}</span>
+            </>
+          ) : (
+            targetHeading
+          )}
+        </h1>
+
+        {category?.subCategories && category.subCategories.length > 0 && (
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link
+              href={`/${category.slug}`}
+              className={`px-3 py-1 text-sm font-semibold rounded-full transition-all duration-200 border ${
+                !subCategoryId
+                  ? "bg-[#1a66ca] text-white border-[#1a66ca]"
+                  : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100 hover:text-gray-900"
+              }`}
+            >
+              {isBn ? "সব" : "All"}
+            </Link>
+            {category.subCategories.map((sub: Category) => {
+              const isActive = sub.id === subCategoryId;
+              return (
+                <Link
+                  key={sub.id}
+                  href={`/${sub.slug}`}
+                  className={`px-3 py-1 text-sm font-semibold rounded-full transition-all duration-200 border ${
+                    isActive
+                      ? "bg-[#1a66ca] text-white border-[#1a66ca]"
+                      : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100 hover:text-gray-900"
+                  }`}
+                >
+                  {isBn ? sub.titleBn || sub.title : sub.title}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       <div className="mt-6 flex flex-col lg:flex-row gap-6 items-start">
         <div className="flex-1 w-full pr-2 border-r border-gray-100">

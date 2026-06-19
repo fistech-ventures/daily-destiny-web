@@ -46,8 +46,10 @@ export default function ShareMarket() {
   return (
     <div className=" w-full overflow-hidden  pb-2 lg:pb-4">
       <div className="relative flex h-14 w-full items-center overflow-hidden   border-y bg-white shadow-sm">
-        <div className="z-20 flex h-full items-center whitespace-nowrap bg-[#000058] px-4 text-sm font-semibold text-primary-foreground shadow-[4px_0px_10px_rgba(0,0,0,0.1)]">
+        <div className="z-20 flex h-full w-[100px] items-center whitespace-nowrap  p-0 py-0 text-sm font-semibold text-primary-foreground shadow-[4px_0px_10px_rgba(0,0,0,0.1)]">
+          <div className="h-1/2 bg-[#000058] p-4 self-end flex items-center justify-center">
           {tShare("title")}
+          </div>
         </div>
 
         <div className="flex flex-1 overflow-hidden">
