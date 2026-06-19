@@ -7,7 +7,7 @@ import { Footer } from "@/components/shared/footer";
 import { MobileBottomNav } from "@/components/shared/mobile-bottom-nav";
 import { usePathname } from "next/navigation";
 import { Category, MarketPrice } from "@/lib/types";
-import Headline from "@/components/shared/headline";
+
 import { VideoArticle } from "@/lib/api";
 import ShareMarket from "@/components/shared/share-market";
 

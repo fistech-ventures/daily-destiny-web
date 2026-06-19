@@ -3,7 +3,6 @@
 import * as React from "react";
 import Link from "next/link";
 import {
-  Search,
   Menu,
   X,
   Newspaper,
@@ -20,10 +19,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useTranslations } from "next-intl";
-import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Category, MarketPrice } from "@/lib/types";
 import { VideoArticle } from "@/lib/api";
 import { getMarketPrice } from "@/lib/api";
@@ -33,18 +30,14 @@ import MarketPriceWidget from "../market-price/market-price-ticker";
 
 export function Navbar({
   categories,
-  videos,
   headlines = [],
   marketPrices: initialMarketPrices = [],
 }: {
   categories: Category[];
-  videos: VideoArticle[];
+  videos?: VideoArticle[];
   headlines?: { title: string; code: string; category: string }[];
   marketPrices?: MarketPrice[];
 }) {
-  const tSearch = useTranslations("search");
-
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [marketPrices, setMarketPrices] =
     React.useState<MarketPrice[]>(initialMarketPrices);
 
@@ -65,10 +58,7 @@ export function Navbar({
     loadPrices();
   }, [initialMarketPrices]);
   const [isSheetOpen, setIsSheetOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const router = useRouter();
   const pathname = usePathname();
-  const isSearchPage = pathname.includes("/search");
 
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
   const [hideNavbar, setHideNavbar] = React.useState(false);
@@ -100,13 +90,7 @@ export function Navbar({
     pathname,
   );
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-      setIsSearchOpen(false);
-    }
-  };
+
 
   // Dropdown state for categories (used for touch devices and explicit open control)
   // Category IDs are strings (see src/lib/types.ts), so store string | null here.
@@ -384,7 +368,7 @@ export function Navbar({
                                 prev === category.id ? null : category.id,
                               );
                             }
-                          } catch (err) {
+                          } catch {
                             // ignore
                           }
                         }}
