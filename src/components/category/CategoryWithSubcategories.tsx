@@ -43,7 +43,7 @@ export default async function CategoryWithSubcategories({ slug, fallbackTitle }:
         return {
           id: sub.id,
           title: sub.titleBn || sub.title,
-          slug: `${parentCat.slug}/${sub.slug}`, // e.g., international/war
+          slug: sub.slug, // e.g., war (resolves to /[locale]/[slug])
           articles: res?.data || [],
         };
       })

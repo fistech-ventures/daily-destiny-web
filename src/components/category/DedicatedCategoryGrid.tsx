@@ -56,7 +56,7 @@ export default function DedicatedCategoryGrid({
               <div>
                 {/* Subcategory Header Title linking to compound route -> e.g., /international/war */}
                 <div className="flex items-start mb-4">
-                  <Link href={`/${mainCategorySlug}/${subCat.slug}`} className="inline-block group">
+                  <Link href={`/${subCat.slug}`} className="inline-block group">
                     <h3 className="text-base font-bold text-gray-800 border-b-2 border-red-700 pb-1 group-hover:text-red-700 transition-colors">
                       {subCat.titleBn || subCat.title}
                     </h3>
@@ -94,7 +94,7 @@ export default function DedicatedCategoryGrid({
               {/* Action Button locked uniformly to bottom edge */}
               <div className="w-full flex justify-center mt-6 pt-2">
                 <Link
-                  href={`/${mainCategorySlug}/${subCat.slug}`}
+                  href={`/${subCat.slug}`}
                   className="inline-flex items-center justify-center bg-brand hover-bg-brand text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
                 >
                   আরও
