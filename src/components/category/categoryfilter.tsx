@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import { getLocationTree } from "@/lib/api";
 import { Location } from "@/lib/types";
 
-export default function LocationFilter() {
+interface LocationFilterProps {
+  initialLocationId?: string;
+}
+
+export default function LocationFilter({ initialLocationId }: LocationFilterProps) {
   const router = useRouter(); 
 
   const [divisions, setDivisions] = useState<Location[]>([]);
@@ -22,6 +26,32 @@ export default function LocationFilter() {
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
+
+  // Pre-select division/district based on initialLocationId
+  useEffect(() => {
+    if (!initialLocationId || divisions.length === 0) return;
+
+    // Check if the ID matches a division directly
+    const matchingDivision = divisions.find((d) => d.id === initialLocationId);
+    if (matchingDivision) {
+      setSelectedDivision(matchingDivision.id);
+      setDistricts(matchingDivision.children || []);
+      return;
+    }
+
+    // Check if the ID matches a district within a division
+    for (const div of divisions) {
+      const matchingDistrict = div.children?.find(
+        (dist) => dist.id === initialLocationId
+      );
+      if (matchingDistrict) {
+        setSelectedDivision(div.id);
+        setDistricts(div.children || []);
+        setSelectedDistrict(matchingDistrict.id);
+        return;
+      }
+    }
+  }, [initialLocationId, divisions]);
 
   const handleDivisionChange = (divisionId: string) => {
     setSelectedDivision(divisionId);
