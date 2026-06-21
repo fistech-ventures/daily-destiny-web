@@ -20,19 +20,19 @@ export function Footer() {
   const companyInfo =
     locale === "bn"
       ? {
-        name: tFooter("companyInfoBn.name"),
-        subtitle: tFooter("companyInfoBn.subtitle"),
-        address: tFooter("companyInfoBn.address"),
-        phone: tFooter("companyInfoBn.phone"),
-        email: tFooter("companyInfoBn.email"),
-      }
+          name: tFooter("companyInfoBn.name"),
+          subtitle: tFooter("companyInfoBn.subtitle"),
+          address: tFooter("companyInfoBn.address"),
+          phone: tFooter("companyInfoBn.phone"),
+          email: tFooter("companyInfoBn.email"),
+        }
       : {
-        name: tFooter("companyInfoEn.name"),
-        subtitle: tFooter("companyInfoEn.subtitle"),
-        address: tFooter("companyInfoEn.address"),
-        phone: tFooter("companyInfoEn.phone"),
-        email: tFooter("companyInfoEn.email"),
-      };
+          name: tFooter("companyInfoEn.name"),
+          subtitle: tFooter("companyInfoEn.subtitle"),
+          address: tFooter("companyInfoEn.address"),
+          phone: tFooter("companyInfoEn.phone"),
+          email: tFooter("companyInfoEn.email"),
+        };
 
   return (
     <>
@@ -42,12 +42,16 @@ export function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-16 pb-10 border-b border-gray-800">
             {/* Section 1: Brand Logo & Short Intro */}
             <div className="lg:col-span-3 space-y-4">
-              <Link href="/" className="inline-block">
+              <Link href="/" className="inline-flex">
                 <img
                   src="/images/footerlogo.png"
                   alt="Ekhon TV"
-                  
-                  className="md:h-auto md:w-auto h-25 w-auto"
+                  className="
+      h-auto 
+      w-24 sm:w-28 md:w-32 lg:w-40 xl:w-48
+      object-contain
+      transition-all duration-300
+    "
                 />
               </Link>
               {/* <p className="text-base text-primary leading-relaxed font-medium">
@@ -99,9 +103,11 @@ export function Footer() {
                 {tFooter("socialLabel") || "আমাদের সাথে যুক্ত থাকুন"}
               </h3>
 
-              
-
-              <NavbarSocialLinks isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} variant="hamburger" />
+              <NavbarSocialLinks
+                isPopupOpen={isPopupOpen}
+                setIsPopupOpen={setIsPopupOpen}
+                variant="hamburger"
+              />
 
               {/* Sub Legal Row under Social Block */}
               <div className="flex flex-wrap gap-x-4 gap-y-1 pt-4 mt-auto">
@@ -139,7 +145,6 @@ export function Footer() {
           </div>
         </div>
       </footer>
-
     </>
   );
 }
