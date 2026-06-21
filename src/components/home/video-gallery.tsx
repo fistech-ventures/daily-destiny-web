@@ -6,6 +6,13 @@ import { VideoArticle } from "@/lib/api";
 import { useTranslations } from "next-intl";
 import { ChevronRight } from "lucide-react";
 
+const getThumbnail = (video: VideoArticle): string => {
+  if (video.source === "youtube" && video.key) {
+    return `https://img.youtube.com/vi/${video.key}/hqdefault.jpg`;
+  }
+  return video.coverImage || "/placeholder.jpg";
+};
+
 interface VideoGalleryProps {
   initialVideos: VideoArticle[];
   initialMeta?: {
@@ -36,6 +43,7 @@ export default function VideoGallery({
   // Segment layout to precisely mimic the asymmetric screenshot template
   const featuredVideo = videos[0];
   const gridVideos = videos.slice(1, 5);
+  const featuredThumbnail = featuredVideo?.coverImage || getThumbnail(featuredVideo);
 
   return (
     <div className="w-full bg-[#1e1e1e] p-4 md:p-6 rounded-md select-none text-white">
@@ -59,7 +67,7 @@ export default function VideoGallery({
               className="relative block w-full aspect-video overflow-hidden"
             >
               <img
-                src={featuredVideo.coverImage || "/placeholder.jpg"}
+                src={featuredThumbnail}
                 alt={featuredVideo.title}
                 className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-102"
               />
@@ -93,47 +101,50 @@ export default function VideoGallery({
 
         {/* RIGHT COLUMN: 2x2 Dense Grid Display Hub */}
         <div className="lg:col-span-5 grid grid-cols-1  gap-4">
-          {gridVideos.map(video => (
-            <div
-              key={video.code}
-              className="flex flex-col bg-[#121212] rounded-md overflow-hidden group border border-gray-900 shadow-sm" 
-            >
-              <Link
-                href={`/video/${video.code}`}
-                className="relative block w-full aspect-video overflow-hidden"
+          {gridVideos.map(video => {
+            const thumbnail = video.coverImage || getThumbnail(video);
+            return (
+              <div
+                key={video.code}
+                className="flex flex-col bg-[#121212] rounded-md overflow-hidden group border border-gray-900 shadow-sm" 
               >
-                <img
-                  src={video.coverImage || "/placeholder.jpg"}
-                  alt={video.title}
-                  className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-102"
-                />
-                {/* Embedded Mini Play Action Node */}
-                <div className="absolute top-2 left-2">
-                  <div className="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center text-white shadow-md">
-                    <svg
-                      className="w-3 h-3 fill-current pl-0.5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Text Area Block */}
-              <div className="p-3 flex flex-col gap-1 bg-[#121212] flex-1 justify-between">
                 <Link
                   href={`/video/${video.code}`}
-                  className="hover:text-orange-400 transition-colors"
+                  className="relative block w-full aspect-video overflow-hidden"
                 >
-                  <h4 className="text-xs md:text-sm font-bold leading-snug line-clamp-2 text-gray-100">
-                    {video.title}
-                  </h4>
+                  <img
+                    src={thumbnail}
+                    alt={video.title}
+                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-102"
+                  />
+                  {/* Embedded Mini Play Action Node */}
+                  <div className="absolute top-2 left-2">
+                    <div className="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center text-white shadow-md">
+                      <svg
+                        className="w-3 h-3 fill-current pl-0.5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
                 </Link>
+
+                {/* Text Area Block */}
+                <div className="p-3 flex flex-col gap-1 bg-[#121212] flex-1 justify-between">
+                  <Link
+                    href={`/video/${video.code}`}
+                    className="hover:text-orange-400 transition-colors"
+                  >
+                    <h4 className="text-xs md:text-sm font-bold leading-snug line-clamp-2 text-gray-100">
+                      {video.title}
+                    </h4>
+                  </Link>
           
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
