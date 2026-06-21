@@ -45,9 +45,9 @@ export function Footer() {
               <Link href="/" className="inline-block">
                 <img
                   src="/images/footerlogo.png"
-                  alt="Ekhon TV"
+                  alt="daily destiny"
                   
-                  className="md:h-auto md:w-auto h-25 w-auto"
+                  className="md:h-auto md:w-auto h-18 w-auto"
                 />
               </Link>
               {/* <p className="text-base text-primary leading-relaxed font-medium">
