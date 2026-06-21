@@ -59,7 +59,8 @@
     "videoPageTitle": "Recent Videos",
     "image": "Image",
     "imagePageTitle": "Image Story",
-    "relatedArticle": "Other related news"
+    "relatedArticle": "Other related news",
+    "noRelatedArticle": "Realated News Not Found"
   },
   "notFound": {
     "statusTag": "Technical Difficulty",
