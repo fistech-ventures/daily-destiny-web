@@ -80,7 +80,7 @@ export default async function Home({
             </div>
 
             <div className="w-full lg:w-80 shrink-0 sticky top-4">
-              <LocationFilter />
+              <LocationFilter initialLocationId={locationId} />
             </div>
           </div>
         </div>

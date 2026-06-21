@@ -25,7 +25,7 @@ export default function VideoGallery({
 
   if (videos.length === 0) {
     return (
-      <div className="flex items-center justify-center py-20 bg-[#1e1e1e] rounded-md">
+      <div className="flex items-center justify-center py-20 bg-accent rounded-md">
         <p className="text-gray-400 font-medium">
           {tCommon("noDataAvailable") || "কোনো তথ্য পাওয়া যায়নি"}
         </p>
