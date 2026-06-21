@@ -261,30 +261,36 @@ const SmallCard: React.FC<ExclusiveSmallCardProps> = ({ article }) => (
 
 export default async function ArticleSection(): Promise<React.ReactNode> {
   try {
-    const response = await getArticles({
+    const featuredArticles = await getArticles({
       page: 1,
       limit: 50,
       sortBy: "position",
       sortOrder: "ASC",
+      isFeatured: true,
+    });
+    const exclusiveArticles = await getArticles({
+      page: 1,
+      limit: 50,
+      sortBy: "position",
+      sortOrder: "ASC",
+      isExclusive: true,
     });
 
-    const allArticles: Article[] = response.data || [];
-
-    const featuredArticles = allArticles.filter(a => a.isFeatured === true);
-    const exclusiveArticles = allArticles.filter(a => a.isExclusive === true);
-    const regularArticles = allArticles.filter(
-      a => a.isExclusive !== true && a.isFeatured !== true,
-    );
+    const regularArticles = await getArticles({
+      page: 1,
+      limit: 50,
+      sortOrder: "ASC",
+    });
 
     console.log("Featured:", featuredArticles.length);
     console.log("Exclusive:", exclusiveArticles.length);
     console.log("Regular:", regularArticles.length);
 
-    const exclusiveTop = exclusiveArticles[0];
-    const gridArticles = regularArticles.slice(0, 12);
+    const exclusiveTop = exclusiveArticles.data[0];
+    const gridArticles = regularArticles.data.slice(0, 12);
 
-    const featuredTop = featuredArticles[0];
-    const featuredSmall = featuredArticles.slice(1, 12);
+    const featuredTop = featuredArticles.data[0];
+    const featuredSmall = featuredArticles.data.slice(1, 12);
 
     return (
       <section className="!p-0">
@@ -302,28 +308,28 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
               <div>
                 {/* Row 1 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  {gridArticles.slice(0, 3).map(article => (
+                  {gridArticles.slice(0, 3).map((article: Article) => (
                     <GridCard key={article.id} article={article} />
                   ))}
                 </div>
 
                 {/* Row 2 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  {gridArticles.slice(3, 6).map(article => (
+                  {gridArticles.slice(3, 6).map((article: Article) => (
                     <GridCard key={article.id} article={article} />
                   ))}
                 </div>
 
                 {/* Row 3 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  {gridArticles.slice(6, 9).map(article => (
+                  {gridArticles.slice(6, 9).map((article: Article) => (
                     <GridCard key={article.id} article={article} />
                   ))}
                 </div>
 
                 {/* Row 4 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {gridArticles.slice(9, 12).map(article => (
+                  {gridArticles.slice(9, 12).map((article: Article) => (
                     <GridCard key={article.id} article={article} />
                   ))}
                 </div>
@@ -349,7 +355,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
             {/* FEATURED SMALL - STACK */}
             {featuredSmall.length > 0 && (
               <div className="flex flex-col gap-3">
-                {featuredSmall.map(article => (
+                {featuredSmall.map((article: Article) => (
                   <SmallCard key={article.id} article={article} />
                 ))}
               </div>
