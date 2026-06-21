@@ -36,9 +36,9 @@ export function NavbarSocialLinks({
   // ════════════════════════════════════════════════
   if (variant === "hamburger") {
     return (
-      <div className="flex flex-col items-center gap-4 w-full py-2">
+      <div className="flex flex-col items-start justify-start gap-4 w-full py-2">
         {/* Row 1: Top 5 Icons */}
-        <div className="flex items-center justify-center gap-2.5 sm:gap-3">
+        <div className="flex items-center justify-start gap-2.5 sm:gap-3">
           {/* Facebook */}
           <SocialIcon bgColor="#1877F2" href="https://www.facebook.com/DailyDestinyBD">
             <Facebook size={16} color="#ffffff" fill="#ffffff" className="stroke-[1] h-[18px] w-[18px]" />
@@ -68,7 +68,7 @@ export function NavbarSocialLinks({
         </div>
 
         {/* Row 2: Bottom 3 Icons */}
-        <div className="flex items-center justify-center gap-2.5 sm:gap-3">
+        <div className="flex items-center justify-start gap-2.5 sm:gap-3">
           {/* WhatsApp */}
           <SocialIcon bgColor="#25D366" href="https://wa.me/yournumber">
             <svg viewBox="0 0 24 24" className="h-4 w-4 md:h-[18px] md:w-[18px]" fill="#ffffff">
