@@ -9,8 +9,10 @@ interface LocationFilterProps {
   initialLocationId?: string;
 }
 
-export default function LocationFilter({ initialLocationId }: LocationFilterProps) {
-  const router = useRouter(); 
+export default function LocationFilter({
+  initialLocationId,
+}: LocationFilterProps) {
+  const router = useRouter();
 
   const [divisions, setDivisions] = useState<Location[]>([]);
   const [districts, setDistricts] = useState<Location[]>([]);
@@ -26,13 +28,14 @@ export default function LocationFilter({ initialLocationId }: LocationFilterProp
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
+  console.log(divisions, "filter");
 
   // Pre-select division/district based on initialLocationId
   useEffect(() => {
     if (!initialLocationId || divisions.length === 0) return;
 
     // Check if the ID matches a division directly
-    const matchingDivision = divisions.find((d) => d.id === initialLocationId);
+    const matchingDivision = divisions.find(d => d.id === initialLocationId);
     if (matchingDivision) {
       setSelectedDivision(matchingDivision.id);
       setDistricts(matchingDivision.children || []);
@@ -42,7 +45,7 @@ export default function LocationFilter({ initialLocationId }: LocationFilterProp
     // Check if the ID matches a district within a division
     for (const div of divisions) {
       const matchingDistrict = div.children?.find(
-        (dist) => dist.id === initialLocationId
+        dist => dist.id === initialLocationId,
       );
       if (matchingDistrict) {
         setSelectedDivision(div.id);
@@ -60,24 +63,24 @@ export default function LocationFilter({ initialLocationId }: LocationFilterProp
     setDistricts(div?.children || []);
   };
 
-const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const locationId = selectedDistrict || selectedDivision;
-  if (!locationId) return;
+    const locationId = selectedDistrict || selectedDivision;
+    if (!locationId) return;
 
-  const currentParams = new URLSearchParams();
-  currentParams.set("locationId", locationId);
-  router.push(`/bn?${currentParams.toString()}`);
-};
+    const currentParams = new URLSearchParams();
+    currentParams.set("locationId", locationId);
+    router.push(`/bn?${currentParams.toString()}`);
+  };
 
   return (
     <div className="w-75 mx-auto p-6 bg-white rounded-xl shadow-sm">
       <div className="mb-6">
-          <h2 className="text-brand text-2xl font-bold tracking-wide mb-1">
+        <h2 className="text-brand text-2xl font-bold tracking-wide mb-1">
           আমার এলাকার খবর
         </h2>
-          <div className="w-16 h-1.5 bg-brand rounded-full"></div>
+        <div className="w-16 h-1.5 bg-brand rounded-full"></div>
       </div>
 
       <form onSubmit={handleSearch} className="space-y-5">
@@ -125,11 +128,11 @@ const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
           </div>
         </div>
 
-          <button
-            type="submit"
-            disabled={!selectedDivision}
-            className="w-full bg-brand hover-bg-brand text-white font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 text-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+        <button
+          type="submit"
+          disabled={!selectedDivision}
+          className="w-full bg-brand hover-bg-brand text-white font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 text-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           <Search size={22} strokeWidth={2} />
           <span>খুঁজুন</span>
         </button>
