@@ -1,6 +1,13 @@
 import React from "react";
 import { VideoArticle } from "@/lib/api";
 
+const getThumbnail = (video: VideoArticle): string => {
+  if (video.source === "youtube" && video.key) {
+    return `https://img.youtube.com/vi/${video.key}/hqdefault.jpg`;
+  }
+  return video.coverImage || "/placeholder.jpg";
+};
+
 interface VideoCardProps {
   video: VideoArticle;
   variant?: "default" | "small" | "featured";
@@ -17,7 +24,7 @@ export default function VideoCard({
       <div className="relative w-full aspect-video rounded-md overflow-hidden shadow-xs">
         {/* Video Thumbnail */}
         <img
-          src={video.coverImage || "/placeholder.jpg"}
+          src={video.coverImage || getThumbnail(video)}
           alt={video.title}
           className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-102 aspect-video"
         />

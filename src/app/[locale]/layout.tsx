@@ -36,7 +36,7 @@ export default async function LocaleLayout({
 
   let categories = [];
   try {
-    const res = await getAllcategories();
+    const res = await getAllcategories({ sortBy: "position" });
     categories = res?.data || [];
   } catch (error) {
     console.error("Failed to fetch categories for layout:", error);
