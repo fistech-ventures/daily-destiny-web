@@ -1,15 +1,15 @@
 import MainLayout from "@/components/home/main-layout";
 import VideoGallery from "@/components/home/video-gallery";
-import FourCategoryGrid from "@/components/category/ThreeColumnCategoryFeatured";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
-import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
-import { Category, Article } from "@/lib/types";
+import { getVideos, getArticles,  getImages } from "@/lib/api";
+import {  Article } from "@/lib/types";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
 import { formatRelativeTime } from "@/utils/date-formatter";
 import SingleCategoryNewsGrid from "@/components/category/SingleCategoryNewsGrid";
 import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
+import OthersCategories from "@/components/category/OthersCategroies";
 
 export async function generateMetadata({
   params,
@@ -105,57 +105,6 @@ export default async function Home({
     totalPages: 1,
   };
 
-  const categoriesRes = await getAllcategories();
-  const categoriesList: Category[] = categoriesRes?.data || [];
-
-  const getCategoryData = async (slug: string) => {
-    const cat = categoriesList.find(c => c.slug === slug);
-
-    if (!cat) {
-      const fallbackTitles: Record<string, string> = {
-        international: "আন্তর্জাতিক",
-        sports: "ক্রীড়া",
-        economy: "অর্থনীতি",
-        business: "ব্যবসা",
-      };
-      return {
-        title: fallbackTitles[slug] || slug,
-        slug,
-        articles: [],
-      };
-    }
-
-    try {
-      const articlesRes = await getArticles({
-        categoryId: cat.id,
-        limit: 4,
-        status: "Published",
-      });
-
-      return {
-        title: cat.titleBn || cat.title,
-        slug: cat.slug,
-        articles: articlesRes?.data || [],
-      };
-    } catch (err) {
-      console.error(
-        `Failed to fetch production records for category slug: ${slug}`,
-        err,
-      );
-      return {
-        title: cat.titleBn || cat.title,
-        slug: cat.slug,
-        articles: [],
-      };
-    }
-  };
-
-  const categoriesData = await Promise.all([
-    getCategoryData("international"),
-    getCategoryData("sports"),
-    getCategoryData("economy"),
-    getCategoryData("business"),
-  ]);
 
   const galleryRes = await getImages({ page: 1, limit: 5 });
   const galleryArticles: GalleryApiItem[] = galleryRes?.data || [];
@@ -269,7 +218,7 @@ export default async function Home({
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
       <SingleCategoryNewsGrid slug="weather" limit={7} />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
-      <FourCategoryGrid categories={categoriesData} sectionTitle="অন্যান্য" />
+      <OthersCategories />
     </main>
   );
 }
