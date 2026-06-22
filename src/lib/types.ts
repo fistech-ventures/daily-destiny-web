@@ -46,6 +46,7 @@ export interface ArticleQueryParams {
   topics?: string[];
   sortBy?: string;
   sortOrder?: "ASC" | "DESC";
+  date?: string;
 }
 
 export interface Author {

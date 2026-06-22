@@ -178,29 +178,7 @@ export function Navbar({
                 >
                   সর্বশেষ
                 </Link>
-                {/* Filter out duplicates dynamically by title text */}
-                {/* {categories
-                  .slice(0, 10)
-                  .filter((category, index, self) => {
-                    const title = category.titleBn || category.title;
-                    return self.findIndex(c => (c.titleBn || c.title) === title) === index;
-                  })
-                  .map((category) => (
-                    <Link
-                      key={category.id}
-                      href={`/${category.slug}`}
-                      className={cn(
-                        "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
-                        strippedPathname === `/${category.slug}`
-                          ? "border-red-600 text-red-600"
-                          : "border-transparent text-gray-700 hover:text-red-600",
-                      )}
-                    >
-                      {category.titleBn || category.title}
-                      
-                    </Link>
-                  ))} */}
-
+                
                 {categories
                   .slice(0, 10)
                   .filter((category, index, self) => {
@@ -327,6 +305,11 @@ export function Navbar({
                           className="h-10 w-auto object-contain"
                         />
                       </Link>
+                      <div className="hidden md:block ">
+                        <div className=" flex h-full justify-end items-center">
+                          <MarketPriceWidget marketPricing={marketPrices} />
+                        </div>
+                      </div>
                       <div className="">
                         <Link
                           href="/e-paper"
@@ -340,35 +323,13 @@ export function Navbar({
 
                     {/* Mega menu body */}
                     <div className="flex flex-col lg:flex-row px-6 py-8 gap-8">
-                      <div className="">
+                      <div className="md:hidden!">
                         <div className=" flex h-full justify-end items-center">
                           <MarketPriceWidget marketPricing={marketPrices} />
                         </div>
                       </div>
                       {/* LEFT: quick nav + categories + subcategories */}
-                      <div className="flex-1 min-w-0">
-                        {/* Quick nav row */}
-                        <div className="flex flex-wrap gap-x-8 gap-y-2 pb-5 mb-2 border-b border-gray-200">
-                          {[
-                            { label: "প্রচ্ছদ", href: "/" },
-                            { label: "সর্বশেষ", href: "/recent" },
-                            { label: "বিশেষ সংবাদ", href: "/special" },
-                            { label: "রাজনীতি", href: "/politics" },
-                            { label: "ছবি", href: "/photo" },
-                            { label: "ভিডিও", href: "/video" },
-                            // { label: "ই-পেপার", href: "/e-paper" },
-                          ].map(item => (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              onClick={() => setIsSheetOpen(false)}
-                              className="text-[15px] font-bold text-gray-900 hover:text-primary transition-colors"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </div>
-
+                      <div className="flex-1 min-w-0 p-5">                        
                         {/* Category rows */}
                         <div className="divide-y divide-gray-100">
                           {categories

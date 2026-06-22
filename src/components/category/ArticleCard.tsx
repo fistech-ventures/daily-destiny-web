@@ -64,7 +64,7 @@ export default function ArticleCard({
         {/* Content Box */}
         <div className="flex flex-col flex-1 min-w-0">
           <h2
-            className={`font-bold text-gray-900 leading-normal group-hover:text-red-600 transition-colors ${
+            className={`font-bold text-gray-900 leading-normal group-hover:text-[#000058] transition-colors ${
               isCenterFeatured
                 ? "text-xl md:text-2xl font-black line-clamp-3"
                 : isCompactRow
