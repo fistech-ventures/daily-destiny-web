@@ -192,6 +192,23 @@ export async function getRelatedArticles(code: string) {
   }
 }
 
+// Track article view event
+export async function trackArticleView(
+  articleId: string,
+  sessionId?: string,
+) {
+  try {
+    const response = await api.post(`/web/articles/${articleId}/events`, {
+      eventType: "view",
+      sessionId: sessionId || undefined,
+    });
+    return response.data;
+  } catch (error) {
+    // Silently fail — view tracking should never break the user experience
+    console.error("Error tracking article view:", error);
+  }
+}
+
 // Get videos
 export async function getVideos(query?: { page?: number; limit?: number }) {
   try {

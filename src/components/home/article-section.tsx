@@ -287,10 +287,10 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
     console.log("Regular:", regularArticles.length);
 
     const exclusiveTop = exclusiveArticles.data[0];
-    const gridArticles = regularArticles.data.slice(0, 12);
+    const gridArticles = regularArticles.data.slice(0, 6);
 
     const featuredTop = featuredArticles.data[0];
-    const featuredSmall = featuredArticles.data.slice(1, 12);
+    const featuredSmall = featuredArticles.data.slice(1, 7);
 
     return (
       <section className="!p-0">
