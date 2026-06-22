@@ -1,15 +1,17 @@
 import MainLayout from "@/components/home/main-layout";
 import VideoGallery from "@/components/home/video-gallery";
-import FourCategoryGrid from "@/components/category/ThreeColumnCategoryFeatured";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
 import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
 import { Category, Article } from "@/lib/types";
+import { imageArticle } from "@/lib/api";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
+import ArchiveSection from "@/components/archive/archive-section";
 import { formatRelativeTime } from "@/utils/date-formatter";
 import SingleCategoryNewsGrid from "@/components/category/SingleCategoryNewsGrid";
 import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
+import OthersCategories from "@/components/category/OthersCategroies";
 
 export async function generateMetadata({
   params,
@@ -25,15 +27,6 @@ export async function generateMetadata({
 }
 
 export const revalidate = 60;
-
-interface GalleryApiItem {
-  id: string | number;
-  coverImage?: string;
-  title: string;
-  description?: string;
-  date?: string;
-  code: string;
-}
 
 export default async function Home({
   params,
@@ -88,17 +81,11 @@ export default async function Home({
     );
   }
 
-  // 👈 3. Fallback to normal standard homepage view when NO location parameters exist
-  const [sliderResponse, galleryResponse, recentNewsResponse] = await Promise.all([
-    getVideos({ page: 1, limit: 9 }),
-    getVideos({ page: 1, limit: 5 }),
-    getArticles({ page: 1, limit: 4, status: "Published" }),
-  ]);
+  // Combined standard fetching to fix 'sliderResponse' unused warning
+  const videosResponse = await getVideos({ page: 1, limit: 9 });
 
-  const recentArticles: Article[] = recentNewsResponse?.data || [];
-
-  const galleryVideos = galleryResponse?.data || [];
-  const galleryMeta = galleryResponse?.meta || {
+  const galleryVideos = videosResponse?.data || [];
+  const galleryMeta = videosResponse?.meta || {
     total: 0,
     page: 1,
     limit: 5,
@@ -107,6 +94,18 @@ export default async function Home({
 
   const categoriesRes = await getAllcategories();
   const categoriesList: Category[] = categoriesRes?.data || [];
+
+  // Fetch national (জাতীয়) category articles
+  const nationalCategory = categoriesList.find(c => c.slug === "national");
+  let recentArticles: Article[] = [];
+  if (nationalCategory) {
+    const nationalRes = await getArticles({
+      categoryId: nationalCategory.id,
+      limit: 4,
+      status: "Published",
+    });
+    recentArticles = nationalRes?.data || [];
+  }
 
   const getCategoryData = async (slug: string) => {
     const cat = categoriesList.find(c => c.slug === slug);
@@ -158,13 +157,13 @@ export default async function Home({
   ]);
 
   const galleryRes = await getImages({ page: 1, limit: 5 });
-  const galleryArticles: GalleryApiItem[] = galleryRes?.data || [];
+  const galleryArticles = galleryRes?.data || [];
 
-  const galleryItems = galleryArticles.map((article: GalleryApiItem) => ({
+  const galleryItems = galleryArticles.map((article: imageArticle) => ({
     id: article.id,
     url: article.coverImage || "",
     title: article.title,
-    description: article.description,
+    description: article.description || "",
     timeAgo: article.date ? formatRelativeTime(article.date) : "",
     photographer: "নিজস্ব প্রতিবেদক",
     code: article.code,
@@ -177,14 +176,23 @@ export default async function Home({
       {/* Location Filter + Recent News Section */}
       <section className="w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left: Location Filter (4 columns) */}
-          <div className="lg:col-span-4">
+          {/* Left: Location Filter */}
+          <div className="lg:col-span-4 h-fit">
             <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl p-5 lg:p-6 shadow-sm border border-blue-100 h-full">
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex items-center justify-center w-9 h-9 rounded-full bg-brand text-white shadow-sm shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
                   </svg>
                 </div>
                 <div>
@@ -200,13 +208,15 @@ export default async function Home({
             </div>
           </div>
 
-          {/* Right: Recent News (8 columns) */}
+          {/* Right: Recent News */}
           <div className="lg:col-span-8">
             <div className="bg-white rounded-xl p-5 lg:p-6 shadow-sm border border-gray-100 h-full">
               <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-6 bg-red-500 rounded-full"></div>
-                  <h3 className="text-lg font-bold text-gray-900">সর্বশেষ সংবাদ</h3>
+                  <h3 className="text-lg font-bold text-gray-900">
+                    জাতীয় খবর
+                  </h3>
                 </div>
               </div>
 
@@ -232,22 +242,25 @@ export default async function Home({
 
                       {/* Content */}
                       <div className="flex-1 p-3">
-                        <h4 className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2">
+                        <h4 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2">
                           {article.title}
                         </h4>
                         <div className="flex items-center gap-2 mt-2">
                           {article.category?.titleBn && (
-                            <span className="text-[10px] font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
+                            <span className="text-sm font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
                               {article.category.titleBn}
                             </span>
                           )}
                           {article.date && (
-                            <span className="text-[10px] text-gray-400">
-                              {new Date(article.date).toLocaleDateString("bn-BD", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
+                            <span className="text-sm text-gray-400">
+                              {new Date(article.date).toLocaleDateString(
+                                "bn-BD",
+                                {
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                },
+                              )}
                             </span>
                           )}
                         </div>
@@ -265,11 +278,12 @@ export default async function Home({
         </div>
       </section>
 
-      <SingleCategoryNewsGrid slug="education" limit={7} />
-      <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
-      <SingleCategoryNewsGrid slug="weather" limit={7} />
+      <SingleCategoryNewsGrid slug="international" limit={7} />
+      {/* <SingleCategoryNewsGrid slug="opinion" limit={7} /> */}
+      <OthersCategories />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
-      <FourCategoryGrid categories={categoriesData} sectionTitle="অন্যান্য" />
+      <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
+      <ArchiveSection />
     </main>
   );
 }

@@ -8,6 +8,10 @@ const config: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "pkuskmdowpawzhskscia.supabase.co",
+      },
+      {
+        protocol: "https",
         hostname: "sgp1.digitaloceanspaces.com",
       },
       {

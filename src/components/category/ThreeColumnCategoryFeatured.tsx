@@ -37,7 +37,7 @@ export default function FourCategoryGrid({
 
       {/* 2. Four Column Grid Matrix */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-transparent mt-2">
-        {categories.slice(0, 4).map(cat => {
+        {categories.slice(0, 4).map((cat) => {
           const leadArticle = cat.articles[0];
           const listArticles = cat.articles.slice(1, 4);
 
@@ -49,7 +49,7 @@ export default function FourCategoryGrid({
               {/* Category Card Header */}
               <div className="flex items-start mb-4">
                 <Link href={`/${cat.slug}`} className="inline-block group">
-                  <h3 className="text-base font-bold text-gray-800 border-b-2 border-red-700 pb-1">
+                  <h3 className="text-base font-bold text-gray-800 border-b-2 border-[#000058] pb-1">
                     {cat.title}
                   </h3>
                 </Link>
@@ -84,7 +84,7 @@ export default function FourCategoryGrid({
               <div className="w-full flex justify-center mt-6 pt-2">
                 <Link
                   href={`/${cat.slug}`}
-                  className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 !hover:text-white text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
+                  className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white hover:!text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
                 >
                   আরও
                 </Link>
