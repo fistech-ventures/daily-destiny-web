@@ -548,6 +548,84 @@ export async function getEpaperPagesByDate(
   }
 }
 
+// ─── Epaper Visual Edition (new layout with hotspots) ──────────────────────
+
+export interface Hotspot {
+  id: string;
+  isActive: boolean;
+  title: string | null;
+  coordinates: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+}
+
+export interface EpaperVisualPage {
+  id: string;
+  isActive: boolean;
+  pageNumber: number;
+  imageUrl: string;
+  hotspots: Hotspot[];
+}
+
+export interface EpaperVisualEdition {
+  id: string;
+  isActive: boolean;
+  publishDate: string;
+  status: string;
+  pages: EpaperVisualPage[];
+}
+
+// Get latest visual edition
+export async function getLatestVisualEdition(): Promise<EpaperVisualEdition | null> {
+  try {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/latest`);
+    return response.data?.data || null;
+  } catch (error) {
+    console.error("Error fetching latest visual edition:", error);
+    return null;
+  }
+}
+
+// Get visual edition by ID
+export async function getVisualEditionById(id: string): Promise<EpaperVisualEdition | null> {
+  try {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/${id}`);
+    return response.data?.data || null;
+  } catch (error) {
+    console.error("Error fetching visual edition by id:", error);
+    return null;
+  }
+}
+
+// Get visual edition by date
+export async function getVisualEditionByDate(date: string): Promise<EpaperVisualEdition | null> {
+  try {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/date/${date}`);
+    return response.data?.data || null;
+  } catch (error) {
+    console.error("Error fetching visual edition by date:", error);
+    return null;
+  }
+}
+
+// Get all visual edition dates
+export async function getVisualEditionDates(): Promise<string[]> {
+  try {
+    const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/dates`);
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Error fetching visual edition dates:", error);
+    return [];
+  }
+}
+
 // Get all publication names
 export async function getEpaperPublications(): Promise<string[]> {
   try {
