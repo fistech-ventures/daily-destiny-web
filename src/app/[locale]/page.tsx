@@ -1,6 +1,5 @@
 import MainLayout from "@/components/home/main-layout";
 import VideoGallery from "@/components/home/video-gallery";
-import FourCategoryGrid from "@/components/category/ThreeColumnCategoryFeatured";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
 import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
@@ -12,6 +11,7 @@ import { formatRelativeTime } from "@/utils/date-formatter";
 import SingleCategoryNewsGrid from "@/components/category/SingleCategoryNewsGrid";
 import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
+import OthersCategories from "@/components/category/OthersCategroies";
 
 export async function generateMetadata({
   params,
@@ -215,7 +215,7 @@ export default async function Home({
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-6 bg-red-500 rounded-full"></div>
                   <h3 className="text-lg font-bold text-gray-900">
-                    জাতীয় নিউজ
+                    জাতীয় খবর
                   </h3>
                 </div>
               </div>
@@ -278,10 +278,10 @@ export default async function Home({
         </div>
       </section>
 
-      <SingleCategoryNewsGrid slug="education" limit={7} />
-      <SingleCategoryNewsGrid slug="weather" limit={7} />
+      <SingleCategoryNewsGrid slug="international" limit={7} />
+      {/* <SingleCategoryNewsGrid slug="opinion" limit={7} /> */}
+      <OthersCategories />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
-      <FourCategoryGrid categories={categoriesData} sectionTitle="অন্যান্য" />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
       <ArchiveSection />
     </main>
