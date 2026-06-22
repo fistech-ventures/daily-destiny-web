@@ -98,6 +98,7 @@ export interface CategoryQueryParam {
   limit?: number;
   searchTerm?: string;
   isActive?: boolean;
+  sortBy?: string;
 }
 
 export interface MarketPrice {

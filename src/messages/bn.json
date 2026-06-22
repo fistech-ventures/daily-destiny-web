@@ -60,7 +60,8 @@
     "videoPageTitle": "সর্বশেষ ভিডিও",
     "image": "ছবি",
     "imagePageTitle": "ছবি",
-    "relatedArticle": "এই সম্পর্কিত অন্যান্য খবর"
+    "relatedArticle": "এই সম্পর্কিত অন্যান্য খবর",
+    "noRelatedArticle": ""
   },
   "notFound": {
     "statusTag": "কারিগরি ত্রুটি",

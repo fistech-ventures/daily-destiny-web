@@ -2,10 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import {
-  Menu,
-  Newspaper,
-} from "lucide-react";
+import { Menu, Newspaper } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -83,13 +80,15 @@ export function Navbar({
     pathname,
   );
 
-
-
   // Dropdown state for categories (used for touch devices and explicit open control)
   // Category IDs are strings (see src/lib/types.ts), so store string | null here.
-  const [openDropdownId, setOpenDropdownId] = React.useState<string | null>(null);
+  const [openDropdownId, setOpenDropdownId] = React.useState<string | null>(
+    null,
+  );
   const navRef = React.useRef<HTMLElement | null>(null);
-  const closeTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
 
   React.useEffect(() => {
     function handleDocClick(e: MouseEvent) {
@@ -132,7 +131,11 @@ export function Navbar({
               </Link>
 
               {/* Social Icons — Exact Serial Matching */}
-              <NavbarSocialLinks isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} variant="navbar" />
+              <NavbarSocialLinks
+                isPopupOpen={isPopupOpen}
+                setIsPopupOpen={setIsPopupOpen}
+                variant="navbar"
+              />
             </div>
           </div>
         </div>
@@ -149,7 +152,10 @@ export function Navbar({
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between">
               {/* Category links — scrollable */}
-              <nav ref={navRef} className="flex items-center overflow-x-auto scrollbar-none h-full">
+              <nav
+                ref={navRef}
+                className="flex items-center overflow-x-auto scrollbar-none h-full"
+              >
                 <Link
                   href={`/recent`}
                   className={cn(
@@ -200,7 +206,8 @@ export function Navbar({
                       key={category.id}
                       className="shrink-0 h-full"
                       onMouseEnter={() => {
-                        if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+                        if (closeTimeoutRef.current)
+                          clearTimeout(closeTimeoutRef.current);
                         if ((category as Category).subCategories?.length > 0) {
                           setOpenDropdownId(category.id);
                         }
@@ -219,13 +226,15 @@ export function Navbar({
                           // On touch devices, toggle dropdown instead of navigating
                           try {
                             if (
-                              (category as Category).subCategories?.length > 0 &&
+                              (category as Category).subCategories?.length >
+                                0 &&
                               typeof window !== "undefined" &&
                               window.matchMedia &&
                               window.matchMedia("(hover: none)").matches
                             ) {
                               e.preventDefault();
-                              if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+                              if (closeTimeoutRef.current)
+                                clearTimeout(closeTimeoutRef.current);
                               setOpenDropdownId((prev) =>
                                 prev === category.id ? null : category.id,
                               );
@@ -240,7 +249,11 @@ export function Navbar({
                             ? "border-red-600 text-red-600"
                             : "border-transparent text-gray-700 hover:text-red-600",
                         )}
-                        aria-haspopup={(category as Category).subCategories?.length > 0 ? "menu" : undefined}
+                        aria-haspopup={
+                          (category as Category).subCategories?.length > 0
+                            ? "menu"
+                            : undefined
+                        }
                         aria-expanded={openDropdownId === category.id}
                       >
                         {category.titleBn || category.title}
@@ -297,7 +310,7 @@ export function Navbar({
                     className="w-full h-screen max-h-screen px-0 py-6 overflow-y-auto bg-white"
                   >
                     {/* Mega menu header */}
-                    <div className="flex items-center justify-between px-6 py-0 border-b border-gray-200">
+                    <div className="flex items-center justify-between px-10 py-0 border-b border-gray-200 pb-2">
                       <Link href="/" onClick={() => setIsSheetOpen(false)}>
                         <img
                           src="/images/footerlogo.png"
@@ -305,10 +318,24 @@ export function Navbar({
                           className="h-10 w-auto object-contain"
                         />
                       </Link>
+                      <div className="">
+                        <Link
+                          href="/e-paper"
+                          className="flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-primary/80 transition-colors"
+                        >
+                          <Newspaper className="h-4 w-4" />
+                          <span>ই-পেপার</span>
+                        </Link>
+                      </div>
                     </div>
 
                     {/* Mega menu body */}
                     <div className="flex flex-col lg:flex-row px-6 py-8 gap-8">
+                      <div className="">
+                        <div className=" flex h-full justify-end items-center">
+                          <MarketPriceWidget marketPricing={marketPrices} />
+                        </div>
+                      </div>
                       {/* LEFT: quick nav + categories + subcategories */}
                       <div className="flex-1 min-w-0">
                         {/* Quick nav row */}
@@ -320,7 +347,7 @@ export function Navbar({
                             { label: "রাজনীতি", href: "/politics" },
                             { label: "ছবি", href: "/photo" },
                             { label: "ভিডিও", href: "/video" },
-                            { label: "ই-পেপার", href: "/e-paper" },
+                            // { label: "ই-পেপার", href: "/e-paper" },
                           ].map((item) => (
                             <Link
                               key={item.href}
@@ -331,12 +358,6 @@ export function Navbar({
                               {item.label}
                             </Link>
                           ))}
-                        </div>
-
-                        <div className="">
-                          <div className=" flex h-full justify-end items-center">
-                            <MarketPriceWidget marketPricing={marketPrices} />
-                          </div>
                         </div>
 
                         {/* Category rows */}
@@ -367,30 +388,30 @@ export function Navbar({
 
                                   {(category as Category).subCategories
                                     ?.length > 0 && (
-                                      <span className="text-red-600 font-bold ml-1">
-                                        ›
-                                      </span>
-                                    )}
+                                    <span className="text-red-600 font-bold ml-1">
+                                      ›
+                                    </span>
+                                  )}
                                 </div>
 
                                 {/* Subcategory links */}
                                 {(category as Category).subCategories?.length >
                                   0 && (
-                                    <div className="flex flex-wrap gap-x-5 gap-y-1.5">
-                                      {(category as Category).subCategories.map(
-                                        (sub: Category) => (
-                                          <Link
-                                            key={sub.id}
-                                            href={`/${sub.slug}`}
-                                            onClick={() => setIsSheetOpen(false)}
-                                            className="text-sm text-gray-600 hover:text-red-600 transition-colors whitespace-nowrap"
-                                          >
-                                            {sub.titleBn || sub.title}
-                                          </Link>
-                                        ),
-                                      )}
-                                    </div>
-                                  )}
+                                  <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+                                    {(category as Category).subCategories.map(
+                                      (sub: Category) => (
+                                        <Link
+                                          key={sub.id}
+                                          href={`/${sub.slug}`}
+                                          onClick={() => setIsSheetOpen(false)}
+                                          className="text-sm text-gray-600 hover:text-red-600 transition-colors whitespace-nowrap"
+                                        >
+                                          {sub.titleBn || sub.title}
+                                        </Link>
+                                      ),
+                                    )}
+                                  </div>
+                                )}
                               </div>
                             ))}
                         </div>
@@ -398,33 +419,36 @@ export function Navbar({
 
                       {/* RIGHT sidebar */}
                       <div className="lg:w-72 shrink-0 space-y-6 lg:border-l border-gray-200 lg:pl-8">
-
-
-
                         <div className="flex flex-col">
-                          <h2 className="text-gray-800 text-lg font-bold border-l-4 pl-4 border-primary">সোশ্যাল মিডিয়া</h2>
-                          <NavbarSocialLinks isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} variant="hamburger" />
-
+                          <h2 className="text-gray-800 text-lg font-bold border-l-4 pl-4 border-primary">
+                            সোশ্যাল মিডিয়া
+                          </h2>
+                          <NavbarSocialLinks
+                            isPopupOpen={isPopupOpen}
+                            setIsPopupOpen={setIsPopupOpen}
+                            variant="hamburger"
+                          />
                         </div>
-                        <Link
-                          href="/e-paper"
-
-                        >
+                        <Link href="/e-paper">
                           <div className="bg-[#000058] hover:bg-[#000058]/80 transition-colors px-4 py-2 text-white text-xs font-bold uppercase rounded-md tracking-wider flex flex-col items-start  gap-2">
                             <div className="flex items-center gap-2">
-
-                              <Newspaper size={24} color="#ffffff" className="stroke-[2] md:h-[24px] md:w-[24px]" />
+                              <Newspaper
+                                size={24}
+                                color="#ffffff"
+                                className="stroke-[2] md:h-[24px] md:w-[24px]"
+                              />
                               <div>
-                                <h2 className="text-white text-lg font-bold  ">আজকের পত্রিকা</h2>
-                                <span className="text-white text-md font-bold  ">(print Version)</span>
+                                <h2 className="text-white text-lg font-bold  ">
+                                  আজকের পত্রিকা
+                                </h2>
+                                <span className="text-white text-md font-bold  ">
+                                  (print Version)
+                                </span>
                               </div>
                             </div>
-
-
                           </div>
                         </Link>
                       </div>
-
                     </div>
                   </SheetContent>
                 </Sheet>
@@ -433,57 +457,63 @@ export function Navbar({
           </div>
 
           {/* Mega Menu Dropdown */}
-          {openDropdownId && (() => {
-            const activeCategory = categories.find((c) => c.id === openDropdownId);
-            if (!activeCategory || !activeCategory.subCategories || activeCategory.subCategories.length === 0) return null;
-            return (
-              <div
-                onMouseEnter={() => {
-                  if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-                }}
-                onMouseLeave={() => {
-                  closeTimeoutRef.current = setTimeout(() => {
-                    setOpenDropdownId(null);
-                  }, 150);
-                }}
-                className={cn(
-                  "absolute left-0 top-full z-50 w-full bg-white border-t border-b border-gray-200 shadow-xl transition-all duration-300 ease-in-out",
-                  "animate-in fade-in slide-in-from-top-2 duration-200"
-                )}
-              >
-                <div className="max-w-screen-xl mx-auto px-6 py-6 text-gray-900">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {activeCategory.subCategories.map((sub) => (
-                      <Link
-                        key={sub.id}
-                        href={`/${sub.slug}`}
-                        onClick={() => setOpenDropdownId(null)}
-                        className="group/item flex flex-col p-3 rounded-lg border border-transparent hover:border-red-100 hover:bg-red-50/30 transition-all duration-200"
-                      >
-                        <div className="font-bold text-gray-900 group-hover/item:text-red-600 transition-colors">
-                          {sub.titleBn || sub.title}
-                        </div>
-                        <span className="text-xs text-gray-500 mt-1">
-                          {sub.titleBn
-                            ? `${sub.titleBn} সংক্রান্ত সব খবর`
-                            : `All news about ${sub.title}`}
-                        </span>
-                      </Link>
-                    ))}
+          {openDropdownId &&
+            (() => {
+              const activeCategory = categories.find(
+                (c) => c.id === openDropdownId,
+              );
+              if (
+                !activeCategory ||
+                !activeCategory.subCategories ||
+                activeCategory.subCategories.length === 0
+              )
+                return null;
+              return (
+                <div
+                  onMouseEnter={() => {
+                    if (closeTimeoutRef.current)
+                      clearTimeout(closeTimeoutRef.current);
+                  }}
+                  onMouseLeave={() => {
+                    closeTimeoutRef.current = setTimeout(() => {
+                      setOpenDropdownId(null);
+                    }, 150);
+                  }}
+                  className={cn(
+                    "absolute left-0 top-full z-50 w-full bg-white border-t border-b border-gray-200 shadow-xl transition-all duration-300 ease-in-out",
+                    "animate-in fade-in slide-in-from-top-2 duration-200",
+                  )}
+                >
+                  <div className="max-w-screen-xl mx-auto px-6 py-6 text-gray-900">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                      {activeCategory.subCategories.map((sub) => (
+                        <Link
+                          key={sub.id}
+                          href={`/${sub.slug}`}
+                          onClick={() => setOpenDropdownId(null)}
+                          className="group/item flex flex-col p-3 rounded-lg border border-transparent hover:border-red-100 hover:bg-red-50/30 transition-all duration-200"
+                        >
+                          <div className="font-bold text-gray-900 group-hover/item:text-red-600 transition-colors">
+                            {sub.titleBn || sub.title}
+                          </div>
+                          <span className="text-xs text-gray-500 mt-1">
+                            {sub.titleBn
+                              ? `${sub.titleBn} সংক্রান্ত সব খবর`
+                              : `All news about ${sub.title}`}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })()}
+              );
+            })()}
         </div>
 
         {/* ════════════════════════════════════════════════
           MOBILE SEARCH OVERLAY
           ════════════════════════════════════════════════ */}
-
       </header>
-
-
     </>
   );
 }
