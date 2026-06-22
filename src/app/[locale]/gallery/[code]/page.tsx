@@ -25,6 +25,7 @@ export async function generateMetadata({
 
   if (!gallery) return {};
 
+
   return generateArticleMetadata(
     {
       ...gallery,
@@ -32,7 +33,7 @@ export async function generateMetadata({
       medias: gallery.images,
     } as unknown as Article,
     {
-      path: `/gallery/${decodedCode}`,
+      path: `/${locale}/gallery/${decodedCode}`,
       locale,
     },
   );
@@ -55,6 +56,8 @@ export default async function GalleryCodePage({
     getArticles({ limit: 5 }),
     getImages({ limit: 8 }),
   ]);
+
+  console.log(gallery, "gallerydetailsbycode");
 
   const recentArticles: Article[] = recentArticlesRes?.data ?? [];
   const relatedImageArticles: imageArticle[] = (relatedImagesRes?.data ?? [])

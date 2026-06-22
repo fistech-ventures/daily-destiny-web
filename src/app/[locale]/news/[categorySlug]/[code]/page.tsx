@@ -18,6 +18,7 @@ import {
 } from "@/lib/metadata";
 import { Metadata } from "next";
 import { buildArticleLdJson } from "@/lib/article-ld-json";
+import ArticleViewTracker from "@/components/news/article-view-tracker";
 
 export async function generateMetadata({
   params,
@@ -174,6 +175,9 @@ export default async function NewsDetailsPage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }}
         />
       )}
+
+      {/* Track article view on the client */}
+      <ArticleViewTracker articleId={article.id} />
 
       {/* News Details */}
       <div className="lg:col-span-2 col-span-3">
