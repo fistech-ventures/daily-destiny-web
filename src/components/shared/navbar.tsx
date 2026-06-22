@@ -157,6 +157,17 @@ export function Navbar({
                 className="flex items-center overflow-x-auto scrollbar-none h-full"
               >
                 <Link
+                  href={`/`}
+                  className={cn(
+                    "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                    strippedPathname === `/recent`
+                      ? "border-red-600 text-primary"
+                      : "border-transparent text-gray-700 hover:text-primary/80",
+                  )}
+                >
+                  হোম
+                </Link>
+                <Link
                   href={`/recent`}
                   className={cn(
                     "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
@@ -167,7 +178,6 @@ export function Navbar({
                 >
                   সর্বশেষ
                 </Link>
-
                 {/* Filter out duplicates dynamically by title text */}
                 {/* {categories
                   .slice(0, 10)
@@ -196,12 +206,11 @@ export function Navbar({
                   .filter((category, index, self) => {
                     const title = category.titleBn || category.title;
                     return (
-                      self.findIndex(
-                        (c) => (c.titleBn || c.title) === title,
-                      ) === index
+                      self.findIndex(c => (c.titleBn || c.title) === title) ===
+                      index
                     );
                   })
-                  .map((category) => (
+                  .map(category => (
                     <div
                       key={category.id}
                       className="shrink-0 h-full"
@@ -235,7 +244,7 @@ export function Navbar({
                               e.preventDefault();
                               if (closeTimeoutRef.current)
                                 clearTimeout(closeTimeoutRef.current);
-                              setOpenDropdownId((prev) =>
+                              setOpenDropdownId(prev =>
                                 prev === category.id ? null : category.id,
                               );
                             }
@@ -348,7 +357,7 @@ export function Navbar({
                             { label: "ছবি", href: "/photo" },
                             { label: "ভিডিও", href: "/video" },
                             // { label: "ই-পেপার", href: "/e-paper" },
-                          ].map((item) => (
+                          ].map(item => (
                             <Link
                               key={item.href}
                               href={item.href}
@@ -367,11 +376,11 @@ export function Navbar({
                               const title = category.titleBn || category.title;
                               return (
                                 self.findIndex(
-                                  (c) => (c.titleBn || c.title) === title,
+                                  c => (c.titleBn || c.title) === title,
                                 ) === index
                               );
                             })
-                            .map((category) => (
+                            .map(category => (
                               <div
                                 key={category.id}
                                 className="flex items-start py-3 gap-4"
@@ -460,7 +469,7 @@ export function Navbar({
           {openDropdownId &&
             (() => {
               const activeCategory = categories.find(
-                (c) => c.id === openDropdownId,
+                c => c.id === openDropdownId,
               );
               if (
                 !activeCategory ||
@@ -486,7 +495,7 @@ export function Navbar({
                 >
                   <div className="max-w-screen-xl mx-auto px-6 py-6 text-gray-900">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                      {activeCategory.subCategories.map((sub) => (
+                      {activeCategory.subCategories.map(sub => (
                         <Link
                           key={sub.id}
                           href={`/${sub.slug}`}
