@@ -4,14 +4,25 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ArchiveCalendarProps {
-  selectedDate: Date | null;
-  onDateSelect: (date: Date) => void;
+  startDate: Date | null;
+  endDate: Date | null;
+  onDateRangeSelect: (startDate: Date | null, endDate: Date | null) => void;
 }
 
 const DAY_NAMES = ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহ", "শুক্র", "শনি"];
 const BENGALI_MONTHS = [
-  "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
-  "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর",
+  "জানুয়ারি",
+  "ফেব্রুয়ারি",
+  "মার্চ",
+  "এপ্রিল",
+  "মে",
+  "জুন",
+  "জুলাই",
+  "আগস্ট",
+  "সেপ্টেম্বর",
+  "অক্টোবর",
+  "নভেম্বর",
+  "ডিসেম্বর",
 ];
 
 function isSameDay(a: Date, b: Date) {
@@ -22,17 +33,32 @@ function isSameDay(a: Date, b: Date) {
   );
 }
 
+function isDateInRange(
+  date: Date,
+  startDate: Date | null,
+  endDate: Date | null,
+) {
+  if (!startDate || !endDate) return false;
+  return date >= startDate && date <= endDate;
+}
+
 export default function ArchiveCalendar({
-  selectedDate,
-  onDateSelect,
+  startDate,
+  endDate,
+  onDateRangeSelect,
 }: ArchiveCalendarProps) {
+  // Normalize today's date to midnight so time variations don't break comparisons
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const [viewMonth, setViewMonth] = useState(
-    selectedDate?.getMonth() ?? today.getMonth(),
+    startDate?.getMonth() ?? today.getMonth(),
   );
   const [viewYear, setViewYear] = useState(
-    selectedDate?.getFullYear() ?? today.getFullYear(),
+    startDate?.getFullYear() ?? today.getFullYear(),
   );
+
+  const [tempStartDate, setTempStartDate] = useState<Date | null>(startDate);
 
   const goToPrevMonth = () => {
     if (viewMonth === 0) {
@@ -50,6 +76,27 @@ export default function ArchiveCalendar({
     } else {
       setViewMonth(m => m + 1);
     }
+  };
+
+  const handleDateClick = (day: number) => {
+    const selectedDate = new Date(viewYear, viewMonth, day);
+
+    if (!tempStartDate) {
+      // First date selection
+      setTempStartDate(selectedDate);
+    } else if (selectedDate < tempStartDate) {
+      // If selected date is before start date, reset
+      setTempStartDate(selectedDate);
+    } else {
+      // Complete the range
+      onDateRangeSelect(tempStartDate, selectedDate);
+      setTempStartDate(null);
+    }
+  };
+
+  const clearSelection = () => {
+    setTempStartDate(null);
+    onDateRangeSelect(null, null);
   };
 
   // Build the calendar grid
@@ -109,29 +156,76 @@ export default function ArchiveCalendar({
           }
 
           const dateObj = new Date(viewYear, viewMonth, day);
-          const isSelected = selectedDate && isSameDay(dateObj, selectedDate);
+
+          // Fix: Compare direct midnights. Anything greater than today is the future.
+          const isFuture = dateObj > today;
+
+          const isStartSelected = startDate && isSameDay(dateObj, startDate);
+          const isEndSelected = endDate && isSameDay(dateObj, endDate);
+          const isTempStart =
+            tempStartDate && isSameDay(dateObj, tempStartDate);
+          const inRange = isDateInRange(
+            dateObj,
+            tempStartDate || startDate,
+            endDate,
+          );
           const isToday = isSameDay(dateObj, today);
 
           return (
             <button
               key={`day-${day}`}
-              onClick={() => onDateSelect(dateObj)}
+              onClick={() => !isFuture && handleDateClick(day)}
+              disabled={isFuture}
               className={`
                 aspect-square flex items-center justify-center text-sm font-medium rounded-lg transition-all
                 ${
-                  isSelected
-                    ? "bg-red-600 text-white shadow-md shadow-red-200 scale-105"
-                    : isToday
-                      ? "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
-                      : "text-gray-700 hover:bg-gray-100"
+                  isFuture
+                    ? "text-gray-300 cursor-not-allowed bg-gray-50"
+                    : isStartSelected || isEndSelected || isTempStart
+                      ? "bg-red-600 text-white shadow-md shadow-red-200 scale-105"
+                      : inRange
+                        ? "bg-red-100 text-red-700"
+                        : isToday
+                          ? "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
+                          : "text-gray-700 hover:bg-gray-100"
                 }
               `}
+              aria-label={`${day}`}
             >
               {day}
             </button>
           );
         })}
       </div>
+
+      {/* Selection Info & Clear Button */}
+      {(tempStartDate || startDate || endDate) && (
+        <div className="px-4 py-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+          <div className="text-xs text-gray-600">
+            {tempStartDate && !endDate ? (
+              <span>শেষ তারিখ নির্বাচন করুন</span>
+            ) : startDate && endDate ? (
+              <span>
+                {startDate.toLocaleDateString("bn-BD", {
+                  month: "short",
+                  day: "numeric",
+                })}{" "}
+                -{" "}
+                {endDate.toLocaleDateString("bn-BD", {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            ) : null}
+          </div>
+          <button
+            onClick={clearSelection}
+            className="text-xs font-medium text-red-600 hover:text-red-700 transition-colors"
+          >
+            সাফ করুন
+          </button>
+        </div>
+      )}
     </div>
   );
 }
