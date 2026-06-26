@@ -33,15 +33,6 @@ function isSameDay(a: Date, b: Date) {
   );
 }
 
-function isDateInRange(
-  date: Date,
-  startDate: Date | null,
-  endDate: Date | null,
-) {
-  if (!startDate || !endDate) return false;
-  return date >= startDate && date <= endDate;
-}
-
 export default function ArchiveCalendar({
   startDate,
   endDate,
@@ -57,8 +48,6 @@ export default function ArchiveCalendar({
   const [viewYear, setViewYear] = useState(
     startDate?.getFullYear() ?? today.getFullYear(),
   );
-
-  const [tempStartDate, setTempStartDate] = useState<Date | null>(startDate);
 
   const goToPrevMonth = () => {
     if (viewMonth === 0) {
@@ -80,22 +69,11 @@ export default function ArchiveCalendar({
 
   const handleDateClick = (day: number) => {
     const selectedDate = new Date(viewYear, viewMonth, day);
-
-    if (!tempStartDate) {
-      // First date selection
-      setTempStartDate(selectedDate);
-    } else if (selectedDate < tempStartDate) {
-      // If selected date is before start date, reset
-      setTempStartDate(selectedDate);
-    } else {
-      // Complete the range
-      onDateRangeSelect(tempStartDate, selectedDate);
-      setTempStartDate(null);
-    }
+    // Single click sets same date as both start and end
+    onDateRangeSelect(selectedDate, selectedDate);
   };
 
   const clearSelection = () => {
-    setTempStartDate(null);
     onDateRangeSelect(null, null);
   };
 
@@ -160,15 +138,7 @@ export default function ArchiveCalendar({
           // Fix: Compare direct midnights. Anything greater than today is the future.
           const isFuture = dateObj > today;
 
-          const isStartSelected = startDate && isSameDay(dateObj, startDate);
-          const isEndSelected = endDate && isSameDay(dateObj, endDate);
-          const isTempStart =
-            tempStartDate && isSameDay(dateObj, tempStartDate);
-          const inRange = isDateInRange(
-            dateObj,
-            tempStartDate || startDate,
-            endDate,
-          );
+          const isSelected = startDate && endDate && isSameDay(dateObj, startDate) && isSameDay(dateObj, endDate);
           const isToday = isSameDay(dateObj, today);
 
           return (
@@ -181,13 +151,11 @@ export default function ArchiveCalendar({
                 ${
                   isFuture
                     ? "text-gray-300 cursor-not-allowed bg-gray-50"
-                    : isStartSelected || isEndSelected || isTempStart
+                    : isSelected
                       ? "bg-red-600 text-white shadow-md shadow-red-200 scale-105"
-                      : inRange
-                        ? "bg-red-100 text-red-700"
-                        : isToday
-                          ? "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
-                          : "text-gray-700 hover:bg-gray-100"
+                      : isToday
+                        ? "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
+                        : "text-gray-700 hover:bg-gray-100"
                 }
               `}
               aria-label={`${day}`}
@@ -199,24 +167,16 @@ export default function ArchiveCalendar({
       </div>
 
       {/* Selection Info & Clear Button */}
-      {(tempStartDate || startDate || endDate) && (
+      {startDate && endDate && (
         <div className="px-4 py-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
           <div className="text-xs text-gray-600">
-            {tempStartDate && !endDate ? (
-              <span>শেষ তারিখ নির্বাচন করুন</span>
-            ) : startDate && endDate ? (
-              <span>
-                {startDate.toLocaleDateString("bn-BD", {
-                  month: "short",
-                  day: "numeric",
-                })}{" "}
-                -{" "}
-                {endDate.toLocaleDateString("bn-BD", {
-                  month: "short",
-                  day: "numeric",
-                })}
-              </span>
-            ) : null}
+            <span>
+              {startDate.toLocaleDateString("bn-BD", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
           </div>
           <button
             onClick={clearSelection}

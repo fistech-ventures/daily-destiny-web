@@ -27,7 +27,7 @@ export default function ArchiveSection() {
   // Fetch latest articles on mount (when no date range selected)
   useEffect(() => {
     getArticles({
-      limit: 9,
+      limit: 6,
       status: "Published",
       sortBy: "date",
       sortOrder: "DESC",
