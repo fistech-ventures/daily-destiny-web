@@ -4,22 +4,44 @@ import React, { useState, useCallback } from "react";
 import { CalendarDays, FileText } from "lucide-react";
 import ArchiveCalendar from "@/components/archive/archive-calendar";
 import NewsListClient from "@/components/news/news-list-client";
-import { getArticles } from "@/lib/api";
-import { Article } from "@/lib/types";
 
 export default function ArchivePage() {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const handleDateSelect = useCallback((date: Date) => {
-    setSelectedDate(date);
-  }, []);
+  const handleDateRangeSelect = useCallback(
+    (start: Date | null, end: Date | null) => {
+      setStartDate(start);
+      setEndDate(end);
+    },
+    [],
+  );
 
-  // Format the date for the API: "Mon Jun 22 2026 16:41:30 GMT+0000"
-  const dateParam = selectedDate ? selectedDate.toString() : undefined;
+  // Format date to YYYY-MM-DD without timezone conversion
+  const formatDateForAPI = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
-  const fetchParams = dateParam
-    ? { date: dateParam, limit: 10 }
+  const hasDateRange = startDate && endDate;
+
+  const fetchParams = hasDateRange
+    ? {
+        startDate: formatDateForAPI(startDate),
+        endDate: formatDateForAPI(endDate),
+        limit: 10,
+      }
     : undefined;
+
+  const formatDateDisplay = (date: Date) => {
+    return date.toLocaleDateString("bn-BD", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
@@ -33,7 +55,7 @@ export default function ArchivePage() {
             আর্কাইভ
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            তারিখ নির্বাচন করে পুরনো সংবাদ দেখুন
+            তারিখ পরিসর নির্বাচন করে পুরনো সংবাদ দেখুন
           </p>
         </div>
       </div>
@@ -42,25 +64,22 @@ export default function ArchivePage() {
         {/* LEFT: Calendar Sidebar */}
         <div className="lg:col-span-4 xl:col-span-3 space-y-4">
           <ArchiveCalendar
-            selectedDate={selectedDate}
-            onDateSelect={handleDateSelect}
+            startDate={startDate}
+            endDate={endDate}
+            onDateRangeSelect={handleDateRangeSelect}
           />
 
-          {selectedDate && (
+          {hasDateRange && (
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <FileText className="h-5 w-5 text-amber-600 mt-0.5 shrink-0" />
                 <div>
                   <p className="text-sm font-semibold text-amber-800">
-                    নির্বাচিত তারিখ
+                    নির্বাচিত তারিখ পরিসর
                   </p>
                   <p className="text-sm text-amber-700 mt-0.5">
-                    {selectedDate.toLocaleDateString("bn-BD", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {formatDateDisplay(startDate)} থেকে{" "}
+                    {formatDateDisplay(endDate)}
                   </p>
                 </div>
               </div>
@@ -70,25 +89,20 @@ export default function ArchivePage() {
 
         {/* RIGHT: Articles */}
         <div className="lg:col-span-8 xl:col-span-9">
-          {selectedDate ? (
+          {hasDateRange ? (
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-100">
                 <h2 className="text-lg font-bold text-gray-900">
-                  {selectedDate.toLocaleDateString("bn-BD", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {formatDateDisplay(startDate)} - {formatDateDisplay(endDate)}
                 </h2>
               </div>
               <div className="p-4">
                 <NewsListClient
-                  key={selectedDate.toISOString()}
+                  key={`${startDate.toISOString()}-${endDate.toISOString()}`}
                   initialData={[]}
                   initialMeta={{ total: 0, page: 1, limit: 10 }}
                   fetchParams={fetchParams}
-                  noDataMessage="এই তারিখে কোনো সংবাদ পাওয়া যায়নি"
+                  noDataMessage="এই তারিখ পরিসরে কোনো সংবাদ পাওয়া যায়নি"
                 />
               </div>
             </div>
@@ -98,11 +112,11 @@ export default function ArchivePage() {
                 <CalendarDays className="h-10 w-10 text-gray-400" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">
-                একটি তারিখ নির্বাচন করুন
+                একটি তারিখ পরিসর নির্বাচন করুন
               </h3>
               <p className="text-gray-500 max-w-md mx-auto">
-                বাম পাশের ক্যালেন্ডার থেকে একটি তারিখে ক্লিক করে সেদিনের সব
-                সংবাদ দেখুন
+                বাম পাশের ক্যালেন্ডার থেকে একটি শুরু ও শেষ তারিখ নির্বাচন করে
+                সেই সময়ের সব সংবাদ দেখুন
               </p>
             </div>
           )}
