@@ -575,14 +575,25 @@ export interface EpaperVisualEdition {
   isActive: boolean;
   publishDate: string;
   status: string;
-  pages: EpaperVisualPage[];
+  pages: any[]; // Replace with your complete EpaperVisualPage definition if necessary
+}
+
+// Helper to validate and safely parse date parameters
+function sanitizeDateParam(date: string): string | null {
+  if (!date || date.includes("NaN") || date === "undefined") {
+    return null;
+  }
+  // Extracts only the pure YYYY-MM-DD segment from any localized or ISO timestamps
+  return date.split("T")[0];
 }
 
 // Get latest visual edition
 export async function getLatestVisualEdition(): Promise<EpaperVisualEdition | null> {
   try {
     const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
-    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/latest`);
+    const response = await api.get(
+      `${locationBaseUrl}/web/epaper-visual/editions/latest`,
+    );
     return response.data?.data || null;
   } catch (error) {
     console.error("Error fetching latest visual edition:", error);
@@ -591,10 +602,14 @@ export async function getLatestVisualEdition(): Promise<EpaperVisualEdition | nu
 }
 
 // Get visual edition by ID
-export async function getVisualEditionById(id: string): Promise<EpaperVisualEdition | null> {
+export async function getVisualEditionById(
+  id: string,
+): Promise<EpaperVisualEdition | null> {
   try {
     const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
-    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/${id}`);
+    const response = await api.get(
+      `${locationBaseUrl}/web/epaper-visual/editions/${id}`,
+    );
     return response.data?.data || null;
   } catch (error) {
     console.error("Error fetching visual edition by id:", error);
@@ -602,11 +617,24 @@ export async function getVisualEditionById(id: string): Promise<EpaperVisualEdit
   }
 }
 
-// Get visual edition by date
-export async function getVisualEditionByDate(date: string): Promise<EpaperVisualEdition | null> {
+// FIXED: Get visual edition by date (Matches Swagger schema /editions/{date})
+export async function getVisualEditionByDate(
+  date: string,
+): Promise<EpaperVisualEdition | null> {
   try {
+    const sanitizedDate = sanitizeDateParam(date);
+    if (!sanitizedDate) {
+      console.warn(
+        "Invalid date parameter intercepted inside API layer. Falling back.",
+      );
+      return await getLatestVisualEdition();
+    }
+
     const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
-    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/date/${date}`);
+    // Removed the redundant "/date" path segment to align with Swagger definition
+    const response = await api.get(
+      `${locationBaseUrl}/web/epaper-visual/editions/${sanitizedDate}`,
+    );
     return response.data?.data || null;
   } catch (error) {
     console.error("Error fetching visual edition by date:", error);
@@ -615,13 +643,25 @@ export async function getVisualEditionByDate(date: string): Promise<EpaperVisual
 }
 
 // Get all visual edition dates
+// Falls back to the latest edition's publishDate when the API endpoint is broken
 export async function getVisualEditionDates(): Promise<string[]> {
   try {
     const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
-    const response = await api.get(`${locationBaseUrl}/web/epaper-visual/editions/dates`);
+    const response = await api.get(
+      `${locationBaseUrl}/web/epaper-visual/editions/dates`,
+    );
     return response.data?.data || [];
   } catch (error) {
     console.error("Error fetching visual edition dates:", error);
+    // Fallback: derive dates from the latest edition
+    try {
+      const latest = await getLatestVisualEdition();
+      if (latest?.publishDate) {
+        return [latest.publishDate];
+      }
+    } catch {
+      // ignore
+    }
     return [];
   }
 }

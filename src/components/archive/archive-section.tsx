@@ -7,6 +7,7 @@ import {
   FileText,
   Loader2,
   Clock,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -17,14 +18,20 @@ import { Article } from "@/lib/types";
 
 export default function ArchiveSection() {
   const { locale } = useParams();
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [articles, setArticles] = useState<Article[]>([]);
   const [latestArticles, setLatestArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch latest articles on mount (when no date selected)
+  // Fetch latest articles on mount (when no date range selected)
   useEffect(() => {
-    getArticles({ limit: 9, status: "Published", sortBy: "date", sortOrder: "DESC" })
+    getArticles({
+      limit: 6,
+      status: "Published",
+      sortBy: "date",
+      sortOrder: "DESC",
+    })
       .then(res => {
         setLatestArticles(res?.data || []);
       })
@@ -33,20 +40,37 @@ export default function ArchiveSection() {
       });
   }, []);
 
-  const handleDateSelect = useCallback((date: Date) => {
-    setSelectedDate(date);
-  }, []);
+  const handleDateRangeSelect = useCallback(
+    (start: Date | null, end: Date | null) => {
+      setStartDate(start);
+      setEndDate(end);
+    },
+    [],
+  );
 
-  // Fetch articles when a date is selected
+  // Format date to YYYY-MM-DD without timezone conversion
+  const formatDateForAPI = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  // Fetch articles when date range is selected
   useEffect(() => {
-    if (!selectedDate) return;
+    if (!startDate || !endDate) return;
 
     let cancelled = false;
     setLoading(true);
 
-    const dateParam = selectedDate.toString();
+    const startDateParam = formatDateForAPI(startDate);
+    const endDateParam = formatDateForAPI(endDate);
 
-    getArticles({ date: dateParam, limit: 9 })
+    getArticles({
+      startDate: startDateParam,
+      endDate: endDateParam,
+      limit: 9,
+    })
       .then(res => {
         if (!cancelled) {
           setArticles(res?.data || []);
@@ -65,10 +89,24 @@ export default function ArchiveSection() {
     return () => {
       cancelled = true;
     };
-  }, [selectedDate]);
+  }, [startDate, endDate]);
 
-  const displayArticles = selectedDate ? articles : latestArticles;
-  const isDisplayLoading = selectedDate ? loading : false;
+  const displayArticles = startDate && endDate ? articles : latestArticles;
+  const isDisplayLoading = startDate && endDate ? loading : false;
+  const hasDateRange = startDate && endDate;
+
+  const clearDateRange = () => {
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const formatDateDisplay = (date: Date) => {
+    return date.toLocaleDateString("bn-BD", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
 
   return (
     <section className="w-full">
@@ -95,27 +133,34 @@ export default function ArchiveSection() {
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               {/* Sub-header */}
               <div className="px-5 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
-                <h3 className="text-base font-bold text-gray-800 flex items-center gap-2">
-                  {selectedDate ? (
-                    <>
-                      <CalendarDays className="h-4 w-4 text-red-600" />
-                      <span>
-                        {selectedDate.toLocaleDateString("bn-BD", {
-                          weekday: "long",
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <Clock className="h-4 w-4 text-red-600" />
-                      <span>সর্বশেষ সংবাদ</span>
-                    </>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-bold text-gray-800 flex items-center gap-2">
+                    {hasDateRange ? (
+                      <>
+                        <CalendarDays className="h-4 w-4 text-red-600" />
+                        <span>
+                          {formatDateDisplay(startDate)} থেকে{" "}
+                          {formatDateDisplay(endDate)}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Clock className="h-4 w-4 text-red-600" />
+                        <span>সর্বশেষ সংবাদ</span>
+                      </>
+                    )}
+                  </h3>
+                  {hasDateRange && (
+                    <button
+                      onClick={clearDateRange}
+                      className="ml-2 p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                      aria-label="Clear date range"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   )}
-                </h3>
-                {!selectedDate && (
+                </div>
+                {!hasDateRange && (
                   <Link
                     href={`/${locale}/archive`}
                     className="text-xs font-medium text-red-600 hover:text-red-700 transition-colors flex items-center gap-1"
@@ -178,9 +223,9 @@ export default function ArchiveSection() {
               ) : (
                 <div className="flex flex-col items-center justify-center min-h-[200px] text-center p-6">
                   <FileText className="h-10 w-10 text-gray-300 mb-3" />
-                  {selectedDate ? (
+                  {hasDateRange ? (
                     <p className="text-gray-500 text-sm">
-                      এই তারিখে কোনো সংবাদ পাওয়া যায়নি
+                      এই তারিখ পরিসরে কোনো সংবাদ পাওয়া যায়নি
                     </p>
                   ) : (
                     <p className="text-gray-500 text-sm">
@@ -195,8 +240,9 @@ export default function ArchiveSection() {
           {/* RIGHT: Calendar (25%) */}
           <div className="w-full lg:w-1/4">
             <ArchiveCalendar
-              selectedDate={selectedDate}
-              onDateSelect={handleDateSelect}
+              startDate={startDate}
+              endDate={endDate}
+              onDateRangeSelect={handleDateRangeSelect}
             />
           </div>
         </div>

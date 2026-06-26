@@ -47,6 +47,8 @@ export interface ArticleQueryParams {
   sortBy?: string;
   sortOrder?: "ASC" | "DESC";
   date?: string;
+  startDate?: string; // YYYY-MM-DD format for date range filtering
+  endDate?: string; // YYYY-MM-DD format for date range filtering
 }
 
 export interface Author {
