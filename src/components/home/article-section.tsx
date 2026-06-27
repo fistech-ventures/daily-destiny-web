@@ -282,10 +282,6 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
       sortOrder: "ASC",
     });
 
-    console.log("Featured:", featuredArticles.length);
-    console.log("Exclusive:", exclusiveArticles.length);
-    console.log("Regular:", regularArticles.length);
-
     const exclusiveTop = exclusiveArticles.data[0];
     const gridArticles = regularArticles.data.slice(0, 6);
 
@@ -293,8 +289,8 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
     const featuredSmall = featuredArticles.data.slice(1, 7);
 
     return (
-      <section className="!p-0">
-        <div className="flex flex-col lg:flex-row gap-5 px-4">
+      <section className="p-0!">
+        <div className="flex flex-col lg:flex-row gap-5">
           <div className="w-full lg:w-3/4 flex flex-col gap-5">
             {exclusiveTop ? (
               <FeaturedSection article={exclusiveTop} />
@@ -365,9 +361,8 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
       </section>
     );
   } catch (error) {
-    console.error("Error loading articles:", error);
     return (
-      <section className="!p-0">
+      <section className="p-0!">
         <div className="text-center py-10">
           <p className="text-red-500">Error loading articles</p>
           <p className="text-gray-500 text-sm">{String(error)}</p>
