@@ -172,7 +172,7 @@ export default async function Home({
   return (
     <main className="max-w-7xl mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
       <MainLayout />
-
+  
       {/* Location Filter + Recent News Section */}
       <section className="w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
