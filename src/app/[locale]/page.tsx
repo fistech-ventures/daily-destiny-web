@@ -13,6 +13,8 @@ import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
 import OthersCategories from "@/components/category/OthersCategroies";
 import FeatureBanner from "@/components/feature-banner/FeatureBanner";
+import BinodonSection from "@/components/home/article/binodon-section";
+import KhelaSlider from "@/components/home/article/khela-slider";
 
 export async function generateMetadata({
   params,
@@ -157,6 +159,29 @@ export default async function Home({
     getCategoryData("business"),
   ]);
 
+  // Fetch Khela/Sports category for the slider
+  const khelaCat = categoriesList.find(
+    (c) => c.slug === "kheladula" || c.slug === "sports",
+  );
+  let khelaArticles: Article[] = [];
+  let khelaTitle = "খেলাধুলা";
+  let khelaSlug = "kheladula";
+
+  if (khelaCat) {
+    try {
+      const khelaRes = await getArticles({
+        categoryId: khelaCat.id,
+        limit: 8,
+        status: "Published",
+      });
+      khelaArticles = khelaRes?.data || [];
+      khelaTitle = khelaCat.titleBn || khelaCat.title || "খেলাধুলা";
+      khelaSlug = khelaCat.slug;
+    } catch (err) {
+      console.error("Failed to fetch khela articles:", err);
+    }
+  }
+
   const galleryRes = await getImages({ page: 1, limit: 5 });
   const galleryArticles = galleryRes?.data || [];
 
@@ -282,6 +307,12 @@ export default async function Home({
 
       <SingleCategoryNewsGrid slug="international" limit={7} />
       {/* <SingleCategoryNewsGrid slug="opinion" limit={7} /> */}
+      <BinodonSection />
+      <KhelaSlider
+        articles={khelaArticles}
+        title={khelaTitle}
+        categorySlug={khelaSlug}
+      />
       <OthersCategories />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
