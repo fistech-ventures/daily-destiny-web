@@ -2,7 +2,7 @@ import MainLayout from "@/components/home/main-layout";
 import VideoGallery from "@/components/home/video-gallery";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
-import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
+import { getVideos, getArticles, getAllcategories, getImages, getSpecialEvents } from "@/lib/api";
 import { Category, Article } from "@/lib/types";
 import { imageArticle } from "@/lib/api";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
@@ -185,6 +185,15 @@ export default async function Home({
   const galleryRes = await getImages({ page: 1, limit: 5 });
   const galleryArticles = galleryRes?.data || [];
 
+  // Fetch the first active special event for the FeatureBanner
+  let specialEvent = null;
+  try {
+    const specialEventsRes = await getSpecialEvents({ page: 1, limit: 1 });
+    specialEvent = specialEventsRes?.data?.[0] ?? null;
+  } catch (err) {
+    console.error("Failed to fetch special events:", err);
+  }
+
   const galleryItems = galleryArticles.map((article: imageArticle) => ({
     id: article.id,
     url: article.coverImage || "",
@@ -197,7 +206,7 @@ export default async function Home({
 
   return (
     <main className="container mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
-      <FeatureBanner />
+      <FeatureBanner eventData={specialEvent} />
       <MainLayout />
 
       {/* Location Filter + Recent News Section */}

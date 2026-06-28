@@ -677,3 +677,20 @@ export async function getEpaperPublications(): Promise<string[]> {
     throw error;
   }
 }
+
+
+// Get Special Events
+export async function getSpecialEvents(query?: {
+  page?: number;
+  limit?: number;
+}) {
+  try {
+    const response = await api.get("/web/special-events", {
+      params: query,
+    });
+    return response.data; // Returns { success, statusCode, message, meta, data: [...] }
+  } catch (error) {
+    console.error("Error fetching special events:", error);
+    throw error;
+  }
+}
