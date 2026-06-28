@@ -5,17 +5,17 @@ import { Article } from "@/lib/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-interface KhelaSliderProps {
+interface EconomySectionProps {
   articles: Article[];
   title: string;
   categorySlug: string;
 }
 
-export default function KhelaSlider({
+export default function EconomySection({
   articles = [],
   title,
   categorySlug,
-}: KhelaSliderProps) {
+}: EconomySectionProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activePage, setActivePage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
