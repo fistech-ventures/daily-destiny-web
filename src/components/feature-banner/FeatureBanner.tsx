@@ -46,7 +46,7 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
   return (
     <section className="w-full bg-[#cbd5e1] p-1 font-sans">
       {/* ── TOP ROW: Banner Image ── */}
-      <div className="relative w-full h-[140px] sm:h-[180px] md:h-[240px] overflow-hidden mb-1">
+      <div className="relative w-full h-[140px] sm:h-[180px] md:h-[240px] mb-1">
         {heroBgImage && (
           <Image
             src={heroBgImage}
@@ -57,7 +57,10 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
           />
         )}
         {/* Screen-reader title */}
+        <div className="relative z-15">
+
         <h2 className="sr-only">{heroTitle}</h2>
+        </div>
       </div>
 
       {/* ── BOTTOM ROW: Article Grid ── */}
