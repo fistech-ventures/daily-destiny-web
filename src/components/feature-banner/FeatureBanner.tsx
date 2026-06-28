@@ -36,37 +36,48 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
     return null;
   }
 
-  const { title: heroTitle, bannerImage: heroBgImage, articles = [] } = eventData;
+  const {
+    title: heroTitle,
+    bannerImage: heroBgImage,
+    articles = [],
+  } = eventData;
 
   // Filter out inactive articles, then cap at 4 to keep the grid layout intact
   const activeArticles = articles
-    .filter((article) => article.isActive)
+    .filter(article => article.isActive)
     .slice(0, 4);
 
   return (
     <section className="w-full bg-[#cbd5e1] p-1 font-sans">
       {/* ── TOP ROW: Banner Image ── */}
-      <div className="relative w-full h-[140px] sm:h-[180px] md:h-[240px] mb-1">
+      <div className="relative w-full h-[140px] sm:h-[180px] md:h-[240px] mb-1 overflow-hidden">
         {heroBgImage && (
           <Image
             src={heroBgImage}
             alt={heroTitle || "Special Event Banner"}
             fill
-            className="object-cover object-center"
+            className="object-contain"
             priority
           />
         )}
-        {/* Screen-reader title */}
-        <div className="relative z-15">
 
+        {/* Banner Title - Positioned at bottom-left */}
+        {heroTitle && (
+          <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 via-black/40 to-transparent p-3 sm:p-4 md:p-6 z-10">
+            <h2 className="text-white text-sm sm:text-lg md:text-2xl font-bold leading-tight">
+              {heroTitle}
+            </h2>
+          </div>
+        )}
+
+        {/* Screen-reader only title */}
         <h2 className="sr-only">{heroTitle}</h2>
-        </div>
       </div>
 
       {/* ── BOTTOM ROW: Article Grid ── */}
       {activeArticles.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 bg-white p-2">
-          {activeArticles.map((article) => (
+          {activeArticles.map(article => (
             <Link
               key={article.id}
               href={`/news/${article.type || "news"}/${article.code}`}
