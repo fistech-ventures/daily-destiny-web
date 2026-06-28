@@ -2,7 +2,7 @@ import MainLayout from "@/components/home/main-layout";
 import VideoGallery from "@/components/home/video-gallery";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
-import { getVideos, getArticles, getAllcategories, getImages } from "@/lib/api";
+import { getVideos, getArticles, getAllcategories, getImages, getSpecialEvents } from "@/lib/api";
 import { Category, Article } from "@/lib/types";
 import { imageArticle } from "@/lib/api";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
@@ -12,6 +12,9 @@ import SingleCategoryNewsGrid from "@/components/category/SingleCategoryNewsGrid
 import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
 import OthersCategories from "@/components/category/OthersCategroies";
+import FeatureBanner from "@/components/feature-banner/FeatureBanner";
+import BinodonSection from "@/components/home/article/binodon-section";
+import KhelaSlider from "@/components/home/article/khela-slider";
 
 export async function generateMetadata({
   params,
@@ -156,8 +159,40 @@ export default async function Home({
     getCategoryData("business"),
   ]);
 
+  // Fetch Khela/Sports category for the slider
+  const khelaCat = categoriesList.find(
+    (c) => c.slug === "kheladula" || c.slug === "sports",
+  );
+  let khelaArticles: Article[] = [];
+  let khelaTitle = "খেলাধুলা";
+  let khelaSlug = "kheladula";
+
+  if (khelaCat) {
+    try {
+      const khelaRes = await getArticles({
+        categoryId: khelaCat.id,
+        limit: 8,
+        status: "Published",
+      });
+      khelaArticles = khelaRes?.data || [];
+      khelaTitle = khelaCat.titleBn || khelaCat.title || "খেলাধুলা";
+      khelaSlug = khelaCat.slug;
+    } catch (err) {
+      console.error("Failed to fetch khela articles:", err);
+    }
+  }
+
   const galleryRes = await getImages({ page: 1, limit: 5 });
   const galleryArticles = galleryRes?.data || [];
+
+  // Fetch the first active special event for the FeatureBanner
+  let specialEvent = null;
+  try {
+    const specialEventsRes = await getSpecialEvents({ page: 1, limit: 1 });
+    specialEvent = specialEventsRes?.data?.[0] ?? null;
+  } catch (err) {
+    console.error("Failed to fetch special events:", err);
+  }
 
   const galleryItems = galleryArticles.map((article: imageArticle) => ({
     id: article.id,
@@ -170,7 +205,8 @@ export default async function Home({
   }));
 
   return (
-    <main className="max-w-7xl mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
+    <main className="container mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
+      <FeatureBanner eventData={specialEvent} />
       <MainLayout />
 
       {/* Location Filter + Recent News Section */}
@@ -280,6 +316,12 @@ export default async function Home({
 
       <SingleCategoryNewsGrid slug="international" limit={7} />
       {/* <SingleCategoryNewsGrid slug="opinion" limit={7} /> */}
+      <BinodonSection />
+      <KhelaSlider
+        articles={khelaArticles}
+        title={khelaTitle}
+        categorySlug={khelaSlug}
+      />
       <OthersCategories />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />

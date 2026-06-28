@@ -182,7 +182,7 @@ export default function ArchiveSection() {
                     <a
                       key={article.id}
                       href={`/news/${article.category?.slug || ""}/${article.code}`}
-                      className="group flex flex-col rounded-lg overflow-hidden border border-gray-100 hover:border-red-200 bg-white shadow-sm hover:shadow-md transition-all duration-200"
+                      className="group flex flex-col rounded-lg overflow-hidden border border-gray-100 hover:border-[#1a66ca] bg-white shadow-sm hover:shadow-md transition-all duration-200"
                     >
                       {/* Thumbnail */}
                       <div className="relative w-full aspect-video overflow-hidden bg-gray-100">
@@ -201,12 +201,12 @@ export default function ArchiveSection() {
 
                       {/* Content */}
                       <div className="flex-1 p-3 flex flex-col">
-                        <h4 className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-red-600 transition-colors line-clamp-2">
+                        <h4 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2">
                           {article.title}
                         </h4>
                         <div className="flex items-center gap-2 mt-2">
                           {article.category?.titleBn && (
-                            <span className="text-[10px] font-medium text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full">
+                            <span className="text-sm font-medium text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full">
                               {article.category.titleBn}
                             </span>
                           )}

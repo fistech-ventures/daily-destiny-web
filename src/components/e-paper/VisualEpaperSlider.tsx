@@ -96,7 +96,6 @@ export default function VisualEpaperSlider({
             onChange={e => handleDateChange(e.target.value)}
             className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white font-medium text-gray-700 outline-none cursor-pointer"
           />
-
         </div>
 
         {/* Center: Pagination controls */}
@@ -134,7 +133,7 @@ export default function VisualEpaperSlider({
           </button>
 
           <span className="text-sm font-medium text-gray-600 ml-1">
-            {activePageIndex + 1}/{totalPages} পাতা
+            {currentPage.pageNumber}/{totalPages} পাতা
           </span>
           <button className="px-2.5 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 font-medium text-xs rounded hover:bg-emerald-100 transition">
             সব পাতা
@@ -176,7 +175,7 @@ export default function VisualEpaperSlider({
               <div className="relative w-full aspect-[3/4] bg-gray-100 rounded overflow-hidden">
                 <Image
                   src={page.imageUrl}
-                  alt={`Thumbnail ${idx + 1}`}
+                  alt={`Thumbnail ${page.pageNumber}`}
                   fill
                   sizes="(max-width: 1024px) 100px, 200px"
                   className="object-cover"
@@ -189,7 +188,7 @@ export default function VisualEpaperSlider({
                     : "bg-gray-100 text-gray-600"
                 }`}
               >
-                পাতা {idx + 1}
+                পাতা {page.pageNumber}
               </span>
             </div>
           ))}
@@ -200,7 +199,7 @@ export default function VisualEpaperSlider({
           <div className="relative w-full aspect-[3/4] border border-gray-100 bg-gray-50">
             <Image
               src={currentPage.imageUrl}
-              alt={`Page Layout ${currentPage.pageNumber}`}
+              alt={`Page ${currentPage.pageNumber}`}
               fill
               sizes="(max-width: 1280px) 100vw, 50vw"
               priority
@@ -269,7 +268,6 @@ export default function VisualEpaperSlider({
                       fill
                       unoptimized
                       priority
-                      // className="object-contain"
                     />
                   </div>
                 </div>

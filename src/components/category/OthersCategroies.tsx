@@ -110,8 +110,13 @@ const OthersCategories = async () => {
       })
     );
 
-    // Filter out categories that don't have any articles (optional, but keeps UI clean)
-    const activeCategoriesData = categoriesData.filter(cat => cat.articles.length > 0);
+    // Exclude categories that already have dedicated sections on the homepage
+    const excludedSlugs = ["international", "binodon", "kheladula"];
+
+    // Filter out categories without articles and those with dedicated sections
+    const activeCategoriesData = categoriesData.filter(
+      cat => cat.articles.length > 0 && !excludedSlugs.includes(cat.slug),
+    );
 
     return (
       <div>
