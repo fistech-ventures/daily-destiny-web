@@ -48,6 +48,11 @@ const VisualEpaperPage = async ({ params, searchParams }: PageProps) => {
     }
   }
 
+
+  if (edition && edition.pages) {
+    edition.pages = edition.pages.sort((a, b) => a.pageNumber - b.pageNumber);
+  }
+
   return (
     <VisualEpaperSlider
       edition={edition}
