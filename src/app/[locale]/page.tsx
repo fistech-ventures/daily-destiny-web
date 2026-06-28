@@ -15,6 +15,8 @@ import OthersCategories from "@/components/category/OthersCategroies";
 import FeatureBanner from "@/components/feature-banner/FeatureBanner";
 import BinodonSection from "@/components/home/article/binodon-section";
 import KhelaSlider from "@/components/home/article/khela-slider";
+import PoliticsSection from "@/components/home/article/polititcs-section";
+import EconomySection from "@/components/home/article/economy-section";
 
 export async function generateMetadata({
   params,
@@ -167,6 +169,10 @@ export default async function Home({
   let khelaTitle = "খেলাধুলা";
   let khelaSlug = "kheladula";
 
+  let politicsArticles: Article[] = [];
+  let politicsTitle = "রাজনীতি";
+  let politicsSlug = "politics";
+
   if (khelaCat) {
     try {
       const khelaRes = await getArticles({
@@ -179,6 +185,48 @@ export default async function Home({
       khelaSlug = khelaCat.slug;
     } catch (err) {
       console.error("Failed to fetch khela articles:", err);
+    }
+  }
+
+  // Fetch politics (রাজনীতি) category articles — 1 hero + up to 6 side cards
+  const politicsCat = categoriesList.find(
+    (c) => c.slug === "politics" || c.slug === "rajneeti" || c.slug === "রাজনীতি",
+  );
+  if (politicsCat) {
+    try {
+      const politicsRes = await getArticles({
+        categoryId: politicsCat.id,
+        limit: 7,
+        status: "Published",
+      });
+      politicsArticles = politicsRes?.data || [];
+      politicsTitle = politicsCat.titleBn || politicsCat.title || "রাজনীতি";
+      politicsSlug = politicsCat.slug;
+    } catch (err) {
+      console.error("Failed to fetch politics articles:", err);
+    }
+  }
+
+  // Fetch economy (অর্থনীতি) category articles — up to 8 cards for the slider
+  const economyCat = categoriesList.find(
+    (c) => c.slug === "economy" || c.slug === "orthoniti" || c.slug === "অর্থনীতি",
+  );
+  let economyArticles: Article[] = [];
+  let economyTitle = "অর্থনীতি";
+  let economySlug = "economy";
+
+  if (economyCat) {
+    try {
+      const economyRes = await getArticles({
+        categoryId: economyCat.id,
+        limit: 8,
+        status: "Published",
+      });
+      economyArticles = economyRes?.data || [];
+      economyTitle = economyCat.titleBn || economyCat.title || "অর্থনীতি";
+      economySlug = economyCat.slug;
+    } catch (err) {
+      console.error("Failed to fetch economy articles:", err);
     }
   }
 
@@ -314,14 +362,26 @@ export default async function Home({
         </div>
       </section>
 
+      {politicsArticles.length > 0 && (
+        <PoliticsSection articles={politicsArticles} />
+      )}
+      <SingleCategoryNewsGrid slug="national" limit={7} />
+      {economyArticles.length > 0 && (
+        <EconomySection
+          articles={economyArticles}
+          title={economyTitle}
+          categorySlug={economySlug}
+        />
+      )}
       <SingleCategoryNewsGrid slug="international" limit={7} />
-      {/* <SingleCategoryNewsGrid slug="opinion" limit={7} /> */}
       <BinodonSection />
       <KhelaSlider
         articles={khelaArticles}
         title={khelaTitle}
         categorySlug={khelaSlug}
       />
+      <SingleCategoryNewsGrid slug="education" limit={7} />
+
       <OthersCategories />
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />

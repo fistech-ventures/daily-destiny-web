@@ -96,7 +96,7 @@ export default async function SingleCategoryNewsGrid({
                         <div className="absolute bottom-4 right-4">
                             <Link
                                 href={`/news/${featuredArticle.category.slug || featuredArticle.category.slugBn}/${featuredArticle.code}`}
-                                className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white text-xs font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
+                                className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white hover:text-white text-sm font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
                             >
                                 বিস্তারিত
                             </Link>
@@ -127,13 +127,13 @@ export default async function SingleCategoryNewsGrid({
                                 </h4>
 
                                 {article.excerpt && (
-                                    <p className="hidden sm:block text-xs text-gray-500 mt-1 line-clamp-2">
+                                    <p className="hidden sm:block text-sm text-gray-500 mt-1 line-clamp-2">
                                         {article.excerpt}
                                     </p>
                                 )}
 
                                 <div className="mt-2.5">
-                                    <span className="inline-flex items-center justify-center bg-[#000058] text-white text-[11px] font-medium px-3 py-1 rounded">
+                                    <span className="inline-flex items-center justify-center bg-[#000058] text-white text-sm font-medium px-3 py-1 rounded">
                                         বিস্তারিত
                                     </span>
                                 </div>
@@ -165,13 +165,13 @@ export default async function SingleCategoryNewsGrid({
                                 </h4>
 
                                 {article.excerpt && (
-                                    <p className="hidden sm:block text-xs text-gray-500 mt-1 line-clamp-2">
+                                    <p className="hidden sm:block text-sm text-gray-500 mt-1 line-clamp-2">
                                         {article.excerpt}
                                     </p>
                                 )}
 
                                 <div className="mt-2.5">
-                                    <span className="inline-flex items-center justify-center bg-[#000058] text-white text-[11px] font-medium px-3 py-1 rounded">
+                                    <span className="inline-flex items-center justify-center bg-[#000058] text-white text-sm font-medium px-3 py-1 rounded">
                                         বিস্তারিত
                                     </span>
                                 </div>
