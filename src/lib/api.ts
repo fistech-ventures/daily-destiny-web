@@ -209,6 +209,23 @@ export async function trackArticleView(
   }
 }
 
+// Track article share event
+export async function trackArticleShare(
+  articleId: string,
+  sessionId?: string,
+){
+   try {
+    const response = await api.post(`/web/articles/${articleId}/events`, {
+      eventType: "share",
+      sessionId: sessionId || undefined,
+    });
+    return response.data;
+  } catch (error) {
+    // Silently fail — share tracking should never break the user experience
+    console.error("Error tracking article share:", error);
+  }
+}
+
 // Get videos
 export async function getVideos(query?: { page?: number; limit?: number }) {
   try {
