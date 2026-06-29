@@ -2,7 +2,13 @@ import MainLayout from "@/components/home/main-layout";
 import VideoGallery from "@/components/home/video-gallery";
 import { generateHomeMetadata } from "@/lib/metadata";
 import { setRequestLocale } from "next-intl/server";
-import { getVideos, getArticles, getAllcategories, getImages, getSpecialEvents } from "@/lib/api";
+import {
+  getVideos,
+  getArticles,
+  getAllcategories,
+  getImages,
+  getSpecialEvents,
+} from "@/lib/api";
 import { Category, Article } from "@/lib/types";
 import { imageArticle } from "@/lib/api";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
@@ -101,7 +107,7 @@ export default async function Home({
   const categoriesList: Category[] = categoriesRes?.data || [];
 
   // Fetch national (জাতীয়) category articles
-  const nationalCategory = categoriesList.find(c => c.slug === "national");
+  const nationalCategory = categoriesList.find((c) => c.slug === "national");
   let recentArticles: Article[] = [];
   if (nationalCategory) {
     const nationalRes = await getArticles({
@@ -113,7 +119,7 @@ export default async function Home({
   }
 
   const getCategoryData = async (slug: string) => {
-    const cat = categoriesList.find(c => c.slug === slug);
+    const cat = categoriesList.find((c) => c.slug === slug);
 
     if (!cat) {
       const fallbackTitles: Record<string, string> = {
@@ -190,7 +196,8 @@ export default async function Home({
 
   // Fetch politics (রাজনীতি) category articles — 1 hero + up to 6 side cards
   const politicsCat = categoriesList.find(
-    (c) => c.slug === "politics" || c.slug === "rajneeti" || c.slug === "রাজনীতি",
+    (c) =>
+      c.slug === "politics" || c.slug === "rajneeti" || c.slug === "রাজনীতি",
   );
   if (politicsCat) {
     try {
@@ -209,7 +216,8 @@ export default async function Home({
 
   // Fetch economy (অর্থনীতি) category articles — up to 8 cards for the slider
   const economyCat = categoriesList.find(
-    (c) => c.slug === "economy" || c.slug === "orthoniti" || c.slug === "অর্থনীতি",
+    (c) =>
+      c.slug === "economy" || c.slug === "orthoniti" || c.slug === "অর্থনীতি",
   );
   let economyArticles: Article[] = [];
   let economyTitle = "অর্থনীতি";
