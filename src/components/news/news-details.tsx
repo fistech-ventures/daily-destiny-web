@@ -59,7 +59,7 @@ export default function NewsDetails({ article }: { article: Article }) {
         <hr className="print:block hidden print:mb-4" />
 
         <div className="print:hidden">
-          <SocialShare title={article.title} />
+          <SocialShare title={article.title} articleId={article.id} />
         </div>
 
         <article

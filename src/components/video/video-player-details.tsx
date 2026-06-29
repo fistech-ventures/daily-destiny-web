@@ -74,7 +74,7 @@ export default function VideoPlayerDetails({ video }: VideoPlayerDetailsProps) {
         <p className="text-sm font-normal text-muted-foreground">
           {video.excerpt}
         </p>
-        <SocialShare title={video.title} />
+        <SocialShare title={video.title} articleId={video.id} />
       </div>
     </div>
   );
