@@ -113,32 +113,41 @@ const SmallCard: React.FC<ExclusiveSmallCardProps> = ({ article }) => (
 
 export default async function ArticleSection(): Promise<React.ReactNode> {
   try {
-    const featuredArticles = await getArticles({
+    const popularArticles = await getArticles({
       page: 1,
-      limit: 50,
+      limit: 10,
       sortBy: "position",
       sortOrder: "ASC",
-      isFeatured: true,
+      isPopular: true,
     });
     const exclusiveArticles = await getArticles({
       page: 1,
-      limit: 50,
+      limit: 7,
       sortBy: "position",
       sortOrder: "ASC",
       isExclusive: true,
     });
 
-    const regularArticles = await getArticles({
+    // Fallback popular
+    const fallbackPopularArticles = await getArticles({
       page: 1,
-      limit: 50,
+      limit: 10,
+      sortBy: "position",
       sortOrder: "ASC",
+      isFeatured: true,
     });
 
     const exclusiveTop = exclusiveArticles.data[0];
-    const gridArticles = regularArticles.data.slice(0, 6);
+    const gridArticles = exclusiveArticles.data.slice(1, 7);
 
-    const featuredTop = featuredArticles.data[0];
-    const featuredSmall = featuredArticles.data.slice(1, 7);
+    const featuredTop =
+      popularArticles.data.length !== 0
+        ? popularArticles.data[0]
+        : fallbackPopularArticles.data[0];
+    const featuredSmall =
+      popularArticles.data.length !== 0
+        ? popularArticles.data.slice(1, 7)
+        : fallbackPopularArticles.data.slice(1, 7);
 
     return (
       <section className="p-0!">
@@ -196,7 +205,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
               <BigCard article={featuredTop} />
             ) : (
               <div className="bg-gray-100 h-48 rounded flex items-center justify-center text-gray-500">
-                No featured articles
+                No popular articles
               </div>
             )}
 

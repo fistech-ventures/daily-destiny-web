@@ -49,6 +49,7 @@ export interface ArticleQueryParams {
   date?: string;
   startDate?: string; // YYYY-MM-DD format for date range filtering
   endDate?: string; // YYYY-MM-DD format for date range filtering
+  isPopular?: boolean
 }
 
 export interface Author {
