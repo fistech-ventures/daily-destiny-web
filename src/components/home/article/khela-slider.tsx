@@ -154,11 +154,13 @@ export default function KhelaSlider({
 
             {/* Content */}
             <div className="p-3 flex flex-col gap-1">
-              <h3 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2">
+              <h3 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                 {article.title}
               </h3>
               {article.excerpt && (
-                <p className="text-sm text-gray-600 line-clamp-3">
+                <p className="text-sm text-gray-600"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {article.excerpt}
                 </p>
               )}

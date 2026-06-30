@@ -7,6 +7,7 @@ import { Footer } from "@/components/shared/footer";
 import { MobileBottomNav } from "@/components/shared/mobile-bottom-nav";
 import { usePathname } from "next/navigation";
 import { Category, MarketPrice } from "@/lib/types";
+import AdBanner from "@/components/shared/ad-banner";
 
 import { VideoArticle } from "@/lib/api";
 import ShareMarket from "@/components/shared/share-market";
@@ -48,13 +49,13 @@ export default function AppProvider({
       {/* <Navbar categories={categories} videos={videos} headlines={headlines} /> */}
       {/* <Headline headlines={headlines} /> */}
 
-      <Navbar 
-          categories={categories} 
-          videos={videos} 
-          headlines={headlines}
-          marketPrices={marketPrices}
-        />
-        <ShareMarket />
+      <Navbar
+        categories={categories}
+        videos={videos}
+        headlines={headlines}
+        marketPrices={marketPrices}
+      />
+      <ShareMarket />
 
       <div className="md:pb-0 pb-16">
         {isSearchPage ? (
@@ -65,8 +66,14 @@ export default function AppProvider({
           </div>
         )}
       </div>
-
+      {/* Footer Advertisement Section */}
+      <div className="bg-gray-50 border-t border-gray-200">
+        <div className="container mx-auto px-4 py-4">
+          <AdBanner className="rounded-lg" altText="ফুটার বিজ্ঞাপন" />
+        </div>
+      </div>
       <Footer />
+
       <MobileBottomNav />
     </QueryClientProvider>
   );

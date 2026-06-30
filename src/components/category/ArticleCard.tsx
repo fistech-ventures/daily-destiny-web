@@ -66,15 +66,16 @@ export default function ArticleCard({
           <h2
             className={`font-bold text-gray-900 leading-normal group-hover:text-[#000058] transition-colors ${
               isCenterFeatured
-                ? "text-xl md:text-2xl font-black line-clamp-3"
+                ? "text-xl md:text-2xl font-black"
                 : isCompactRow
-                  ? "text-sm sm:text-base font-bold line-clamp-2 md:line-clamp-3 text-gray-900"
+                  ? "text-sm sm:text-base font-bold text-gray-900"
                   : isVerticalLead
-                    ? "text-base md:text-lg line-clamp-2"
+                    ? "text-base md:text-lg"
                     : isTextOnly
-                      ? "text-sm md:text-base font-normal py-1.5 line-clamp-2"
-                      : "text-lg md:text-xl lg:text-2xl line-clamp-2 md:line-clamp-3"
+                      ? "text-sm md:text-base font-normal py-1.5"
+                      : "text-lg md:text-xl lg:text-2xl"
             }`}
+            style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
           >
             {article.title}
           </h2>
@@ -85,7 +86,8 @@ export default function ArticleCard({
               dangerouslySetInnerHTML={{
                 __html: article.details || article.excerpt || "",
               }}
-              className="line-clamp-3 text-sm md:text-base font-normal text-gray-600 leading-relaxed mt-1"
+              className="text-sm md:text-base font-normal text-gray-600 leading-relaxed mt-1"
+              style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
             />
           )}
 

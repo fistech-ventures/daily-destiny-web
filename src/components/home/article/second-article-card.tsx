@@ -41,10 +41,12 @@ export default function SecondArticleCard({ article }: { article: Article }) {
             </Link> */}
           </div>
           <Link href={`/news/${article.category.slug}/${article.code}`}>
-            <h3 className="lg:text-base text-xs font-semibold hover:underline line-clamp-2">
+            <h3 className="lg:text-base text-xs font-semibold hover:underline"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
               {article.title}
             </h3>
-            <p className="text-sm line-clamp-2 font-normal text-muted-foreground">
+            <p className="text-sm font-normal text-muted-foreground"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
               {article.excerpt}
             </p>
           </Link>

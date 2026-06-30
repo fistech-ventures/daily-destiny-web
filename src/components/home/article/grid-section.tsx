@@ -32,10 +32,12 @@ export default function GridSection({
                 <span className="text-xs text-primary font-semibold">
                   {article.category?.titleBn || article.category?.title}
                 </span>
-                <h3 className="text-base font-semibold mt-1 line-clamp-2 group-hover:text-primary transition-colors">
+                <h3 className="text-base font-semibold mt-1 group-hover:text-primary transition-colors"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {article.title}
                 </h3>
-                <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                <p className="text-sm text-muted-foreground mt-1"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {article.excerpt}
                 </p>
               </div>

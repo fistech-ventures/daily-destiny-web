@@ -26,7 +26,8 @@ export default function HorizontalArticleCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
         <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight group-hover:text-gray-200 transition-colors line-clamp-2">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight group-hover:text-gray-200 transition-colors"
+            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
             {article.title}
           </h2>
           {/* <p className="text-xs text-gray-300 mt-2 font-light">২১ মিনিট আগে</p> */}
@@ -53,7 +54,8 @@ export default function HorizontalArticleCard({
 
         {/* Text Area */}
         <div className="flex flex-col gap-1.5">
-          <h2 className="text-base md:text-lg font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+          <h2 className="text-base md:text-lg font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors"
+            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
             {article.title}
           </h2>
 
@@ -62,7 +64,8 @@ export default function HorizontalArticleCard({
               dangerouslySetInnerHTML={{
                 __html: article.details || article.excerpt,
               }}
-              className="line-clamp-3 text-xs md:text-sm font-normal text-gray-600 leading-relaxed"
+              className="text-xs md:text-sm font-normal text-gray-600 leading-relaxed"
+              style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
             />
           ) : null}
 
