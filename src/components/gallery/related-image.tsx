@@ -34,7 +34,8 @@ export default function ImageCard({ item }: IProps) {
         {/* <p className="text-sm font-medium text-[#B37B2F]">
           {formatRelativeTime(item.date)}
         </p> */}
-        <h3 className="line-clamp-2 text-xs md:text-base font-semibold text-[#1A1A1A] transition-colors group-hover:text-brand">
+        <h3 className="text-xs md:text-base font-semibold text-[#1A1A1A] transition-colors group-hover:text-brand"
+        style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
           {item.title}
         </h3>
       </div>

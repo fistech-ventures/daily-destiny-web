@@ -61,7 +61,8 @@ export default function GalleryCard({
           {showdescription && (
             <div
               dangerouslySetInnerHTML={{ __html: gallery.description }}
-              className="line-clamp-2 text-sm font-normal text-muted-foreground"
+              className="text-sm font-normal text-muted-foreground"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
             />
           )}
         </div>

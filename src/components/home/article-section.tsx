@@ -1,21 +1,15 @@
 import React from "react";
 import Link from "next/link";
+import { Clock, TrendingUp } from "lucide-react";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
+import AdBanner from "@/components/shared/ad-banner";
 
 interface FeaturedSectionProps {
   article: Article;
 }
 
 interface GridCardProps {
-  article: Article;
-}
-
-interface ExclusiveCardProps {
-  article: Article;
-}
-
-interface ExclusiveSmallCardProps {
   article: Article;
 }
 
@@ -45,7 +39,8 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
             {article.title}
           </h1>
         </Link>
-        <p className="text-sm md:text-base text-gray-600 line-clamp-4">
+        <p className="text-sm md:text-base text-gray-600"
+          style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
           {article.excerpt}
         </p>
       </div>
@@ -63,7 +58,8 @@ const GridCard: React.FC<GridCardProps> = ({ article }) => (
         className="w-full aspect-video object-cover hover:opacity-90"
       />
       <div className="p-4">
-        <h3 className="text-sm md:text-base font-bold line-clamp-3 hover:text-blue-600">
+        <h3 className="text-sm md:text-base font-bold hover:text-blue-600"
+        style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
           {article.title}
         </h3>
       </div>
@@ -71,55 +67,30 @@ const GridCard: React.FC<GridCardProps> = ({ article }) => (
   </Link>
 );
 
-// Big Card for sidebar top
-const BigCard: React.FC<ExclusiveCardProps> = ({ article }) => (
-  <Link href={`/news/${article.category?.slug || "others"}/${article.code}`}>
-    <div className="w-full bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+// News list item for latest/popular sidebar
+const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
+  <Link
+    href={`/news/${article.category?.slug || "others"}/${article.code}`}
+    className="group flex gap-3 bg-white border border-gray-100 rounded-lg overflow-hidden hover:border-gray-200 hover:shadow-sm transition-all"
+  >
+    <div className="shrink-0 w-20 h-16 sm:w-24 sm:h-18">
       <img
         src={article.coverImage}
         alt={article.title}
-        className="w-full aspect-video object-cover hover:opacity-90"
+        className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
       />
-      <div className="p-4">
-        <h3 className="text-sm md:text-base font-bold line-clamp-2 hover:text-blue-600">
-          {article.title}
-        </h3>
-      </div>
     </div>
-  </Link>
-);
-
-// Small Cards
-const SmallCard: React.FC<ExclusiveSmallCardProps> = ({ article }) => (
-  <Link href={`/news/${article.category?.slug || "others"}/${article.code}`}>
-    <div className="w-full bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-shadow p-3 flex gap-3">
-      {/* Thumbnail */}
-      <div className="shrink-0 w-20 h-16">
-        <img
-          src={article.coverImage}
-          alt={article.title}
-          className="w-full h-full object-cover rounded hover:opacity-90"
-        />
-      </div>
-      {/* Text */}
-      <div className="flex-1 min-w-0">
-        <h4 className="text-base font-semibold line-clamp-2 hover:text-blue-600">
-          {article.title}
-        </h4>
-      </div>
+    <div className="flex-1 min-w-0 py-1.5 pr-2">
+      <h4 className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+        style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
+        {article.title}
+      </h4>
     </div>
   </Link>
 );
 
 export default async function ArticleSection(): Promise<React.ReactNode> {
   try {
-    const popularArticles = await getArticles({
-      page: 1,
-      limit: 10,
-      sortBy: "position",
-      sortOrder: "ASC",
-      isPopular: true,
-    });
     const exclusiveArticles = await getArticles({
       page: 1,
       limit: 7,
@@ -128,26 +99,27 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
       isExclusive: true,
     });
 
-    // Fallback popular
-    const fallbackPopularArticles = await getArticles({
+    // Fetch latest 3 articles for sidebar
+    const latestRes = await getArticles({
       page: 1,
-      limit: 10,
-      sortBy: "position",
-      sortOrder: "ASC",
-      isFeatured: true,
+      limit: 3,
+      sortBy: "date",
+      sortOrder: "DESC",
+      status: "Published",
     });
+    const latestArticles: Article[] = latestRes?.data || [];
+
+    // Fetch popular 3 articles for sidebar
+    const popularSidebarRes = await getArticles({
+      page: 1,
+      limit: 3,
+      isPopular: true,
+      status: "Published",
+    });
+    const popularSidebarArticles: Article[] = popularSidebarRes?.data || [];
 
     const exclusiveTop = exclusiveArticles.data[0];
     const gridArticles = exclusiveArticles.data.slice(1, 7);
-
-    const featuredTop =
-      popularArticles.data.length !== 0
-        ? popularArticles.data[0]
-        : fallbackPopularArticles.data[0];
-    const featuredSmall =
-      popularArticles.data.length !== 0
-        ? popularArticles.data.slice(1, 7)
-        : fallbackPopularArticles.data.slice(1, 7);
 
     return (
       <section className="p-0!">
@@ -200,23 +172,50 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
 
           {/* RIGHT SIDEBAR - 1/4 width */}
           <div className="w-full lg:w-1/4 flex flex-col gap-5">
-            {/* FEATURED TOP - BIG */}
-            {featuredTop ? (
-              <BigCard article={featuredTop} />
-            ) : (
-              <div className="bg-gray-100 h-48 rounded flex items-center justify-center text-gray-500">
-                No popular articles
-              </div>
-            )}
+            {/* Advertisement Banner */}
+            <AdBanner className="rounded-lg" />
 
-            {/* FEATURED SMALL - STACK */}
-            {featuredSmall.length > 0 && (
-              <div className="flex flex-col gap-3">
-                {featuredSmall.map((article: Article) => (
-                  <SmallCard key={article.id} article={article} />
-                ))}
+            {/* Latest News - 3 items */}
+            <div>
+              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-red-600 pb-2 mb-3">
+                <Clock className="h-4 w-4 text-red-600" />
+                <span>সর্বশেষ সংবাদ</span>
+              </h3>
+              <div className="flex flex-col gap-2.5">
+                {latestArticles.length > 0 ? (
+                  latestArticles
+                    .slice(0, 3)
+                    .map(article => (
+                      <NewsListItem key={article.id} article={article} />
+                    ))
+                ) : (
+                  <p className="text-gray-400 text-sm text-center py-4">
+                    কোনো সংবাদ পাওয়া যায়নি
+                  </p>
+                )}
               </div>
-            )}
+            </div>
+
+            {/* Popular News - 3 items */}
+            <div>
+              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-orange-500 pb-2 mb-3">
+                <TrendingUp className="h-4 w-4 text-orange-500" />
+                <span>জনপ্রিয় সংবাদ</span>
+              </h3>
+              <div className="flex flex-col gap-2.5">
+                {popularSidebarArticles.length > 0 ? (
+                  popularSidebarArticles
+                    .slice(0, 3)
+                    .map(article => (
+                      <NewsListItem key={article.id} article={article} />
+                    ))
+                ) : (
+                  <p className="text-gray-400 text-sm text-center py-4">
+                    কোনো সংবাদ পাওয়া যায়নি
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>

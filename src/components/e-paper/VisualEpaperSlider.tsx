@@ -12,6 +12,7 @@ import {
   Share2,
   X,
 } from "lucide-react";
+import AdBanner from "@/components/shared/ad-banner";
 
 interface Hotspot {
   id: string;
@@ -289,6 +290,11 @@ export default function VisualEpaperSlider({
                 </p>
               </div>
             )}
+          </div>
+
+          {/* Advertisement at bottom of right column */}
+          <div className="p-2 md:p-4 border-t border-gray-200">
+            <AdBanner className="rounded-lg" altText="ই-পেপার বিজ্ঞাপন" />
           </div>
         </div>
       </div>

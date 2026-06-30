@@ -50,10 +50,12 @@ export default async function CategorySection({
             width={600}
             className="w-full aspect-3/2 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
           />
-          <h3 className="text-lg font-semibold mt-2 line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="text-lg font-semibold mt-2 group-hover:text-primary transition-colors"
+            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
             {isFirstArticle.title}
           </h3>
-          <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+          <p className="text-sm text-muted-foreground mt-1"
+            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
             {isFirstArticle.excerpt}
           </p>
         </Link>
@@ -74,10 +76,12 @@ export default async function CategorySection({
                 className="w-32 aspect-4/3 object-cover rounded-lg shrink-0 group-hover:scale-105 transition-transform duration-300"
               />
               <div className="flex-1">
-                <h4 className="text-base font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                <h4 className="text-base font-semibold group-hover:text-primary transition-colors"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {article.title}
                 </h4>
-                <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                <p className="text-sm text-muted-foreground mt-1"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {article.excerpt}
                 </p>
               </div>

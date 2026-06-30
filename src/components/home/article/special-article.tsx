@@ -81,7 +81,8 @@ export default async function SpecialArticle({
             <h3 className="text-lg text-primary-foreground font-semibold  ">
               {firstSpecialArticle.title}
             </h3>
-            <p className="text-sm line-clamp-2 font-normal text-white">
+            <p className="text-sm font-normal text-white"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
               {firstSpecialArticle.excerpt}
             </p>
           </div>
@@ -114,7 +115,8 @@ export default async function SpecialArticle({
                 <h3 className="text-base font-semibold group-hover:underline">
                   {article.title}
                 </h3>
-                <p className="text-sm line-clamp-2 font-normal text-foreground">
+                <p className="text-sm font-normal text-foreground"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {article.excerpt}
                 </p>
               </div>

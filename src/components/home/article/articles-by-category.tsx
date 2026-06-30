@@ -73,7 +73,8 @@ export default async function CategorySection({
                     </h5>
                   </div>
                 </div> */}
-                <h3 className="text-base font-medium leading-snug text-gray-900 group-hover:underline transition-colors line-clamp-2">
+                <h3 className="text-base font-medium leading-snug text-gray-900 group-hover:underline transition-colors"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {featuredArticle.title}
                 </h3>
               </div>
@@ -98,7 +99,8 @@ export default async function CategorySection({
                 <Link
                   href={`/news/${article.category?.slug || "uncategorized"}/${article.code}`}
                 >
-                  <h4 className="text-base font-medium leading-relaxed text-gray-800 group-hover:underline transition-colors line-clamp-2">
+                  <h4 className="text-base font-medium leading-relaxed text-gray-800 group-hover:underline transition-colors"
+                    style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                     {article.title}
                   </h4>
                 </Link>

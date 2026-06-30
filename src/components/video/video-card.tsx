@@ -54,7 +54,8 @@ export default function VideoCard({
         </h3>
 
         {video.excerpt && (
-          <p className="text-xs md:text-sm font-medium leading-normal text-gray-500 line-clamp-2">
+          <p className="text-xs md:text-sm font-medium leading-normal text-gray-500"
+            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
             {video.excerpt}
           </p>
         )}

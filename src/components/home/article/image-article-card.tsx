@@ -40,7 +40,8 @@ export default function ImageGalleryCard({ article }: ImageGalleryCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="md:text-base text-xs font-bold leading-snug text-gray-800 transition-colors duration-200 group-hover:text-primary px-1 line-clamp-2">
+        <h3 className="md:text-base text-xs font-bold leading-snug text-gray-800 transition-colors duration-200 group-hover:text-primary px-1"
+        style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
           {article.title}
         </h3>
       </div>

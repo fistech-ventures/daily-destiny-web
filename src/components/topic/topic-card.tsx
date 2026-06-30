@@ -37,7 +37,8 @@ export default async function TopicCard({ article }: NewsCardProps) {
 
         <div
           dangerouslySetInnerHTML={{ __html: article.details }}
-          className="line-clamp-2 text-sm font-normal text-muted-foreground"
+          className="text-sm font-normal text-muted-foreground"
+          style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
         />
       </div>
     </Link>
