@@ -34,7 +34,7 @@ export default function NewsListClient({
       initialData={initialData}
       initialMeta={initialMeta}
       fetchData={fetchMore}
-      listClassName="grid grid-cols-1 md:grid-cols-3 gap-6"
+      listClassName="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6"
       wrapperClassName="w-full"
       noDataMessage={noDataMessage}
       renderItem={(article: Article, index: number) => {
