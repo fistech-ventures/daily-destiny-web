@@ -313,6 +313,7 @@ export function Navbar({
                       <div className="">
                         <Link
                           href="/e-papers/visual"
+                          onClick={() => setIsSheetOpen(false)}
                           className="flex items-center gap-1.5 px-3 py-3 text-sm text-gray-700 hover:text-primary/80 transition-colors"
                         >
                           <Newspaper className="h-4 w-4" />
@@ -399,7 +400,7 @@ export function Navbar({
                             variant="hamburger"
                           />
                         </div>
-                        <Link href="/e-papers/visual">
+                        <Link href="/e-papers/visual" onClick={() => setIsSheetOpen(false)}>
                           <div className="bg-[#000058] hover:bg-[#000058]/80 transition-colors px-4 py-2 text-white text-xs font-bold uppercase rounded-md tracking-wider flex flex-col items-start  gap-2">
                             <div className="flex items-center gap-2">
                               <Newspaper
