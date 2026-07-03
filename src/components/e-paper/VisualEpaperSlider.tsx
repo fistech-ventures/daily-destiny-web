@@ -44,6 +44,11 @@ interface VisualEpaperSliderProps {
   availableDates: string[];
 }
 
+interface ImageDimensions {
+  width: number;
+  height: number;
+}
+
 export default function VisualEpaperSlider({
   edition,
   currentDate,
@@ -55,6 +60,14 @@ export default function VisualEpaperSlider({
 
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [selectedHotspot, setSelectedHotspot] = useState<Hotspot | null>(null);
+  // Natural pixel dimensions of the currently loaded page image.
+  // Needed to correct the crop wrapper's aspect ratio, since hotspot
+  // coordinates are normalized (0-1) fractions of the image, not raw
+  // pixel ratios. Without this correction, non-square page images
+  // produce a distorted/stretched crop.
+  const [imgDimensions, setImgDimensions] = useState<ImageDimensions | null>(
+    null,
+  );
 
   if (!edition || !edition.pages || edition.pages.length === 0) {
     return (
@@ -71,6 +84,9 @@ export default function VisualEpaperSlider({
     if (index >= 0 && index < totalPages) {
       setActivePageIndex(index);
       setSelectedHotspot(null);
+      // Reset dimensions so the crop panel waits for the new page's
+      // image to load before rendering (avoids using stale ratios).
+      setImgDimensions(null);
     }
   };
 
@@ -205,6 +221,15 @@ export default function VisualEpaperSlider({
               sizes="(max-width: 1280px) 100vw, 50vw"
               priority
               className="object-contain"
+              onLoad={e => {
+                const img = e.currentTarget;
+                if (img.naturalWidth && img.naturalHeight) {
+                  setImgDimensions({
+                    width: img.naturalWidth,
+                    height: img.naturalHeight,
+                  });
+                }
+              }}
             />
 
             {/* Interactive Hotspot Matrix Layers */}
@@ -244,13 +269,23 @@ export default function VisualEpaperSlider({
           </div>
 
           <div className="p-2 md:p-4 flex flex-col items-center justify-start h-fit">
-            {selectedHotspot ? (
+            {selectedHotspot && imgDimensions ? (
               <div className="w-full flex flex-col items-center gap-3">
-                {/* Isolated Crop Space Wrapper */}
+                {/* Isolated Crop Space Wrapper
+                    NOTE: hotspot.coordinates.width/height are normalized
+                    (0-1) fractions of the source image, NOT raw pixel
+                    aspect ratios. To get the crop's true visual aspect
+                    ratio we must multiply by the image's actual natural
+                    pixel dimensions, otherwise non-square source images
+                    render a distorted/stretched crop. */}
                 <div
                   className="relative w-full border border-gray-200 bg-white shadow-sm rounded overflow-hidden"
                   style={{
-                    aspectRatio: `${selectedHotspot.coordinates.width} / ${selectedHotspot.coordinates.height}`,
+                    aspectRatio: `${
+                      selectedHotspot.coordinates.width * imgDimensions.width
+                    } / ${
+                      selectedHotspot.coordinates.height * imgDimensions.height
+                    }`,
                     width: "100%",
                   }}
                 >
@@ -263,6 +298,12 @@ export default function VisualEpaperSlider({
                       top: `${-selectedHotspot.coordinates.y * (100 / selectedHotspot.coordinates.height)}%`,
                     }}
                   >
+                    {/* Do NOT add object-contain/object-cover here.
+                        This image must stretch (default fill behavior)
+                        to exactly fill the oversized, offset inner div
+                        above — that's what produces the accurate crop.
+                        The outer wrapper's corrected aspect ratio is
+                        what prevents visible distortion. */}
                     <Image
                       src={currentPage.imageUrl}
                       alt="Crisp High-Res Isolated Snippet View"
@@ -276,6 +317,13 @@ export default function VisualEpaperSlider({
                 <p className="text-[11px] text-gray-400 font-medium">
                   * নির্বাচিত সংবাদটি আলাদাভাবে প্রদর্শিত হচ্ছে
                 </p>
+              </div>
+            ) : selectedHotspot && !imgDimensions ? (
+              // Hotspot picked but the main image hasn't reported its
+              // natural dimensions yet (e.g. page just changed) — show
+              // a lightweight loading state instead of a distorted crop.
+              <div className="w-full aspect-[3/4] flex items-center justify-center text-gray-400 text-sm">
+                লোড হচ্ছে...
               </div>
             ) : (
               <div className="my-auto py-20 flex flex-col items-center justify-center text-center text-gray-400">
