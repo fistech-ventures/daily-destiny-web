@@ -9,9 +9,22 @@ import {
   MessageCircleMore,
 } from "lucide-react";
 import { toast } from "sonner";
+import { trackArticleShare } from "@/lib/api";
 
 interface SocialShareProps {
   title: string;
+  /** Optional — when provided, share events are tracked via the API */
+  articleId?: string;
+}
+
+/** Generate or retrieve a per-tab session ID stored in sessionStorage */
+function getSessionId(): string {
+  let sessionId = sessionStorage.getItem("dd_session_id");
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    sessionStorage.setItem("dd_session_id", sessionId);
+  }
+  return sessionId;
 }
 
 // Custom X (formerly Twitter) Icon to match your image exactly
@@ -21,7 +34,7 @@ const XIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
-const SocialShare = ({ title }: SocialShareProps) => {
+const SocialShare = ({ title, articleId }: SocialShareProps) => {
   const pathname = usePathname();
   const origin = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -36,11 +49,24 @@ const SocialShare = ({ title }: SocialShareProps) => {
     whatsapp: `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`,
   };
 
-  const openPopup = (link: string) => {
+  const handleShare = (link: string) => {
+    if (articleId) {
+      trackArticleShare(articleId, getSessionId());
+    }
     window.open(link, "_blank", "width=600,height=400,noopener,noreferrer");
   };
 
-  const copyToClipboard = () => {
+  const handlePrint = () => {
+    if (articleId) {
+      trackArticleShare(articleId, getSessionId());
+    }
+    window.print();
+  };
+
+  const handleCopyLink = () => {
+    if (articleId) {
+      trackArticleShare(articleId, getSessionId());
+    }
     navigator.clipboard.writeText(fullUrl);
     toast.success("Copied to clipboard!");
   };
@@ -51,7 +77,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
     <div className="flex items-center gap-4 mb-4 py-4 border-y border-gray-100 print:hidden">
       {/* Facebook - Light Blue Bg */}
       <button
-        onClick={() => openPopup(shareLinks.facebook)}
+        onClick={() => handleShare(shareLinks.facebook)}
         className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on Facebook"
       >
@@ -60,7 +86,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
 
       {/* X (Twitter) - Light Gray Bg */}
       <button
-        onClick={() => openPopup(shareLinks.x)}
+        onClick={() => handleShare(shareLinks.x)}
         className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on X"
       >
@@ -69,7 +95,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
 
       {/* LinkedIn - Specific Blue Bg */}
       <button
-        onClick={() => openPopup(shareLinks.linkedin)}
+        onClick={() => handleShare(shareLinks.linkedin)}
         className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on LinkedIn"
       >
@@ -78,7 +104,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
 
       {/* WhatsApp - Light Green Bg */}
       <button
-        onClick={() => openPopup(shareLinks.whatsapp)}
+        onClick={() => handleShare(shareLinks.whatsapp)}
         className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Share on WhatsApp"
       >
@@ -87,7 +113,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
 
       {/* Print - Classic Gray Bg */}
       <button
-        onClick={() => window.print()}
+        onClick={handlePrint}
         className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Print Article"
       >
@@ -96,7 +122,7 @@ const SocialShare = ({ title }: SocialShareProps) => {
 
       {/* Copy Link - White/Gray Bg */}
       <button
-        onClick={copyToClipboard}
+        onClick={handleCopyLink}
         className="p-2 lg:p-3 rounded-full bg-brand-light text-brand hover-bg-brand transition-all cursor-pointer"
         title="Copy Link"
       >

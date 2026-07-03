@@ -92,7 +92,8 @@ export default function VideoGallery({
                   href={`/video/${video.code}`}
                   className="hover:text-cyan-400 transition-colors"
                 >
-                  <h3 className="text-sm md:text-base font-bold leading-snug line-clamp-2 text-gray-100">
+                  <h3 className="text-sm md:text-base font-bold leading-snug text-gray-100"
+                    style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                     {video.title}
                   </h3>
                 </Link>

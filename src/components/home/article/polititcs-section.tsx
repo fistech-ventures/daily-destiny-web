@@ -76,7 +76,8 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
                                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
                                     {mainArticle.title}
                                 </h2>
-                                <p className="mt-3 text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                                <p className="mt-3 text-sm text-gray-600 leading-relaxed"
+                                    style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                                     {mainArticle.excerpt}
                                 </p>
                             </div>
@@ -117,7 +118,8 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
                                             className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-200"
                                         />
                                     </div>
-                                    <h3 className="mt-3 text-sm font-bold text-gray-900 leading-snug line-clamp-3 group-hover:text-blue-600 transition-colors duration-200">
+                                    <h3 className="mt-3 text-sm font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200"
+                                        style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                                         {article.title}
                                     </h3>
                                 </div>

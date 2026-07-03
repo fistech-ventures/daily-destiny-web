@@ -46,7 +46,8 @@ export default function MainArticle({
           </h5>
         </div> */}
         <h2 className="lg:text-xl font-semibold">{firstArticle.title}</h2>
-        <p className="line-clamp-4 text-base font-normal text-muted-foreground">
+        <p className="text-base font-normal text-muted-foreground"
+          style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
           {firstArticle.excerpt}
         </p>
       </Link>
@@ -74,7 +75,8 @@ export default function MainArticle({
                 </h5>
               </div> */}
               <h2 className="lg:text-base font-semibold">{article.title}</h2>
-              <p className="line-clamp-2 text-base font-normal text-muted-foreground">
+              <p className="text-base font-normal text-muted-foreground"
+                style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                 {article.excerpt}
               </p>
             </Link>

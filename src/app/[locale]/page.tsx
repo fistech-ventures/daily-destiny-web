@@ -19,10 +19,12 @@ import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
 import OthersCategories from "@/components/category/OthersCategroies";
 import FeatureBanner from "@/components/feature-banner/FeatureBanner";
+import AdBanner from "@/components/shared/ad-banner";
 import BinodonSection from "@/components/home/article/binodon-section";
 import KhelaSlider from "@/components/home/article/khela-slider";
 import PoliticsSection from "@/components/home/article/polititcs-section";
 import EconomySection from "@/components/home/article/economy-section";
+import LatestNewsSection from "@/components/news/latest-news-section";
 
 export async function generateMetadata({
   params,
@@ -107,7 +109,7 @@ export default async function Home({
   const categoriesList: Category[] = categoriesRes?.data || [];
 
   // Fetch national (জাতীয়) category articles
-  const nationalCategory = categoriesList.find((c) => c.slug === "national");
+  const nationalCategory = categoriesList.find(c => c.slug === "national");
   let recentArticles: Article[] = [];
   if (nationalCategory) {
     const nationalRes = await getArticles({
@@ -119,7 +121,7 @@ export default async function Home({
   }
 
   const getCategoryData = async (slug: string) => {
-    const cat = categoriesList.find((c) => c.slug === slug);
+    const cat = categoriesList.find(c => c.slug === slug);
 
     if (!cat) {
       const fallbackTitles: Record<string, string> = {
@@ -169,7 +171,7 @@ export default async function Home({
 
   // Fetch Khela/Sports category for the slider
   const khelaCat = categoriesList.find(
-    (c) => c.slug === "kheladula" || c.slug === "sports",
+    c => c.slug === "kheladula" || c.slug === "sports",
   );
   let khelaArticles: Article[] = [];
   let khelaTitle = "খেলাধুলা";
@@ -196,8 +198,7 @@ export default async function Home({
 
   // Fetch politics (রাজনীতি) category articles — 1 hero + up to 6 side cards
   const politicsCat = categoriesList.find(
-    (c) =>
-      c.slug === "politics" || c.slug === "rajneeti" || c.slug === "রাজনীতি",
+    c => c.slug === "politics" || c.slug === "rajneeti" || c.slug === "রাজনীতি",
   );
   if (politicsCat) {
     try {
@@ -216,7 +217,7 @@ export default async function Home({
 
   // Fetch economy (অর্থনীতি) category articles — up to 8 cards for the slider
   const economyCat = categoriesList.find(
-    (c) =>
+    c =>
       c.slug === "economy" || c.slug === "orthoniti" || c.slug === "অর্থনীতি",
   );
   let economyArticles: Article[] = [];
@@ -262,15 +263,17 @@ export default async function Home({
 
   return (
     <main className="container mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
+      {/* Homepage Advertisement Section */}
+      <AdBanner className="rounded-lg" altText="হোমপেজ বিজ্ঞাপন" />
+
       <FeatureBanner eventData={specialEvent} />
       <MainLayout />
 
-      {/* Location Filter + Recent News Section */}
       <section className="w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left: Location Filter */}
-          <div className="lg:col-span-4 h-fit">
-            <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl p-5 lg:p-6 shadow-sm border border-blue-100 h-full">
+          {/* Left: Location Filter (50%) + Advertisement (50%) */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            <div className="flex-[1_1_0%] bg-gradient-to-br from-blue-50 to-white rounded-xl p-5 lg:p-6 shadow-sm border border-blue-100">
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex items-center justify-center w-9 h-9 rounded-full bg-brand text-white shadow-sm shrink-0">
                   <svg
@@ -298,73 +301,167 @@ export default async function Home({
               </div>
               <LocationFilter />
             </div>
+            <div className="flex-[1_1_0%]">
+              <AdBanner
+                className="rounded-lg h-full"
+                altText="এলাকার সংবাদ বিজ্ঞাপন"
+              />
+            </div>
           </div>
 
-          {/* Right: Recent News */}
+          {/* Right: National News — Top row: 1 full-width big card | Bottom row: 3 cards */}
           <div className="lg:col-span-8">
             <div className="bg-white rounded-xl p-5 lg:p-6 shadow-sm border border-gray-100 h-full">
               <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-6 bg-red-500 rounded-full"></div>
-                  <h3 className="text-lg font-bold text-gray-900">
-                    জাতীয় খবর
-                  </h3>
+                  <h3 className="text-lg font-bold text-gray-900">জাতীয়</h3>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {recentArticles.length > 0 ? (
-                  recentArticles.map((article: Article, idx: number) => (
+              {recentArticles.length > 0 ? (
+                <div className="flex flex-col gap-5">
+                  {/* Top row: 1 full-width big card */}
+                  <div className="w-full">
                     <a
-                      key={article.id || article.code || idx}
-                      href={`/news/${article.category?.slug || article.category?.slugBn || ""}/${article.code}`}
-                      className="group flex flex-col rounded-lg overflow-hidden border border-gray-100 hover:border-gray-200 bg-white shadow-xs hover:shadow-sm transition-all duration-200"
+                      key={recentArticles[0].id || recentArticles[0].code}
+                      href={`/news/${recentArticles[0].category?.slug || recentArticles[0].category?.slugBn || ""}/${recentArticles[0].code}`}
+                      className="group flex flex-col rounded-xl overflow-hidden border border-gray-100 hover:border-gray-300 bg-white shadow-sm hover:shadow-lg transition-all duration-200"
                     >
-                      {/* Thumbnail */}
-                      {article.coverImage && (
-                        <div className="relative w-full h-36 sm:h-40 overflow-hidden bg-gray-100">
+                      {/* Large Thumbnail */}
+                      {recentArticles[0].coverImage && (
+                        <div className="relative w-full h-48 sm:h-56 lg:h-72 overflow-hidden bg-gray-100">
                           <img
-                            src={article.coverImage}
-                            alt={article.title}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            src={recentArticles[0].coverImage}
+                            alt={recentArticles[0].title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             loading="lazy"
                           />
+                          {/* Gradient overlay for better text readability */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                          {/* Category badge */}
+                          {recentArticles[0].category?.titleBn && (
+                            <span className="absolute top-3 left-3 text-xs font-semibold text-white bg-red-600 px-2.5 py-1 rounded-full shadow-sm">
+                              {recentArticles[0].category.titleBn}
+                            </span>
+                          )}
                         </div>
                       )}
 
                       {/* Content */}
-                      <div className="flex-1 p-3">
-                        <h4 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2">
-                          {article.title}
+                      <div className="p-4 flex flex-col">
+                        <h4
+                          className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                          style={{
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                            width: "100%",
+                          }}
+                        >
+                          {recentArticles[0].title}
                         </h4>
-                        <div className="flex items-center gap-2 mt-2">
-                          {article.category?.titleBn && (
-                            <span className="text-sm font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
-                              {article.category.titleBn}
+                        {recentArticles[0].excerpt && (
+                          <p
+                            className="text-sm text-gray-500 mt-2"
+                            style={{
+                              display: "-webkit-box",
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              width: "100%",
+                            }}
+                          >
+                            {recentArticles[0].excerpt}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-3 mt-2 pt-2">
+                          {recentArticles[0].date && (
+                            <span className="text-xs text-gray-400 flex items-center gap-1">
+                              <svg
+                                className="w-3.5 h-3.5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                              {new Date(
+                                recentArticles[0].date,
+                              ).toLocaleDateString("bn-BD", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              })}
                             </span>
                           )}
-                          {article.date && (
-                            <span className="text-sm text-gray-400">
-                              {new Date(article.date).toLocaleDateString(
-                                "bn-BD",
-                                {
-                                  day: "numeric",
-                                  month: "short",
-                                  year: "numeric",
-                                },
-                              )}
-                            </span>
-                          )}
+                          <span className="text-xs font-medium text-[#1a66ca] group-hover:underline">
+                            বিস্তারিত →
+                          </span>
                         </div>
                       </div>
                     </a>
-                  ))
-                ) : (
-                  <div className="col-span-full py-10 text-center text-gray-400 text-sm">
-                    কোনো সংবাদ পাওয়া যায়নি
                   </div>
-                )}
-              </div>
+
+                  {/* Bottom row: 3 small cards in a row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {recentArticles
+                      .slice(1, 4)
+                      .map((article: Article, idx: number) => (
+                        <a
+                          key={article.id || article.code || idx}
+                          href={`/news/${article.category?.slug || article.category?.slugBn || ""}/${article.code}`}
+                          className="group flex flex-col bg-white border border-gray-100 rounded-lg overflow-hidden hover:border-gray-200 hover:shadow-sm transition-all"
+                        >
+                          {/* Thumbnail */}
+                          {article.coverImage && (
+                            <div className="relative w-full h-32 sm:h-36 overflow-hidden bg-gray-100">
+                              <img
+                                src={article.coverImage}
+                                alt={article.title}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                loading="lazy"
+                              />
+                            </div>
+                          )}
+
+                          {/* Content */}
+                          <div className="p-3">
+                            <h4
+                              className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                              style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                                width: "100%",
+                              }}
+                            >
+                              {article.title}
+                            </h4>
+                            <div className="flex items-center gap-2 mt-2">
+                              {article.category?.titleBn && (
+                                <span className="text-[10px] font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
+                                  {article.category.titleBn}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </a>
+                      ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="py-10 text-center text-gray-400 text-sm">
+                  কোনো সংবাদ পাওয়া যায়নি
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -373,7 +470,9 @@ export default async function Home({
       {politicsArticles.length > 0 && (
         <PoliticsSection articles={politicsArticles} />
       )}
-      <SingleCategoryNewsGrid slug="national" limit={7} />
+      {/* জাতীয় সংবাদ → সর্বশেষ সংবাদ with extra block in 3rd column */}
+      <LatestNewsSection />
+      <SingleCategoryNewsGrid slug="international" limit={7} />
       {economyArticles.length > 0 && (
         <EconomySection
           articles={economyArticles}
@@ -381,7 +480,9 @@ export default async function Home({
           categorySlug={economySlug}
         />
       )}
-      <SingleCategoryNewsGrid slug="international" limit={7} />
+      {/* Advertisement Section */}
+      <AdBanner className="rounded-lg" altText="মাঝপাতার বিজ্ঞাপন" />
+
       <BinodonSection />
       <KhelaSlider
         articles={khelaArticles}

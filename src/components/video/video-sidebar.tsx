@@ -45,7 +45,8 @@ export default function VideoSidebar({ images, t }: ImageStorySidebarProps) {
                     </div>
                   </div>
                 </div>
-                <h3 className="text-base font-bold text-gray-900 line-clamp-3 leading-snug group-hover:text-primary transition-colors">
+                <h3 className="text-base font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors"
+                style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {image.title}
                 </h3>
               </Link>

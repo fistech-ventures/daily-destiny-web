@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { formatRelativeTime } from "@/utils/date-formatter";
 import ArchiveCalendar from "@/components/archive/archive-calendar";
+import AdBanner from "@/components/shared/ad-banner";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
 
@@ -126,7 +127,7 @@ export default function ArchiveSection() {
           </Link>
         </div>
 
-        {/* Content: Latest Articles (3/4) + Calendar (1/4) */}
+        {/* Content: Articles (3/4) + Calendar + Ad (1/4) */}
         <div className="flex flex-col lg:flex-row gap-6 p-6">
           {/* LEFT: Latest Articles (75%) */}
           <div className="w-full lg:w-3/4">
@@ -201,7 +202,8 @@ export default function ArchiveSection() {
 
                       {/* Content */}
                       <div className="flex-1 p-3 flex flex-col">
-                        <h4 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2">
+                        <h4 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                          style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                           {article.title}
                         </h4>
                         <div className="flex items-center gap-2 mt-2">
@@ -237,13 +239,14 @@ export default function ArchiveSection() {
             </div>
           </div>
 
-          {/* RIGHT: Calendar (25%) */}
-          <div className="w-full lg:w-1/4">
+          {/* RIGHT: Calendar (top) + Advertisement (below) */}
+          <div className="w-full lg:w-1/4 flex flex-col gap-6">
             <ArchiveCalendar
               startDate={startDate}
               endDate={endDate}
               onDateRangeSelect={handleDateRangeSelect}
             />
+            <AdBanner className="rounded-xl" altText="আর্কাইভ বিজ্ঞাপন" />
           </div>
         </div>
       </div>

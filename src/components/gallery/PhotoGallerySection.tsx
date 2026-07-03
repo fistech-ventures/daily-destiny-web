@@ -124,7 +124,8 @@ export default function PhotoGallerySection({
 
           <div>
             <Link href={`/articles/by-code/${activeItem.code}`}>
-              <h3 className="text-lg font-bold text-gray-900 hover:text-red-600 transition-colors cursor-pointer line-clamp-2">
+              <h3 className="text-lg font-bold text-gray-900 hover:text-red-600 transition-colors cursor-pointer"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                 {activeItem.title}
               </h3>
             </Link>

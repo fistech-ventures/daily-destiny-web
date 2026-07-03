@@ -9,6 +9,7 @@ import React from "react";
 import Link from "next/link";
 import NewsListClient from "@/components/news/news-list-client";
 import LocationFilter from "@/components/category/categoryfilter";
+import AdBanner from "@/components/shared/ad-banner";
 
 export async function generateMetadata({
   params,
@@ -206,7 +207,8 @@ export default async function CategoryPage({
           />
         </div>
 
-        <div className="w-full lg:w-80 shrink-0 sticky top-4">
+        <div className="w-full lg:w-80 shrink-0 sticky top-4 flex flex-col gap-4">
+          <AdBanner className="rounded-lg" altText="বিভাগ পাতা বিজ্ঞাপন" />
           <LocationFilter initialLocationId={locationId} />
         </div>
       </div>

@@ -178,6 +178,7 @@ export default async function NewsDetailsPage({
 
       {/* Track article view on the client */}
       <ArticleViewTracker articleId={article.id} />
+      {/* <ArticleShareTracker articleId={article.id} /> */}
 
       {/* News Details */}
       <div className="lg:col-span-2 col-span-3">

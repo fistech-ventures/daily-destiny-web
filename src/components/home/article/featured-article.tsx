@@ -30,10 +30,12 @@ export default function FeaturedArticle({
             <span className="inline-block px-3 py-1 bg-primary text-white text-sm font-semibold rounded mb-3">
               {article.category?.titleBn || article.category?.title}
             </span>
-            <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 line-clamp-2 group-hover:text-primary-foreground transition-colors">
+            <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 group-hover:text-primary-foreground transition-colors"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
               {article.title}
             </h1>
-            <p className="text-white/90 line-clamp-2 text-base">
+            <p className="text-white/90 text-base"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
               {article.excerpt}
             </p>
           </div>

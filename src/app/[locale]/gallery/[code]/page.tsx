@@ -86,7 +86,7 @@ export default async function GalleryCodePage({
           </p>
         )}
 
-        <SocialShare title={gallery.title} />
+        <SocialShare title={gallery.title} articleId={String(gallery.id)} />
 
         <div className="flex flex-col gap-2">
           {gallery.images.map((image, index) => (

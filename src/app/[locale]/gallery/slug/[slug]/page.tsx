@@ -52,7 +52,7 @@ export default async function GalleryDetails({
       <div className="lg:space-y-3 space-y-2 lg:col-span-2 col-span-3">
         <h2 className="text-base md:text-xl lg:text-2xl">{gallery.title}</h2>
         {gallery.date && <p>{formatRelativeTime(gallery.date)}</p>}
-        <SocialShare title={gallery.title} />
+        <SocialShare title={gallery.title} articleId={String(gallery.id)} />
         <div className="p-3 bg-background rounded-md space-y-3 lg:space-y-6 relative w-full">
           {gallery.images.map((image, index) => (
             <div key={index} className="space-y-2">
