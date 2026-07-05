@@ -120,47 +120,47 @@ export default async function Home({
     recentArticles = nationalRes?.data || [];
   }
 
-  const getCategoryData = async (slug: string) => {
-    const cat = categoriesList.find(c => c.slug === slug);
+  // const getCategoryData = async (slug: string) => {
+  //   const cat = categoriesList.find(c => c.slug === slug);
 
-    if (!cat) {
-      const fallbackTitles: Record<string, string> = {
-        international: "আন্তর্জাতিক",
-        sports: "ক্রীড়া",
-        economy: "অর্থনীতি",
-        business: "ব্যবসা",
-      };
-      return {
-        title: fallbackTitles[slug] || slug,
-        slug,
-        articles: [],
-      };
-    }
+  //   if (!cat) {
+  //     const fallbackTitles: Record<string, string> = {
+  //       international: "আন্তর্জাতিক",
+  //       sports: "ক্রীড়া",
+  //       economy: "অর্থনীতি",
+  //       business: "ব্যবসা",
+  //     };
+  //     return {
+  //       title: fallbackTitles[slug] || slug,
+  //       slug,
+  //       articles: [],
+  //     };
+  //   }
 
-    try {
-      const articlesRes = await getArticles({
-        categoryId: cat.id,
-        limit: 4,
-        status: "Published",
-      });
+  //   try {
+  //     const articlesRes = await getArticles({
+  //       categoryId: cat.id,
+  //       limit: 4,
+  //       status: "Published",
+  //     });
 
-      return {
-        title: cat.titleBn || cat.title,
-        slug: cat.slug,
-        articles: articlesRes?.data || [],
-      };
-    } catch (err) {
-      console.error(
-        `Failed to fetch production records for category slug: ${slug}`,
-        err,
-      );
-      return {
-        title: cat.titleBn || cat.title,
-        slug: cat.slug,
-        articles: [],
-      };
-    }
-  };
+  //     return {
+  //       title: cat.titleBn || cat.title,
+  //       slug: cat.slug,
+  //       articles: articlesRes?.data || [],
+  //     };
+  //   } catch (err) {
+  //     console.error(
+  //       `Failed to fetch production records for category slug: ${slug}`,
+  //       err,
+  //     );
+  //     return {
+  //       title: cat.titleBn || cat.title,
+  //       slug: cat.slug,
+  //       articles: [],
+  //     };
+  //   }
+  // };
 
   // const categoriesData = await Promise.all([
   //   getCategoryData("international"),
@@ -178,8 +178,8 @@ export default async function Home({
   let khelaSlug = "kheladula";
 
   let politicsArticles: Article[] = [];
-  const politicsTitle = "রাজনীতি";
-  const politicsSlug = "politics";
+  // const politicsTitle = "রাজনীতি";
+  // const politicsSlug = "politics";
 
   if (khelaCat) {
     try {
