@@ -162,12 +162,12 @@ export default async function Home({
     }
   };
 
-  const categoriesData = await Promise.all([
-    getCategoryData("international"),
-    getCategoryData("sports"),
-    getCategoryData("economy"),
-    getCategoryData("business"),
-  ]);
+  // const categoriesData = await Promise.all([
+  //   getCategoryData("international"),
+  //   getCategoryData("sports"),
+  //   getCategoryData("economy"),
+  //   getCategoryData("business"),
+  // ]);
 
   // Fetch Khela/Sports category for the slider
   const khelaCat = categoriesList.find(
@@ -178,8 +178,8 @@ export default async function Home({
   let khelaSlug = "kheladula";
 
   let politicsArticles: Article[] = [];
-  let politicsTitle = "রাজনীতি";
-  let politicsSlug = "politics";
+  const politicsTitle = "রাজনীতি";
+  const politicsSlug = "politics";
 
   if (khelaCat) {
     try {
@@ -208,8 +208,8 @@ export default async function Home({
         status: "Published",
       });
       politicsArticles = politicsRes?.data || [];
-      politicsTitle = politicsCat.titleBn || politicsCat.title || "রাজনীতি";
-      politicsSlug = politicsCat.slug;
+      // politicsTitle = politicsCat.titleBn || politicsCat.title || "রাজনীতি";
+      // politicsSlug = politicsCat.slug;
     } catch (err) {
       console.error("Failed to fetch politics articles:", err);
     }
