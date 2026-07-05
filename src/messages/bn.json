@@ -167,12 +167,14 @@
       "email": "Email:  news.dainikdestiny@gmail.com"
     },
     "companyInfoBn": {
-      "name": "প্রকাশক ও সম্পাদক:      মোহাম্মদ রফিকুল আমীন",
+      "title": "প্রকাশক ও সম্পাদক:",
+      "name": "মোহাম্মদ রফিকুল আমীন",
       "subtitle": "পথ অনেক আমরা সত্যের পথে ",
       "address": "সাহারা সেন্টার (৫ম তলা), ৩৭/এ, কাকরাইল ভিআইপি রোড , ঢাকা-১০০০",
       "phone": "ফোন: +880 1404410531",
       "email": "ই-মেইল:  news.dainikdestiny@gmail.com"
     },
+
     "social": [
       {
         "name": "টুইটার",
