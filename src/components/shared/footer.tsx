@@ -41,14 +41,14 @@ export function Footer() {
           {/* Main Grid Area */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-16 pb-10 border-b border-gray-800">
             {/* Section 1: Brand Logo & Short Intro */}
-            <div className="lg:col-span-3 space-y-4">
-              <Link href="/" className="inline-flex">
+            <div className="lg:col-span-3 space-y-4 text-center sm:text-left">
+              <Link href="/" className="inline-flex justify-center sm:justify-start">
                 <img
                   src="/images/footerlogo.png"
                   alt="Ekhon TV"
                   className="
       h-auto 
-      w-24 sm:w-28 md:w-32 lg:w-40 xl:w-48
+      w-32 sm:w-28 md:w-32 lg:w-40 xl:w-48
       object-contain
       transition-all duration-300
     "

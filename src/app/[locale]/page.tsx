@@ -396,7 +396,7 @@ export default async function Home({
                                 recentArticles[0].date,
                               ).toLocaleDateString("bn-BD", {
                                 day: "numeric",
-                                month: "short",
+                                month: "long",
                                 year: "numeric",
                               })}
                             </span>
