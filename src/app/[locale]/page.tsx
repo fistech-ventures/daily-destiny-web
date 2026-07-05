@@ -120,54 +120,54 @@ export default async function Home({
     recentArticles = nationalRes?.data || [];
   }
 
-  const getCategoryData = async (slug: string) => {
-    const cat = categoriesList.find(c => c.slug === slug);
+  // const getCategoryData = async (slug: string) => {
+  //   const cat = categoriesList.find(c => c.slug === slug);
 
-    if (!cat) {
-      const fallbackTitles: Record<string, string> = {
-        international: "আন্তর্জাতিক",
-        sports: "ক্রীড়া",
-        economy: "অর্থনীতি",
-        business: "ব্যবসা",
-      };
-      return {
-        title: fallbackTitles[slug] || slug,
-        slug,
-        articles: [],
-      };
-    }
+  //   if (!cat) {
+  //     const fallbackTitles: Record<string, string> = {
+  //       international: "আন্তর্জাতিক",
+  //       sports: "ক্রীড়া",
+  //       economy: "অর্থনীতি",
+  //       business: "ব্যবসা",
+  //     };
+  //     return {
+  //       title: fallbackTitles[slug] || slug,
+  //       slug,
+  //       articles: [],
+  //     };
+  //   }
 
-    try {
-      const articlesRes = await getArticles({
-        categoryId: cat.id,
-        limit: 4,
-        status: "Published",
-      });
+  //   try {
+  //     const articlesRes = await getArticles({
+  //       categoryId: cat.id,
+  //       limit: 4,
+  //       status: "Published",
+  //     });
 
-      return {
-        title: cat.titleBn || cat.title,
-        slug: cat.slug,
-        articles: articlesRes?.data || [],
-      };
-    } catch (err) {
-      console.error(
-        `Failed to fetch production records for category slug: ${slug}`,
-        err,
-      );
-      return {
-        title: cat.titleBn || cat.title,
-        slug: cat.slug,
-        articles: [],
-      };
-    }
-  };
+  //     return {
+  //       title: cat.titleBn || cat.title,
+  //       slug: cat.slug,
+  //       articles: articlesRes?.data || [],
+  //     };
+  //   } catch (err) {
+  //     console.error(
+  //       `Failed to fetch production records for category slug: ${slug}`,
+  //       err,
+  //     );
+  //     return {
+  //       title: cat.titleBn || cat.title,
+  //       slug: cat.slug,
+  //       articles: [],
+  //     };
+  //   }
+  // };
 
-  const categoriesData = await Promise.all([
-    getCategoryData("international"),
-    getCategoryData("sports"),
-    getCategoryData("economy"),
-    getCategoryData("business"),
-  ]);
+  // const categoriesData = await Promise.all([
+  //   getCategoryData("international"),
+  //   getCategoryData("sports"),
+  //   getCategoryData("economy"),
+  //   getCategoryData("business"),
+  // ]);
 
   // Fetch Khela/Sports category for the slider
   const khelaCat = categoriesList.find(
@@ -178,8 +178,8 @@ export default async function Home({
   let khelaSlug = "kheladula";
 
   let politicsArticles: Article[] = [];
-  let politicsTitle = "রাজনীতি";
-  let politicsSlug = "politics";
+  // const politicsTitle = "রাজনীতি";
+  // const politicsSlug = "politics";
 
   if (khelaCat) {
     try {
@@ -208,8 +208,8 @@ export default async function Home({
         status: "Published",
       });
       politicsArticles = politicsRes?.data || [];
-      politicsTitle = politicsCat.titleBn || politicsCat.title || "রাজনীতি";
-      politicsSlug = politicsCat.slug;
+      // politicsTitle = politicsCat.titleBn || politicsCat.title || "রাজনীতি";
+      // politicsSlug = politicsCat.slug;
     } catch (err) {
       console.error("Failed to fetch politics articles:", err);
     }

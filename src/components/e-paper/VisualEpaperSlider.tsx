@@ -52,7 +52,6 @@ interface ImageDimensions {
 export default function VisualEpaperSlider({
   edition,
   currentDate,
-  availableDates,
 }: VisualEpaperSliderProps) {
   const router = useRouter();
   const pathname = usePathname();
