@@ -21,6 +21,7 @@ export function Footer() {
     locale === "bn"
       ? {
           name: tFooter("companyInfoBn.name"),
+          title: tFooter("companyInfoBn.title"),
           subtitle: tFooter("companyInfoBn.subtitle"),
           address: tFooter("companyInfoBn.address"),
           phone: tFooter("companyInfoBn.phone"),
@@ -42,7 +43,10 @@ export function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-16 pb-10 border-b border-gray-800">
             {/* Section 1: Brand Logo & Short Intro */}
             <div className="lg:col-span-3 space-y-4 text-center sm:text-left">
-              <Link href="/" className="inline-flex justify-center sm:justify-start">
+              <Link
+                href="/"
+                className="inline-flex justify-center sm:justify-start"
+              >
                 <img
                   src="/images/footerlogo.png"
                   alt="Ekhon TV"
@@ -62,8 +66,12 @@ export function Footer() {
             {/* Section 2: Contact Info */}
             <div className="lg:col-span-3 flex flex-col gap-2">
               <h3 className="font-bold text-black text-base md:text-base tracking-wide uppercase border-l-2 border-red-600 pl-3">
+                {companyInfo.title}
+              </h3>
+              <h3 className="font-bold text-black text-base md:text-base tracking-wide uppercase  pl-3">
                 {companyInfo.name}
               </h3>
+
               <p className="text-base text-black whitespace-pre-line leading-relaxed mt-1">
                 {companyInfo.address}
               </p>
