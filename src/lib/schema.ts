@@ -1,4 +1,5 @@
 import { Article, GlobalConfig } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 
 type JsonLd = Record<string, unknown>;
 
@@ -85,7 +86,7 @@ export const SchemaGenerator = {
       "@type": "NewsArticle",
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": `${siteUrl}/news/${article.category?.slug}/${article.code}`,
+        "@id": `${siteUrl}/news/${getArticleCategory(article)?.slug}/${article.code}`,
       },
       headline: article.metaTitle || article.title,
       description: article.metaDescription || article.excerpt,
@@ -106,7 +107,7 @@ export const SchemaGenerator = {
       dateModified: article.updatedAt,
       keywords: article.tags || [],
       inLanguage: article.language === "Bengali" ? "bn" : "en",
-      articleSection: article.category?.title,
+      articleSection: getArticleCategory(article)?.title,
     };
   },
 };

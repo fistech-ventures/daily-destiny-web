@@ -4,6 +4,7 @@ import NotFoundContent from "@/components/application/not-found-content";
 import AppProvider from "@/provider/app-provider";
 import { getAllcategories, getArticles, getVideos } from "@/lib/api";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import { generateFallbackMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({
@@ -37,7 +38,7 @@ export default async function GlobalNotFound() {
 
   const headlines = articles.map((article) => ({
     title: article.title,
-    category: article.category?.slug,
+    category: getArticleCategory(article)?.slug ?? "",
     code: article.code,
   }));
 

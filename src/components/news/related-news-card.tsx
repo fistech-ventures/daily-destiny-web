@@ -1,4 +1,5 @@
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import React from "react";
 import Link from "next/link";
 // import { Timer } from "lucide-react";
@@ -8,7 +9,7 @@ export default function RelatedNewsCard({ article }: { article: Article }) {
   return (
     <div>
       <Link
-        href={`/news/${article.category?.slug || "uncategorized"}/${article.code}`}
+        href={`/news/${getArticleCategory(article)?.slug || "uncategorized"}/${article.code}`}
       >
         <div
           key={article.id}

@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -139,7 +140,7 @@ export default function KhelaSlider({
         {articles.map((article, idx) => (
           <Link
             key={article.id || article.code || idx}
-            href={`/news/${article.category?.slug || article.category?.slugBn || "others"}/${article.code}`}
+            href={`/news/${getArticleCategory(article)?.slug || getArticleCategory(article)?.slugBn || "others"}/${article.code}`}
             className="w-[260px] sm:w-[280px] md:w-[calc(50%-10px)] lg:w-[calc((100%-40px)/3)] shrink-0 snap-start bg-white border border-gray-200 rounded-md overflow-hidden shadow-xs hover:shadow-sm hover:border-gray-300 transition-all group"
           >
             {/* Image */}

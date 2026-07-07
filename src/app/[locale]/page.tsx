@@ -11,6 +11,7 @@ import {
 } from "@/lib/api";
 import { Category, Article } from "@/lib/types";
 import { imageArticle } from "@/lib/api";
+import { getArticleCategory } from "@/lib/utils";
 import PhotoGallerySection from "@/components/gallery/PhotoGallerySection";
 import ArchiveSection from "@/components/archive/archive-section";
 import { formatRelativeTime } from "@/utils/date-formatter";
@@ -119,55 +120,6 @@ export default async function Home({
     });
     recentArticles = nationalRes?.data || [];
   }
-
-  // const getCategoryData = async (slug: string) => {
-  //   const cat = categoriesList.find(c => c.slug === slug);
-
-  //   if (!cat) {
-  //     const fallbackTitles: Record<string, string> = {
-  //       international: "আন্তর্জাতিক",
-  //       sports: "ক্রীড়া",
-  //       economy: "অর্থনীতি",
-  //       business: "ব্যবসা",
-  //     };
-  //     return {
-  //       title: fallbackTitles[slug] || slug,
-  //       slug,
-  //       articles: [],
-  //     };
-  //   }
-
-  //   try {
-  //     const articlesRes = await getArticles({
-  //       categoryId: cat.id,
-  //       limit: 4,
-  //       status: "Published",
-  //     });
-
-  //     return {
-  //       title: cat.titleBn || cat.title,
-  //       slug: cat.slug,
-  //       articles: articlesRes?.data || [],
-  //     };
-  //   } catch (err) {
-  //     console.error(
-  //       `Failed to fetch production records for category slug: ${slug}`,
-  //       err,
-  //     );
-  //     return {
-  //       title: cat.titleBn || cat.title,
-  //       slug: cat.slug,
-  //       articles: [],
-  //     };
-  //   }
-  // };
-
-  // const categoriesData = await Promise.all([
-  //   getCategoryData("international"),
-  //   getCategoryData("sports"),
-  //   getCategoryData("economy"),
-  //   getCategoryData("business"),
-  // ]);
 
   // Fetch Khela/Sports category for the slider
   const khelaCat = categoriesList.find(
@@ -324,8 +276,7 @@ export default async function Home({
                   {/* Top row: 1 full-width big card */}
                   <div className="w-full">
                     <a
-                      key={recentArticles[0].id || recentArticles[0].code}
-                      href={`/news/${recentArticles[0].category?.slug || recentArticles[0].category?.slugBn || ""}/${recentArticles[0].code}`}
+                      key={recentArticles[0].id || recentArticles[0].code}                          href={`/news/${getArticleCategory(recentArticles[0])?.slug || getArticleCategory(recentArticles[0])?.slugBn || ""}/${recentArticles[0].code}`}
                       className="group flex flex-col rounded-xl overflow-hidden border border-gray-100 hover:border-gray-300 bg-white shadow-sm hover:shadow-lg transition-all duration-200"
                     >
                       {/* Large Thumbnail */}
@@ -342,7 +293,7 @@ export default async function Home({
                           {/* Category badge */}
                           {recentArticles[0].category?.titleBn && (
                             <span className="absolute top-3 left-3 text-xs font-semibold text-white bg-red-600 px-2.5 py-1 rounded-full shadow-sm">
-                              {recentArticles[0].category.titleBn}
+                              {getArticleCategory(recentArticles[0])?.titleBn}
                             </span>
                           )}
                         </div>
@@ -416,7 +367,7 @@ export default async function Home({
                       .map((article: Article, idx: number) => (
                         <a
                           key={article.id || article.code || idx}
-                          href={`/news/${article.category?.slug || article.category?.slugBn || ""}/${article.code}`}
+                          href={`/news/${getArticleCategory(article)?.slug || getArticleCategory(article)?.slugBn || ""}/${article.code}`}
                           className="group flex flex-col bg-white border border-gray-100 rounded-lg overflow-hidden hover:border-gray-200 hover:shadow-sm transition-all"
                         >
                           {/* Thumbnail */}
@@ -445,11 +396,10 @@ export default async function Home({
                             >
                               {article.title}
                             </h4>
-                            <div className="flex items-center gap-2 mt-2">
-                              {article.category?.titleBn && (
-                                <span className="text-[10px] font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
-                                  {article.category.titleBn}
-                                </span>
+                            <div className="flex items-center gap-2 mt-2">                          {getArticleCategory(article)?.titleBn && (
+                                  <span className="text-[10px] font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
+                                    {getArticleCategory(article)?.titleBn}
+                                  </span>
                               )}
                             </div>
                           </div>

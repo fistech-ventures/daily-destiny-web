@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 
 interface ArticleCardProps {
   article: Article;
@@ -23,7 +24,7 @@ export default function ArticleCard({
 
   return (
     <Link
-      href={`/news/${article.category?.slug || "others"}/${article.code}`}
+      href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
       className="group block w-full transition-all rounded-xl"
     >
       <div

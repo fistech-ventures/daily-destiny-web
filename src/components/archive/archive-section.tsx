@@ -16,6 +16,7 @@ import ArchiveCalendar from "@/components/archive/archive-calendar";
 import AdBanner from "@/components/shared/ad-banner";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 
 export default function ArchiveSection() {
   const { locale } = useParams();
@@ -182,7 +183,7 @@ export default function ArchiveSection() {
                   {displayArticles.map(article => (
                     <a
                       key={article.id}
-                      href={`/news/${article.category?.slug || ""}/${article.code}`}
+                      href={`/news/${getArticleCategory(article)?.slug || ""}/${article.code}`}
                       className="group flex flex-col rounded-lg overflow-hidden border border-gray-100 hover:border-[#1a66ca] bg-white shadow-sm hover:shadow-md transition-all duration-200"
                     >
                       {/* Thumbnail */}
@@ -207,9 +208,9 @@ export default function ArchiveSection() {
                           {article.title}
                         </h4>
                         <div className="flex items-center gap-2 mt-2">
-                          {article.category?.titleBn && (
+                          {getArticleCategory(article)?.titleBn && (
                             <span className="text-sm font-medium text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full">
-                              {article.category.titleBn}
+                              {getArticleCategory(article)?.titleBn}
                             </span>
                           )}
                           {article.date && (

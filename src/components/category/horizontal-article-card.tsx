@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 
 interface HorizontalArticleCardProps {
   article: Article;
@@ -14,7 +15,7 @@ export default function HorizontalArticleCard({
   if (layoutType === "featured") {
     return (
       <Link
-        href={`/news/${article.category?.slug || "others"}/${article.code}`}
+        href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
         className="group block relative w-full aspect-[16/10] md:aspect-video overflow-hidden rounded-lg shadow-sm"
       >
         <img

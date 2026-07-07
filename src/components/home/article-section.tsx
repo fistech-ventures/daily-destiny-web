@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Clock, TrendingUp } from "lucide-react";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import AdBanner from "@/components/shared/ad-banner";
 
 interface FeaturedSectionProps {
@@ -20,7 +21,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
       {/* Left: 1 Big Image (col-span-2) */}
       <div className="col-span-2 p-3 bg-gray-50 flex justify-center">
         <Link
-          href={`/news/${article.category?.slug || "others"}/${article.code}`}
+          href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
         >
           <img
             src={article.coverImage}
@@ -33,7 +34,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
       {/* Right: Title & Description (col-span-1) */}
       <div className="col-span-1 p-6 flex flex-col border-l border-gray-200">
         <Link
-          href={`/news/${article.category?.slug || "others"}/${article.code}`}
+          href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
         >
           <h1 className="text-2xl md:text-3xl font-bold mb-4 hover:text-blue-600">
             {article.title}

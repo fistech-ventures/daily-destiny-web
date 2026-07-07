@@ -1,4 +1,5 @@
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
@@ -17,7 +18,7 @@ export default function GridSection({
         {articles.map((article) => (
           <Link
             key={article.id}
-            href={`/news/${article.category?.slug || "others"}/${article.code}`}
+            href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
             className="block group"
           >
             <div className="bg-background rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
@@ -30,7 +31,7 @@ export default function GridSection({
               />
               <div className="p-3">
                 <span className="text-xs text-primary font-semibold">
-                  {article.category?.titleBn || article.category?.title}
+                  {getArticleCategory(article)?.titleBn || getArticleCategory(article)?.title}
                 </span>
                 <h3 className="text-base font-semibold mt-1 group-hover:text-primary transition-colors"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
