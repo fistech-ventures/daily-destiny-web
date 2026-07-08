@@ -1,5 +1,6 @@
 import { Category, Article } from "@/lib/types";
 import { getArticles } from "@/lib/api";
+import { getArticleCategory } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
@@ -40,7 +41,7 @@ export default async function CategorySection({
       <div className="grid md:grid-cols-2 gap-4">
         {/* First article - larger */}
         <Link
-          href={`/news/${isFirstArticle.category?.slug || "others"}/${isFirstArticle.code}`}
+          href={`/news/${getArticleCategory(isFirstArticle)?.slug || "others"}/${isFirstArticle.code}`}
           className="block group"
         >
           <img
@@ -65,7 +66,7 @@ export default async function CategorySection({
           {restArticles.map((article: Article) => (
             <Link
               key={article.id}
-              href={`/news/${article.category?.slug || "others"}/${article.code}`}
+              href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
               className="flex gap-3 group"
             >
               <img

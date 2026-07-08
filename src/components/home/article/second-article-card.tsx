@@ -1,4 +1,5 @@
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 
 import React from "react";
 import Link from "next/link";
@@ -11,7 +12,7 @@ export default function SecondArticleCard({ article }: { article: Article }) {
     <div className="group">
       <div className="grid md:grid-cols-5 items-center gap-2 md:gap-3">
         <Link
-          href={`/news/${article.category.slug}/${article.code}`}
+          href={`/news/${getArticleCategory(article)?.slug ?? "others"}/${article.code}`}
           className="md:col-span-2"
         >
           <img
@@ -34,13 +35,12 @@ export default function SecondArticleCard({ article }: { article: Article }) {
             </div> */}
             {/* <Link href={article.category.slug}>
               <h5 className="text-xs lg:text-sm relative before:absolute before:top-1/2 before:-left-3 before:-translate-y-1/2 before:rounded-full before:h-2 before:w-2 before:bg-primary ml-3.5 hover:underline">
-                {currentLocale === "bn"
-                  ? article.category.titleBn
-                  : article.category.title}
+                {currentLocale === "bn"                    ? (getArticleCategory(article)?.titleBn ?? '')
+                    : (getArticleCategory(article)?.title ?? '')}
               </h5>
             </Link> */}
           </div>
-          <Link href={`/news/${article.category.slug}/${article.code}`}>
+          <Link href={`/news/${getArticleCategory(article)?.slug ?? "others"}/${article.code}`}>
             <h3 className="lg:text-base text-xs font-semibold hover:underline"
               style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
               {article.title}

@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { getAllcategories, getArticles } from "@/lib/api";
 import { Category, Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 
 export default async function BinodonSection() {
   // Fetch categories
@@ -53,7 +54,7 @@ export default async function BinodonSection() {
         {/* Leftmost 2 Columns spanning 2 Rows */}
         <div className="md:col-span-2 md:row-span-2 flex flex-col h-full border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-6">
           <a
-            href={`/news/${mainArticle.category?.slug || binodonSlug}/${mainArticle.code}`}
+            href={`/news/${getArticleCategory(mainArticle)?.slug || binodonSlug}/${mainArticle.code}`}
             className="group block flex-col h-full justify-between"
           >
             <div>
@@ -91,7 +92,7 @@ export default async function BinodonSection() {
                 border-gray-100`}
             >
               <a
-                href={`/news/${article.category?.slug || binodonSlug}/${article.code}`}
+                href={`/news/${getArticleCategory(article)?.slug || binodonSlug}/${article.code}`}
                 className="group block flex-col justify-between h-full"
               >
                 <div>

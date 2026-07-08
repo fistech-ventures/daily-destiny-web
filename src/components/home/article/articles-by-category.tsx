@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Article, Category } from "@/lib/types";
 import { getArticles } from "@/lib/api";
+import { getArticleCategory } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 // import { formatRelativeTime } from "@/utils/date-formatter";
 
@@ -54,8 +55,7 @@ export default async function CategorySection({
         <>
           {/* Featured Article */}
           {featuredArticle && (
-            <Link
-              href={`/news/${featuredArticle.category?.slug || "others"}/${featuredArticle.code}`}
+            <Link                  href={`/news/${getArticleCategory(featuredArticle)?.slug || "others"}/${featuredArticle.code}`}
             >
               <div className="group cursor-pointer">
                 <div className="relative aspect-16/10 w-full overflow-hidden rounded-md mb-3">
@@ -97,7 +97,7 @@ export default async function CategorySection({
                   </div>
                 </div> */}
                 <Link
-                  href={`/news/${article.category?.slug || "uncategorized"}/${article.code}`}
+                  href={`/news/${getArticleCategory(article)?.slug || "uncategorized"}/${article.code}`}
                 >
                   <h4 className="text-base font-medium leading-relaxed text-gray-800 group-hover:underline transition-colors"
                     style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>

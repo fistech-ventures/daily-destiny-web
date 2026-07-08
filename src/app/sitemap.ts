@@ -9,6 +9,7 @@ import {
   VideoArticle,
 } from "@/lib/api";
 import { Article, Category } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import { MetadataRoute } from "next";
 
 type ChangeFrequency = MetadataRoute.Sitemap[number]["changeFrequency"];
@@ -65,10 +66,10 @@ async function fetchAllNewsEntries(): Promise<MetadataRoute.Sitemap> {
     if (!data.length) break;
 
     data.forEach((article: Article) => {
-      if (!article?.category?.slug || !article?.code) return;
+      if (!getArticleCategory(article)?.slug || !article?.code) return;
       entries.push(
         buildLocalizedEntry(
-          `/news/${article.category.slug}/${article.code}`,
+          `/news/${(getArticleCategory(article)?.slug ?? '')}/${article.code}`,
           normalizeDate(article.updatedAt),
           "hourly",
           0.9,

@@ -111,6 +111,7 @@ export default async function CategoryPage({
   // 2. Initialize the query configuration with strict typing instead of 'any'
   const apiQuery: CategoryPageArticlesQuery = {
     limit: 10,
+    status: "Published",
   };
 
   // 3. Populate filter values type-safely based on conditionals

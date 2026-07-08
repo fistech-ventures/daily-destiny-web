@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import AdBanner from "@/components/shared/ad-banner";
 
 export default async function LatestNewsSection() {
@@ -44,7 +45,7 @@ export default async function LatestNewsSection() {
         {featuredArticle && (
           <div className="lg:col-span-1 flex flex-col bg-white border border-gray-200 rounded-md p-4 pb-14 shadow-xs relative h-fit">
             <Link
-              href={`/news/${featuredArticle.category?.slug || featuredArticle.category?.slugBn || "others"}/${featuredArticle.code}`}
+              href={`/news/${getArticleCategory(featuredArticle)?.slug || getArticleCategory(featuredArticle)?.slugBn || "others"}/${featuredArticle.code}`}
               className="group flex flex-col gap-3"
             >
               <div className="relative w-full aspect-video rounded overflow-hidden bg-gray-100">
@@ -60,9 +61,9 @@ export default async function LatestNewsSection() {
                 {featuredArticle.title}
               </h3>
 
-              {featuredArticle.category?.titleBn && (
+              {getArticleCategory(featuredArticle)?.titleBn && (
                 <span className="inline-block text-xs font-medium text-brand bg-blue-50 px-2 py-0.5 rounded-full self-start">
-                  {featuredArticle.category.titleBn}
+                  {getArticleCategory(featuredArticle)?.titleBn}
                 </span>
               )}
 
@@ -76,7 +77,7 @@ export default async function LatestNewsSection() {
 
             <div className="absolute bottom-4 right-4">
               <Link
-                href={`/news/${featuredArticle.category?.slug || featuredArticle.category?.slugBn || "others"}/${featuredArticle.code}`}
+                href={`/news/${getArticleCategory(featuredArticle)?.slug || getArticleCategory(featuredArticle)?.slugBn || "others"}/${featuredArticle.code}`}
                 className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white hover:text-white text-sm font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
               >
                 বিস্তারিত
@@ -90,7 +91,7 @@ export default async function LatestNewsSection() {
           {middleArticles.map((article, idx) => (
             <Link
               key={article.id || article.code || idx}
-              href={`/news/${article.category?.slug || article.category?.slugBn || "others"}/${article.code}`}
+              href={`/news/${getArticleCategory(article)?.slug || getArticleCategory(article)?.slugBn || "others"}/${article.code}`}
               className="group flex gap-4 bg-white border border-gray-200 rounded-md p-3 shadow-xs hover:border-gray-300 transition-all items-center"
             >
               <div className="relative w-28 sm:w-36 h-20 sm:h-24 flex-shrink-0 rounded overflow-hidden bg-gray-100">
@@ -109,9 +110,9 @@ export default async function LatestNewsSection() {
                   </h4>
                 </div>
 
-                {article.category?.titleBn && (
+                {getArticleCategory(article)?.titleBn && (
                   <span className="inline-block mt-1.5 text-xs font-medium text-brand bg-blue-50 px-2 py-0.5 rounded-full">
-                    {article.category.titleBn}
+                    {getArticleCategory(article)?.titleBn}
                   </span>
                 )}
               </div>
@@ -124,7 +125,7 @@ export default async function LatestNewsSection() {
           {rightArticles.map((article, idx) => (
             <Link
               key={article.id || article.code || idx}
-              href={`/news/${article.category?.slug || article.category?.slugBn || "others"}/${article.code}`}
+              href={`/news/${getArticleCategory(article)?.slug || getArticleCategory(article)?.slugBn || "others"}/${article.code}`}
               className="group flex gap-4 bg-white border border-gray-200 rounded-md p-3 shadow-xs hover:border-gray-300 transition-all items-center"
             >
               <div className="relative w-28 sm:w-36 h-20 sm:h-24 flex-shrink-0 rounded overflow-hidden bg-gray-100">
@@ -143,9 +144,9 @@ export default async function LatestNewsSection() {
                   </h4>
                 </div>
 
-                {article.category?.titleBn && (
+                {getArticleCategory(article)?.titleBn && (
                   <span className="inline-block mt-1.5 text-xs font-medium text-brand bg-blue-50 px-2 py-0.5 rounded-full">
-                    {article.category.titleBn}
+                    {getArticleCategory(article)?.titleBn}
                   </span>
                 )}
               </div>

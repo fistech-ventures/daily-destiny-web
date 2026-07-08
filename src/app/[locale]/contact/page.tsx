@@ -1,8 +1,6 @@
 import enMessages from "@/messages/en.json";
 import bnMessages from "@/messages/bn.json";
 import { generateFallbackMetadata } from "@/lib/metadata";
-import { getPage } from "@/lib/api";
-import { notFound } from "next/navigation";
 import { Mail, MapPin, Phone } from "lucide-react";
 import ContactForm from "@/components/contact/contact-form";
 
@@ -24,13 +22,7 @@ export default async function ContactPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { data: page } = await getPage("contact");
-  const pageStatus = page?.isActive;
   const { locale } = await params;
-
-  if (!pageStatus) {
-    return notFound();
-  }
 
   // Get messages based on locale
   const messages = locale === "bn" ? bnMessages.contact : enMessages.contact;
