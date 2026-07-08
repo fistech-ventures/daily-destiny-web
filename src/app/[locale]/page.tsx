@@ -117,6 +117,7 @@ export default async function Home({
       categoryId: nationalCategory.id,
       limit: 4,
       status: "Published",
+      includeMultiCategory: true,
     });
     recentArticles = nationalRes?.data || [];
   }
@@ -139,6 +140,7 @@ export default async function Home({
         categoryId: khelaCat.id,
         limit: 8,
         status: "Published",
+        includeMultiCategory: true,
       });
       khelaArticles = khelaRes?.data || [];
       khelaTitle = khelaCat.titleBn || khelaCat.title || "খেলাধুলা";
@@ -158,6 +160,7 @@ export default async function Home({
         categoryId: politicsCat.id,
         limit: 7,
         status: "Published",
+        includeMultiCategory: true,
       });
       politicsArticles = politicsRes?.data || [];
       // politicsTitle = politicsCat.titleBn || politicsCat.title || "রাজনীতি";
@@ -182,6 +185,7 @@ export default async function Home({
         categoryId: economyCat.id,
         limit: 8,
         status: "Published",
+        includeMultiCategory: true,
       });
       economyArticles = economyRes?.data || [];
       economyTitle = economyCat.titleBn || economyCat.title || "অর্থনীতি";

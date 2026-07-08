@@ -63,7 +63,7 @@ async function CustomNews404({ categorySlug }: { categorySlug: string }) {
     const category = categories.find((c: Category) => c.slug === categorySlug);
 
     if (category) {
-      const res = await getArticles({ categoryId: category.id, limit: 10 });
+      const res = await getArticles({ categoryId: category.id, limit: 10, includeMultiCategory: true });
       fallbackArticles = res?.data || [];
     } else {
       const res = await getArticles({ limit: 10 });
