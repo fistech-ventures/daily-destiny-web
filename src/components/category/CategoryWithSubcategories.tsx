@@ -38,6 +38,7 @@ export default async function CategoryWithSubcategories({ slug, fallbackTitle }:
           categoryId: sub.id, 
           limit: 4,
           status: "Published",
+          includeMultiCategory: true,
         });
 
         return {
@@ -59,6 +60,7 @@ export default async function CategoryWithSubcategories({ slug, fallbackTitle }:
       categoryId: parentCat.id,
       limit: 4,
       status: "Published",
+      includeMultiCategory: true,
     });
 
     if (!generalRes?.data || generalRes.data.length === 0) return null;

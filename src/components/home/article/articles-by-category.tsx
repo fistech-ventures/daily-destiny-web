@@ -20,6 +20,7 @@ export default async function CategorySection({
     categoryId: category.id,
     limit: 4,
     status: "Published",
+    includeMultiCategory: true,
   });
 
   const articles: Article[] = response?.data || [];

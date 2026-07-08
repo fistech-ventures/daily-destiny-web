@@ -130,10 +130,10 @@ export async function getMarketPrice(query?: {
 
 // Get articles
 export async function getArticles(
-  query?: ArticleQueryParams & { useLocationApi?: boolean },
+  query?: ArticleQueryParams & { useLocationApi?: boolean; includeMultiCategory?: boolean },
 ) {
   try {
-    const { useLocationApi, ...params } = query || {};
+    const { useLocationApi, includeMultiCategory, ...params } = query || {};
 
     // 1. Establish path roots without mixing string flags with object configurations
     const baseUrl = useLocationApi
@@ -152,7 +152,61 @@ export async function getArticles(
     const response = await api.get(baseUrl, {
       params: finalParams,
     });
-    return response.data;
+
+    const data = response.data;
+
+    // 4. Multi-category fallback: when includeMultiCategory is true and categoryId is set,
+    //    also fetch articles whose `categories` array contains the target category ID
+    //    (for articles that have a different primary categoryId but are tagged with this category)
+    if (includeMultiCategory && params.categoryId) {
+      const targetLimit = params.limit || 10;
+      const currentArticles: any[] = data?.data || [];
+
+      // Only do the fallback if primary results are fewer than the requested limit
+      if (currentArticles.length < targetLimit) {
+        try {
+          // Fetch broader set without categoryId filter
+          const broaderParams = { ...params };
+          delete broaderParams.categoryId;
+          if (!useLocationApi) {
+            broaderParams.type = "news";
+          }
+          // Fetch enough to find matching articles after filtering
+          broaderParams.limit = Math.max(targetLimit * 3, 20);
+
+          const broaderResponse = await api.get(baseUrl, {
+            params: broaderParams,
+          });
+
+          const broaderArticles: any[] = broaderResponse.data?.data || [];
+
+          // Filter broader articles to include those whose categories[] contains the target
+          const targetCategoryId = params.categoryId;
+          const existingIds = new Set(currentArticles.map((a: any) => a.id));
+
+          for (const article of broaderArticles) {
+            if (existingIds.has(article.id)) continue;
+
+            const hasCategoryInArray = article.categories?.some(
+              (cat: any) => cat.id === targetCategoryId,
+            );
+
+            if (hasCategoryInArray) {
+              currentArticles.push(article);
+              existingIds.add(article.id);
+            }
+
+            if (currentArticles.length >= targetLimit) break;
+          }
+
+          data.data = currentArticles;
+        } catch {
+          // If the broader fetch fails, silently use the primary results
+        }
+      }
+    }
+
+    return data;
   } catch (error) {
     console.error("Error fetching articles:", error);
     throw error;

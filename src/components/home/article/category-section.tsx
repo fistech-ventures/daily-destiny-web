@@ -14,6 +14,7 @@ export default async function CategorySection({
     page: 1,
     limit: 4,
     categoryId: category.id,
+    includeMultiCategory: true,
   });
   const categoryArticles = categoryArticlesRes?.data || [];
 

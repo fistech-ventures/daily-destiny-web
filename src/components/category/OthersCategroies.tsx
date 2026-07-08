@@ -92,6 +92,7 @@ const OthersCategories = async () => {
             categoryId: cat.id,
             limit: 4,
             status: "Published",
+            includeMultiCategory: true,
           });
 
           return {
