@@ -33,8 +33,8 @@ export default function NewsDetails({ article }: { article: Article }) {
           <div className="flex items-center gap-2 text-gray-600 text-sm md:text-base">
             <span className="font-semibold text-primary">
               {currentLocale === "bn"
-                ? article.author.nameBn
-                : article.author.name}
+                ? (article.author?.nameBn ?? '')
+                : (article.author?.name ?? '')}
             </span>
             <span>|</span>
             <span>
@@ -84,7 +84,7 @@ export default function NewsDetails({ article }: { article: Article }) {
           <img src="/images/logo.png" alt="Daily Destiny" className="w-24 h-16 object-contain" />
         </div>
         <div className="hidden print:flex justify-between items-center py-2">
-          <p className="text-sm text-gray-500">{currentLocale === "bn" ? article.author.nameBn : article.author.name}</p>
+          <p className="text-sm text-gray-500">{currentLocale === "bn" ? (article.author?.nameBn ?? '') : (article.author?.name ?? '')}</p>
           <p className="text-sm text-gray-500">{tFooter("copyright", { year: new Date().getFullYear() })}</p>
         </div>
       </div>

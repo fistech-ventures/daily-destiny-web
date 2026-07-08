@@ -29,6 +29,7 @@ export default async function SingleCategoryNewsGrid({
     categoryId: currentCat.id,
     limit,
     status: "Published",
+    includeMultiCategory: true,
   });
 
   const articles: Article[] = articlesRes?.data || [];

@@ -21,6 +21,7 @@ export default async function BinodonSection() {
     categoryId: binodonCat.id,
     limit: 7,
     status: "Published",
+    includeMultiCategory: true,
   });
 
   const articles: Article[] = articlesRes?.data || [];

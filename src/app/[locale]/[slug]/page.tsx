@@ -66,6 +66,7 @@ export const revalidate = 0;
 // 1. Create a strict, explicit interface for the page query construction
 interface CategoryPageArticlesQuery extends ArticleQueryParams {
   useLocationApi?: boolean;
+  includeMultiCategory?: boolean;
 }
 
 export default async function CategoryPage({
@@ -123,6 +124,7 @@ export default async function CategoryPage({
       apiQuery.subCategoryId = subCategoryId;
     } else if (category?.id) {
       apiQuery.categoryId = category.id;
+      apiQuery.includeMultiCategory = true;
     }
   }
 
