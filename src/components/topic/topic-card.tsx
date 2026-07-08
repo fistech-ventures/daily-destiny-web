@@ -1,4 +1,5 @@
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 // import { formatRelativeTime } from "@/utils/date-formatter";
 // import { Timer } from "lucide-react";
 
@@ -12,7 +13,7 @@ interface NewsCardProps {
 export default async function TopicCard({ article }: NewsCardProps) {
   return (
     <Link
-      href={`/news/${article.category?.slug || "uncategorized"}/${article.code}`}
+      href={`/news/${getArticleCategory(article)?.slug || "uncategorized"}/${article.code}`}
       className="group cursor-pointer"
     >
       <div className="relative aspect-video overflow-hidden rounded-2xl mb-3">

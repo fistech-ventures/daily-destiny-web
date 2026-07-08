@@ -1,4 +1,5 @@
 import { Article } from '@/lib/types';
+import { getArticleCategory } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
@@ -63,7 +64,7 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
 
                 {/* Leftmost 2 Columns spanning across 2 Rows */}
                 <div className="md:col-span-2 md:row-span-2 flex flex-col h-full border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-6">
-                    <a href={`/news/${mainArticle.category?.slug || "politics"}/${mainArticle.code}`} className="group block flex-col h-full justify-between">
+                    <a href={`/news/${getArticleCategory(mainArticle)?.slug || "politics"}/${mainArticle.code}`} className="group block flex-col h-full justify-between">
                         <div>
                             <div className="overflow-hidden rounded-lg bg-gray-100 aspect-[16/10]">
                                 <img
@@ -109,7 +110,7 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
                                 ${isNotLastCol ? 'md:border-r md:pr-6' : ''} 
                                 border-gray-100`}
                         >
-                            <a href={`/news/${article.category?.slug || "politics"}/${article.code}`} className="group block flex-col justify-between h-full">
+                            <a href={`/news/${getArticleCategory(article)?.slug || "politics"}/${article.code}`} className="group block flex-col justify-between h-full">
                                 <div>
                                     <div className="overflow-hidden rounded-lg bg-gray-100 aspect-[16/10]">
                                         <img

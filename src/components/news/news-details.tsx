@@ -1,6 +1,7 @@
 import { Article } from "@/lib/types";
 
 import React from "react";
+import { getArticleCategory } from "@/lib/utils";
 import SocialShare from "../shared/social-share";
 import { useLocale, useTranslations } from "next-intl";
 import { formatBdTime } from "@/utils/date-formatter";
@@ -38,8 +39,8 @@ export default function NewsDetails({ article }: { article: Article }) {
             <span>|</span>
             <span>
               {currentLocale === "bn"
-                ? article.category.titleBn
-                : article.category.title}
+                ? (getArticleCategory(article)?.titleBn ?? '')
+                : (getArticleCategory(article)?.title ?? '')}
             </span>
           </div>
           <div className="text-gray-500 text-sm">

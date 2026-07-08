@@ -1,4 +1,5 @@
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 // import { formatRelativeTime } from "@/utils/date-formatter";
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -61,7 +62,7 @@ export default async function SpecialArticle({
       <div className="grid lg:grid-cols-2 gap-3 items-stretch">
         {/* Fisrt Special Article */}
         <Link
-          href={`/news/${firstSpecialArticle.category.slug}/${firstSpecialArticle.code}`}
+          href={`/news/${getArticleCategory(firstSpecialArticle)?.slug ?? "others"}/${firstSpecialArticle.code}`}
           className="bg-primary/80 rounded-md"
         >
           <img
@@ -93,7 +94,7 @@ export default async function SpecialArticle({
           {restFourSpecialArticles.map((article: Article) => (
             <Link
               key={article.id}
-              href={`/news/${article.category.slug}/${article.code}`}
+              href={`/news/${getArticleCategory(article)?.slug ?? "others"}/${article.code}`}
               className="group grid-cols-12 grid items-center gap-2"
             >
               <div className="col-span-12 md:col-span-3 relative">

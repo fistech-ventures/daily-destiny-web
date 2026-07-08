@@ -1,4 +1,5 @@
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
@@ -14,7 +15,7 @@ export default function FeaturedArticle({
   return (
     <div className="mb-6">
       <Link
-        href={`/news/${article.category?.slug || "others"}/${article.code}`}
+        href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
         className="block group"
       >
         <div className="relative overflow-hidden rounded-lg">
@@ -28,7 +29,7 @@ export default function FeaturedArticle({
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <span className="inline-block px-3 py-1 bg-primary text-white text-sm font-semibold rounded mb-3">
-              {article.category?.titleBn || article.category?.title}
+              {getArticleCategory(article)?.titleBn || getArticleCategory(article)?.title}
             </span>
             <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 group-hover:text-primary-foreground transition-colors"
               style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>

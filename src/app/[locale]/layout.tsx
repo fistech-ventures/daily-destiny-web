@@ -11,6 +11,7 @@ import {
   getMarketPrice,
 } from "@/lib/api";
 import { Article } from "@/lib/types";
+import { getArticleCategory } from "@/lib/utils";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -62,7 +63,7 @@ export default async function LocaleLayout({
 
   const headlines = articles.map((article) => ({
     title: article.title,
-    category: article.category?.slug,
+    category: getArticleCategory(article)?.slug ?? "",
     code: article.code,
   }));
 

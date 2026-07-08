@@ -137,8 +137,8 @@ export default async function NewsDetailsPage({
     globalConfig = configRes?.data ?? null;
 
     if (article) {
-      // 💡 FIXED: Changed from article.id to article.code to match backend expectation
-      const relatedRes = await getRelatedArticles(article.code);
+      // Use article.id (UUID) — the /related endpoint expects the UUID, not the numeric code
+      const relatedRes = await getRelatedArticles(article.id);
 
       // Safely check if the backend responded with data.articles object or a clean array fallback
       let articlesArray: Article[] = [];

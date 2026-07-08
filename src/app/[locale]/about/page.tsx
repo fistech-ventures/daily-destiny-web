@@ -1,8 +1,6 @@
 import enMessages from "@/messages/en.json";
 import bnMessages from "@/messages/bn.json";
 import { generateFallbackMetadata } from "@/lib/metadata";
-import { getPage } from "@/lib/api";
-import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -18,12 +16,6 @@ export async function generateMetadata({
 }
 
 export default async function AboutPage() {
-  const { data: page } = await getPage("about");
-  const pageStatus = page?.isActive;
-
-  if (!pageStatus) {
-    return notFound();
-  }
 
   const en = enMessages.about;
   const bn = bnMessages.about;

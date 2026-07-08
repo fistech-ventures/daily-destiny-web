@@ -78,7 +78,10 @@ export interface Article {
   isFeatured: boolean;
   tags: string[];
   author: Author;
-  category: Category;
+  category?: Category;
+  categories?: Category[];
+  subCategory?: Category;
+  subCategories?: Category[];
   medias?: ArticleMedia[];
   coverImageCredit: string;
   seoMetaData?: SeoMetaData;
