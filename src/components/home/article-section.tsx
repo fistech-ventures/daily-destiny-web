@@ -51,7 +51,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
 
 // Grid Card - Image on top, Title below
 const GridCard: React.FC<GridCardProps> = ({ article }) => (
-  <Link href={`/news/${article.category?.slug || "others"}/${article.code}`}>
+  <Link href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}>
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
       <img
         src={article.coverImage}
@@ -71,7 +71,7 @@ const GridCard: React.FC<GridCardProps> = ({ article }) => (
 // News list item for latest/popular sidebar
 const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
   <Link
-    href={`/news/${article.category?.slug || "others"}/${article.code}`}
+    href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
     className="group flex gap-3 bg-white border border-gray-100 rounded-lg overflow-hidden hover:border-gray-200 hover:shadow-sm transition-all"
   >
     <div className="shrink-0 w-20 h-16 sm:w-24 sm:h-18">

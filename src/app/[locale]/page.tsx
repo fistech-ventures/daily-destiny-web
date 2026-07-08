@@ -291,7 +291,7 @@ export default async function Home({
                           {/* Gradient overlay for better text readability */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                           {/* Category badge */}
-                          {recentArticles[0].category?.titleBn && (
+                          {getArticleCategory(recentArticles[0])?.titleBn && (
                             <span className="absolute top-3 left-3 text-xs font-semibold text-white bg-red-600 px-2.5 py-1 rounded-full shadow-sm">
                               {getArticleCategory(recentArticles[0])?.titleBn}
                             </span>

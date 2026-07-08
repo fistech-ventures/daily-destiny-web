@@ -80,6 +80,8 @@ export interface Article {
   author: Author;
   category?: Category;
   categories?: Category[];
+  subCategory?: Category;
+  subCategories?: Category[];
   medias?: ArticleMedia[];
   coverImageCredit: string;
   seoMetaData?: SeoMetaData;

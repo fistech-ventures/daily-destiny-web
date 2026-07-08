@@ -61,7 +61,7 @@ export default async function LatestNewsSection() {
                 {featuredArticle.title}
               </h3>
 
-              {featuredArticle.category?.titleBn && (
+              {getArticleCategory(featuredArticle)?.titleBn && (
                 <span className="inline-block text-xs font-medium text-brand bg-blue-50 px-2 py-0.5 rounded-full self-start">
                   {getArticleCategory(featuredArticle)?.titleBn}
                 </span>
