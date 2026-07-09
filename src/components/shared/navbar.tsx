@@ -45,26 +45,20 @@ function DesktopDateTime() {
     dateTime.toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
   );
 
-  const dateStr = new Intl.DateTimeFormat(
-    locale === "bn" ? "bn-BD" : "en-US",
-    {
-      timeZone: "Asia/Dhaka",
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    },
-  ).format(dhakaTime);
+  const dateStr = new Intl.DateTimeFormat(locale === "bn" ? "bn-BD" : "en-US", {
+    timeZone: "Asia/Dhaka",
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(dhakaTime);
 
-  const timeStr = new Intl.DateTimeFormat(
-    locale === "bn" ? "bn-BD" : "en-US",
-    {
-      timeZone: "Asia/Dhaka",
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    },
-  ).format(dhakaTime);
+  const timeStr = new Intl.DateTimeFormat(locale === "bn" ? "bn-BD" : "en-US", {
+    timeZone: "Asia/Dhaka",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).format(dhakaTime);
 
   return (
     <div className="hidden md:flex flex-col text-xs text-gray-500 leading-tight">
@@ -107,8 +101,7 @@ export function Navbar({
   const pathname = usePathname();
 
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
-  const [isDesktopPopupOpen, setIsDesktopPopupOpen] =
-    React.useState(false);
+  const [isDesktopPopupOpen, setIsDesktopPopupOpen] = React.useState(false);
   const [hideNavbar, setHideNavbar] = React.useState(false);
   const lastScrollY = React.useRef(0);
 
@@ -227,10 +220,7 @@ export function Navbar({
                 </SocialIcon>
 
                 {/* Instagram */}
-                <SocialIcon
-                  bgColor="#E1306C"
-                  href="https://instagram.com"
-                >
+                <SocialIcon bgColor="#E1306C" href="https://instagram.com">
                   <Instagram
                     size={16}
                     color="#ffffff"
@@ -315,78 +305,34 @@ export function Navbar({
                   সর্বশেষ
                 </Link>
 
-                {categories
-                  .slice(0, 10)
-                  .filter((category, index, self) => {
-                    const title = category.titleBn || category.title;
-                    return (
-                      self.findIndex(c => (c.titleBn || c.title) === title) ===
-                      index
-                    );
-                  })
-                  .map(category => (
-                    <div
-                      key={category.id}
-                      className="shrink-0 h-full"
-                      onMouseEnter={() => {
-                        if (closeTimeoutRef.current)
-                          clearTimeout(closeTimeoutRef.current);
-                        if ((category as Category).subCategories?.length > 0) {
-                          setOpenDropdownId(category.id);
-                        }
-                      }}
-                      onMouseLeave={() => {
-                        if ((category as Category).subCategories?.length > 0) {
-                          closeTimeoutRef.current = setTimeout(() => {
-                            setOpenDropdownId(null);
-                          }, 150);
-                        }
-                      }}
-                    >
-                      <Link
-                        href={`/${category.slug}`}
-                        onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                          // On touch devices, toggle dropdown instead of navigating
-                          try {
-                            if (
-                              (category as Category).subCategories?.length >
-                                0 &&
-                              typeof window !== "undefined" &&
-                              window.matchMedia &&
-                              window.matchMedia("(hover: none)").matches
-                            ) {
-                              e.preventDefault();
-                              if (closeTimeoutRef.current)
-                                clearTimeout(closeTimeoutRef.current);
-                              setOpenDropdownId(prev =>
-                                prev === category.id ? null : category.id,
-                              );
-                            }
-                          } catch {
-                            // ignore
-                          }
-                        }}
-                        className={cn(
-                          "px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
-                          strippedPathname === `/${category.slug}`
-                            ? "border-red-600 text-red-600"
-                            : "border-transparent text-gray-700 hover:text-red-600",
-                        )}
-                        aria-haspopup={
-                          (category as Category).subCategories?.length > 0
-                            ? "menu"
-                            : undefined
-                        }
-                        aria-expanded={openDropdownId === category.id}
-                      >
-                        {category.titleBn || category.title}
-
-                        {(category as Category).subCategories?.length > 0 && (
-                          <span className="ml-1 text-xs">▼</span>
-                        )}
-                      </Link>
-                    </div>
-                  ))}
+                {/* Ensure your parent container has classes like: "flex overflow-x-auto scrollbar-none" */}
+                <div className="flex items-center overflow-x-auto scrollbar-none gap-2 h-full">
+                  {categories
+                    .slice(0, 10)
+                    .filter((category, index, self) => {
+                      const title = category.titleBn || category.title;
+                      return (
+                        self.findIndex(
+                          (c) => (c.titleBn || c.title) === title,
+                        ) === index
+                      );
+                    })
+                    .map((category) => (
+                      <div key={category.id} className="shrink-0 h-full">
+                        <Link
+                          href={`/${category.slug}`}
+                          className={cn(
+                            "px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                            strippedPathname === `/${category.slug}`
+                              ? "border-red-600 text-red-600"
+                              : "border-transparent text-gray-700 hover:text-red-600",
+                          )}
+                        >
+                          {category.titleBn || category.title}
+                        </Link>
+                      </div>
+                    ))}
+                </div>
 
                 <Link
                   href={`/video`}
@@ -474,11 +420,11 @@ export function Navbar({
                               const title = category.titleBn || category.title;
                               return (
                                 self.findIndex(
-                                  c => (c.titleBn || c.title) === title,
+                                  (c) => (c.titleBn || c.title) === title,
                                 ) === index
                               );
                             })
-                            .map(category => (
+                            .map((category) => (
                               <div
                                 key={category.id}
                                 className="flex items-start py-3 gap-4"
@@ -536,7 +482,10 @@ export function Navbar({
                             variant="hamburger"
                           />
                         </div>
-                        <Link href="/e-papers/visual" onClick={() => setIsSheetOpen(false)}>
+                        <Link
+                          href="/e-papers/visual"
+                          onClick={() => setIsSheetOpen(false)}
+                        >
                           <div className="bg-[#000058] hover:bg-[#000058]/80 transition-colors px-4 py-2 text-white text-xs font-bold uppercase rounded-md tracking-wider flex flex-col items-start  gap-2">
                             <div className="flex items-center gap-2">
                               <Newspaper
@@ -567,7 +516,7 @@ export function Navbar({
           {openDropdownId &&
             (() => {
               const activeCategory = categories.find(
-                c => c.id === openDropdownId,
+                (c) => c.id === openDropdownId,
               );
               if (
                 !activeCategory ||
@@ -593,7 +542,7 @@ export function Navbar({
                 >
                   <div className="max-w-screen-xl mx-auto px-6 py-6 text-gray-900">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                      {activeCategory.subCategories.map(sub => (
+                      {activeCategory.subCategories.map((sub) => (
                         <Link
                           key={sub.id}
                           href={`/${sub.slug}`}
@@ -633,7 +582,7 @@ export function Navbar({
                 className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300"
               />
               <div
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
                 className="relative z-10 bg-white border border-gray-200 rounded-[24px] p-8 pt-10 shadow-2xl flex flex-col items-center gap-5 animate-in fade-in zoom-in-75 slide-in-from-bottom-4 duration-300 ease-out"
               >
                 <button
@@ -699,7 +648,10 @@ export function Navbar({
                   </SocialIcon>
 
                   {/* Facebook Group */}
-                  <SocialIcon bgColor="#1877F2" href="https://facebook.com/groups">
+                  <SocialIcon
+                    bgColor="#1877F2"
+                    href="https://facebook.com/groups"
+                  >
                     <Users size={18} color="#ffffff" className="stroke-[2]" />
                   </SocialIcon>
 
