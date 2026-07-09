@@ -50,13 +50,13 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
   return (
     <section className="w-full bg-[#cbd5e1] p-1 font-sans">
       {/* ── TOP ROW: Banner Image ── */}
-      <div className="relative w-full h-[140px] sm:h-[180px] md:h-[240px] mb-1 overflow-hidden">
+      <div className=" relative w-full h-[140px] sm:h-[180px]  md:h-[240px] mb-1 overflow-hidden">
         {heroBgImage && (
           <Image
             src={heroBgImage}
             alt={heroTitle || "Special Event Banner"}
             fill
-            className="object-contain"
+            className="object-cover object-right md:object-contain"
             priority
           />
         )}
@@ -64,7 +64,7 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
         {/* Banner Title - Positioned at bottom-left */}
         {heroTitle && (
           <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 via-black/40 to-transparent p-3 sm:p-4 md:p-6 z-10">
-            <h2 className="text-white text-sm sm:text-lg md:text-2xl font-bold leading-tight">
+            <h2 className="text-white text-base sm:text-lg md:text-2xl font-bold leading-tight">
               {heroTitle}
             </h2>
           </div>

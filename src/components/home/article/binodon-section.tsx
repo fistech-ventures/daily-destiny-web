@@ -50,10 +50,16 @@ export default async function BinodonSection() {
         </Link>
       </div>
 
-      {/* 5-Column Grid matching PoliticsSection layout */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-start mt-2">
-        {/* Leftmost 2 Columns spanning 2 Rows */}
-        <div className="md:col-span-2 md:row-span-2 flex flex-col h-full border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-6">
+      {/* প্যারেন্ট গ্রিড পরিবর্তন:
+        - মোবাইলে ২টি কলাম (grid-cols-2)
+        - ডেস্কটপে ৫টি কলাম (md:grid-cols-5)
+      */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 items-start mt-2">
+        {/* বড় কার্ড (Main Hero Card):
+          - মোবাইলে col-span-2 (ফুল উইডথ)
+          - ডেস্কটপে md:col-span-2 
+        */}
+        <div className="col-span-2 md:col-span-2 md:row-span-2 flex flex-col h-full border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-6">
           <a
             href={`/news/${getArticleCategory(mainArticle)?.slug || binodonSlug}/${mainArticle.code}`}
             className="group block flex-col h-full justify-between"
@@ -67,10 +73,10 @@ export default async function BinodonSection() {
                 />
               </div>
               <div className="mt-4">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
+                <h2 className="text-lg md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
                   {mainArticle.title}
                 </h2>
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed"
+                <p className="mt-3 text-xs md:text-sm text-gray-600 leading-relaxed"
                   style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {mainArticle.excerpt}
                 </p>
@@ -79,7 +85,10 @@ export default async function BinodonSection() {
           </a>
         </div>
 
-        {/* Remaining 3 Columns across 2 Rows (6 cards total) */}
+        {/* ছোট কার্ডগুলো (Side Articles):
+          - মোবাইলে col-span-1 (১ সারিতে ২টি করে)
+          - ডেস্কটপে md:col-span-1 
+        */}
         {sideArticles.map((article, index) => {
           const isRow1 = index < 3;
           const isNotLastCol = (index + 1) % 3 !== 0;
@@ -87,10 +96,9 @@ export default async function BinodonSection() {
           return (
             <div
               key={article.id}
-              className={`md:col-span-1 flex flex-col h-full pb-4 md:pb-0
+              className={`col-span-1 flex flex-col h-full pb-4 md:pb-0 border-gray-100
                 ${isRow1 ? "md:border-b md:pb-6" : "md:pt-2"}
-                ${isNotLastCol ? "md:border-r md:pr-6" : ""}
-                border-gray-100`}
+                ${isNotLastCol ? "md:border-r md:pr-6" : ""}`}
             >
               <a
                 href={`/news/${getArticleCategory(article)?.slug || binodonSlug}/${article.code}`}
@@ -104,7 +112,7 @@ export default async function BinodonSection() {
                       className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-200"
                     />
                   </div>
-                  <h3 className="mt-3 text-sm font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200"
+                  <h3 className="mt-3 text-xs sm:text-sm font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200"
                     style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                     {article.title}
                   </h3>
