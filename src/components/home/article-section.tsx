@@ -40,8 +40,16 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
             {article.title}
           </h1>
         </Link>
-        <p className="text-sm md:text-base text-gray-600"
-          style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
+        <p
+          className="text-sm md:text-base text-gray-600"
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 4,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            width: "100%",
+          }}
+        >
           {article.excerpt}
         </p>
       </div>
@@ -51,7 +59,9 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
 
 // Grid Card - Image on top, Title below
 const GridCard: React.FC<GridCardProps> = ({ article }) => (
-  <Link href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}>
+  <Link
+    href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
+  >
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
       <img
         src={article.coverImage}
@@ -59,8 +69,16 @@ const GridCard: React.FC<GridCardProps> = ({ article }) => (
         className="w-full aspect-video object-cover hover:opacity-90"
       />
       <div className="p-4">
-        <h3 className="text-sm md:text-base font-bold hover:text-blue-600"
-        style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
+        <h3
+          className="text-sm md:text-base font-bold hover:text-blue-600"
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            width: "100%",
+          }}
+        >
           {article.title}
         </h3>
       </div>
@@ -82,8 +100,16 @@ const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
       />
     </div>
     <div className="flex-1 min-w-0 py-1.5 pr-2">
-      <h4 className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
-        style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
+      <h4
+        className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+        style={{
+          display: "-webkit-box",
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+          width: "100%",
+        }}
+      >
         {article.title}
       </h4>
     </div>
@@ -135,34 +161,10 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
             )}
 
             {gridArticles.length > 0 ? (
-              <div>
-                {/* Row 1 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  {gridArticles.slice(0, 3).map((article: Article) => (
-                    <GridCard key={article.id} article={article} />
-                  ))}
-                </div>
-
-                {/* Row 2 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  {gridArticles.slice(3, 6).map((article: Article) => (
-                    <GridCard key={article.id} article={article} />
-                  ))}
-                </div>
-
-                {/* Row 3 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  {gridArticles.slice(6, 9).map((article: Article) => (
-                    <GridCard key={article.id} article={article} />
-                  ))}
-                </div>
-
-                {/* Row 4 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {gridArticles.slice(9, 12).map((article: Article) => (
-                    <GridCard key={article.id} article={article} />
-                  ))}
-                </div>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {gridArticles.map((article: Article) => (
+                  <GridCard key={article.id} article={article} />
+                ))}
               </div>
             ) : (
               <div className="text-center py-10 text-gray-500">
@@ -186,7 +188,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
                 {latestArticles.length > 0 ? (
                   latestArticles
                     .slice(0, 3)
-                    .map(article => (
+                    .map((article) => (
                       <NewsListItem key={article.id} article={article} />
                     ))
                 ) : (
@@ -207,7 +209,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
                 {popularSidebarArticles.length > 0 ? (
                   popularSidebarArticles
                     .slice(0, 3)
-                    .map(article => (
+                    .map((article) => (
                       <NewsListItem key={article.id} article={article} />
                     ))
                 ) : (

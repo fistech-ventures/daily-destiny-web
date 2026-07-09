@@ -26,6 +26,7 @@ import KhelaSlider from "@/components/home/article/khela-slider";
 import PoliticsSection from "@/components/home/article/polititcs-section";
 import EconomySection from "@/components/home/article/economy-section";
 import LatestNewsSection from "@/components/news/latest-news-section";
+import BackToTop from "@/components/shared/back-to-top";
 
 export async function generateMetadata({
   params,
@@ -364,15 +365,15 @@ export default async function Home({
                     </a>
                   </div>
 
-                  {/* Bottom row: 3 small cards in a row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {/* Bottom row: 3 small cards — 2-col on mobile, 3-col on tablet+ */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {recentArticles
                       .slice(1, 4)
                       .map((article: Article, idx: number) => (
                         <a
                           key={article.id || article.code || idx}
                           href={`/news/${getArticleCategory(article)?.slug || getArticleCategory(article)?.slugBn || ""}/${article.code}`}
-                          className="group flex flex-col bg-white border border-gray-100 rounded-lg overflow-hidden hover:border-gray-200 hover:shadow-sm transition-all"
+                          className={`group flex flex-col bg-white border border-gray-100 rounded-lg overflow-hidden hover:border-gray-200 hover:shadow-sm transition-all ${idx === 2 ? "col-span-2 sm:col-span-1" : ""}`}
                         >
                           {/* Thumbnail */}
                           {article.coverImage && (
@@ -449,6 +450,8 @@ export default async function Home({
       <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
       <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
       <ArchiveSection />
+
+      <BackToTop />
     </main>
   );
 }
