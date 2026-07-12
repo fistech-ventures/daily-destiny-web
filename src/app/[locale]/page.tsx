@@ -86,9 +86,7 @@ export default async function Home({
               />
             </div>
 
-            <div className="w-full lg:w-80 shrink-0 sticky top-4">
-              <LocationFilter initialLocationId={locationId} />
-            </div>
+            <div className="w-full lg:w-80 shrink-0 sticky top-4"></div>
           </div>
         </div>
       </main>
@@ -115,7 +113,7 @@ export default async function Home({
   if (nationalCategory) {
     const nationalRes = await getArticles({
       categoryId: nationalCategory.id,
-      limit: 4,
+      limit: 5,
       status: "Published",
       includeMultiCategory: true,
     });
@@ -265,7 +263,7 @@ export default async function Home({
             </div>
           </div>
 
-          {/* Right: National News — Top row: 1 full-width big card | Bottom row: 3 cards */}
+          {/* Right: National News — Top row: 2 cards | Bottom row: 2 cards */}
           <div className="lg:col-span-8">
             <div className="bg-white rounded-xl p-5 lg:p-6 shadow-sm border border-gray-100 h-full">
               <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
@@ -277,97 +275,103 @@ export default async function Home({
 
               {recentArticles.length > 0 ? (
                 <div className="flex flex-col gap-5">
-                  {/* Top row: 1 full-width big card */}
-                  <div className="w-full">
-                    <a
-                      key={recentArticles[0].id || recentArticles[0].code}                          href={`/news/${getArticleCategory(recentArticles[0])?.slug || getArticleCategory(recentArticles[0])?.slugBn || ""}/${recentArticles[0].code}`}
-                      className="group flex flex-col rounded-xl overflow-hidden border border-gray-100 hover:border-gray-300 bg-white shadow-sm hover:shadow-lg transition-all duration-200"
-                    >
-                      {/* Large Thumbnail */}
-                      {recentArticles[0].coverImage && (
-                        <div className="relative w-full h-48 sm:h-56 lg:h-72 overflow-hidden bg-gray-100">
-                          <img
-                            src={recentArticles[0].coverImage}
-                            alt={recentArticles[0].title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                          {/* Gradient overlay for better text readability */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                          {/* Category badge */}
-                          {getArticleCategory(recentArticles[0])?.titleBn && (
-                            <span className="absolute top-3 left-3 text-xs font-semibold text-white bg-red-600 px-2.5 py-1 rounded-full shadow-sm">
-                              {getArticleCategory(recentArticles[0])?.titleBn}
-                            </span>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Content */}
-                      <div className="p-4 flex flex-col">
-                        <h4
-                          className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors"
-                          style={{
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                            width: "100%",
-                          }}
+                  {/* Top row: 2 cards side by side */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {recentArticles
+                      .slice(0, 2)
+                      .map((article: Article, idx: number) => (
+                        <a
+                          key={article.id || article.code || idx}
+                          href={`/news/${getArticleCategory(article)?.slug || getArticleCategory(article)?.slugBn || ""}/${article.code}`}
+                          className="group flex flex-col rounded-xl overflow-hidden border border-gray-100 hover:border-gray-300 bg-white shadow-sm hover:shadow-lg transition-all duration-200"
                         >
-                          {recentArticles[0].title}
-                        </h4>
-                        {recentArticles[0].excerpt && (
-                          <p
-                            className="text-sm text-gray-500 mt-2"
-                            style={{
-                              display: "-webkit-box",
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: "vertical",
-                              overflow: "hidden",
-                              width: "100%",
-                            }}
-                          >
-                            {recentArticles[0].excerpt}
-                          </p>
-                        )}
-                        <div className="flex items-center gap-3 mt-2 pt-2">
-                          {recentArticles[0].date && (
-                            <span className="text-xs text-gray-400 flex items-center gap-1">
-                              <svg
-                                className="w-3.5 h-3.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                              {new Date(
-                                recentArticles[0].date,
-                              ).toLocaleDateString("bn-BD", {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
-                              })}
-                            </span>
+                          {/* Thumbnail */}
+                          {article.coverImage && (
+                            <div className="relative w-full h-48 sm:h-52 lg:h-60 overflow-hidden bg-gray-100">
+                              <img
+                                src={article.coverImage}
+                                alt={article.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                loading="lazy"
+                              />
+                              {/* Gradient overlay for better text readability */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                              {/* Category badge */}
+                              {getArticleCategory(article)?.titleBn && (
+                                <span className="absolute top-3 left-3 text-xs font-semibold text-white bg-red-600 px-2.5 py-1 rounded-full shadow-sm">
+                                  {getArticleCategory(article)?.titleBn}
+                                </span>
+                              )}
+                            </div>
                           )}
-                          <span className="text-xs font-medium text-[#1a66ca] group-hover:underline">
-                            বিস্তারিত →
-                          </span>
-                        </div>
-                      </div>
-                    </a>
+
+                          {/* Content */}
+                          <div className="p-4 flex flex-col">
+                            <h4
+                              className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                              style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                                width: "100%",
+                              }}
+                            >
+                              {article.title}
+                            </h4>
+                            {article.excerpt && (
+                              <p
+                                className="text-sm text-gray-500 mt-2"
+                                style={{
+                                  display: "-webkit-box",
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: "vertical",
+                                  overflow: "hidden",
+                                  width: "100%",
+                                }}
+                              >
+                                {article.excerpt}
+                              </p>
+                            )}
+                            <div className="flex items-center gap-3 mt-2 pt-2">
+                              {article.date && (
+                                <span className="text-xs text-gray-400 flex items-center gap-1">
+                                  <svg
+                                    className="w-3.5 h-3.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                  {new Date(article.date).toLocaleDateString(
+                                    "bn-BD",
+                                    {
+                                      day: "numeric",
+                                      month: "long",
+                                      year: "numeric",
+                                    },
+                                  )}
+                                </span>
+                              )}
+                              <span className="text-xs font-medium text-[#1a66ca] group-hover:underline">
+                                বিস্তারিত →
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+                      ))}
                   </div>
 
-                  {/* Bottom row: 3 small cards in a row */}
+                  {/* Bottom row: remaining 3 cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {recentArticles
-                      .slice(1, 4)
+                      .slice(2, 5)
                       .map((article: Article, idx: number) => (
                         <a
                           key={article.id || article.code || idx}
@@ -400,10 +404,11 @@ export default async function Home({
                             >
                               {article.title}
                             </h4>
-                            <div className="flex items-center gap-2 mt-2">                          {getArticleCategory(article)?.titleBn && (
-                                  <span className="text-[10px] font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
-                                    {getArticleCategory(article)?.titleBn}
-                                  </span>
+                            <div className="flex items-center gap-2 mt-2">
+                              {getArticleCategory(article)?.titleBn && (
+                                <span className="text-[10px] font-medium text-brand bg-blue-50 px-1.5 py-0.5 rounded-full">
+                                  {getArticleCategory(article)?.titleBn}
+                                </span>
                               )}
                             </div>
                           </div>
