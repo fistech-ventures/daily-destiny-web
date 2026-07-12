@@ -25,7 +25,24 @@ export default async function ContactPage({
   const { locale } = await params;
 
   // Get messages based on locale
-  const messages = locale === "bn" ? bnMessages.contact : enMessages.contact;
+  const currentMessages = locale === "bn" ? bnMessages : enMessages;
+  const messages = currentMessages.contact;
+  const footerData = currentMessages.footer;
+
+  // Real-time data mapped from footer localization settings
+  const companyInfo = locale === "bn"
+    ? {
+        name: footerData.companyInfoBn?.name,
+        address: footerData.companyInfoBn?.address,
+        phone: footerData.companyInfoBn?.phone,
+        email: footerData.companyInfoBn?.email,
+      }
+    : {
+        name: footerData.companyInfoEn?.name,
+        address: footerData.companyInfoEn?.address,
+        phone: footerData.companyInfoEn?.phone,
+        email: footerData.companyInfoEn?.email,
+      };
 
   return (
     <div className="">
@@ -50,21 +67,21 @@ export default async function ContactPage({
                 <MapPin />
                 <div>
                   <p className="font-medium">{messages.addressLabel}:</p>
-                  <p>{messages.address}</p>
+                  <p>{companyInfo.address}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Phone />
                 <div>
                   <p className="font-medium">{messages.phoneLabel}:</p>
-                  <p>{messages.phone}</p>
+                  <p>{companyInfo.phone}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Mail />
                 <div>
                   <p className="font-medium">{messages.emailLabel}:</p>
-                  <p>{messages.email}</p>
+                  <p>{companyInfo.email}</p>
                 </div>
               </div>
             </div>

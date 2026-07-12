@@ -4,7 +4,6 @@ import Link from "next/link";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
-import AdBanner from "@/components/shared/ad-banner";
 
 export default async function LatestNewsSection() {
   // Fetch 7 latest articles (1 featured + 3 middle + 3 right)
@@ -22,7 +21,7 @@ export default async function LatestNewsSection() {
 
   const featuredArticle = articles[0];
   const middleArticles = articles.slice(1, 4); // 3 items
-  const rightArticles = articles.slice(5,6); // 3 items for right column
+  const rightArticles = articles.slice(4, 7); // 3 items for right column
 
   return (
     <div className="w-full flex flex-col gap-4 select-none">
@@ -154,7 +153,7 @@ export default async function LatestNewsSection() {
           ))}
 
           {/* Advertisement at bottom of right column */}
-          <AdBanner className="rounded-lg" altText="সর্বশেষ সংবাদ বিজ্ঞাপন" />
+          {/* <AdBanner className="rounded-lg" altText="সর্বশেষ সংবাদ বিজ্ঞাপন" /> */}
         </div>
       </div>
     </div>

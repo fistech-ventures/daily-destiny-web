@@ -37,7 +37,7 @@ export default function FourCategoryGrid({
 
       {/* 2. Four Column Grid Matrix */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-transparent mt-2">
-        {categories.slice(0, 4).map((cat) => {
+        {categories.slice(4,8).map((cat) => {
           const leadArticle = cat.articles[0];
           const listArticles = cat.articles.slice(1, 4);
 
