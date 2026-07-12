@@ -23,14 +23,14 @@ export async function generateMetadata({
   try {
     const { data: categories } = await getAllcategories();
     let category = categories.find(
-      (c: Category) => c.slug === decodedSlug || c.slugBn === decodedSlug
+      (c: Category) => c.slug === decodedSlug || c.slugBn === decodedSlug,
     );
     let activeSubCategory: Category | undefined = undefined;
 
     if (!category) {
       for (const parent of categories) {
         const sub = parent.subCategories?.find(
-          (s: Category) => s.slug === decodedSlug || s.slugBn === decodedSlug
+          (s: Category) => s.slug === decodedSlug || s.slugBn === decodedSlug,
         );
         if (sub) {
           category = parent;
@@ -106,7 +106,8 @@ export default async function CategoryPage({
   }
 
   const resolvedSearchParams = await searchParams;
-  const subCategoryId = resolvedSubCategoryId || resolvedSearchParams.subCategoryId;
+  const subCategoryId =
+    resolvedSubCategoryId || resolvedSearchParams.subCategoryId;
   const locationId = resolvedSearchParams.locationId;
 
   // 2. Initialize the query configuration with strict typing instead of 'any'
@@ -138,12 +139,16 @@ export default async function CategoryPage({
     (subCategory: Category) => subCategory.id === subCategoryId,
   );
   const subTitle = subCategoryObj
-    ? (isBn ? subCategoryObj.titleBn : subCategoryObj.title)
+    ? isBn
+      ? subCategoryObj.titleBn
+      : subCategoryObj.title
     : undefined;
 
   const targetHeading = locationId
-    ? (isBn ? "আমার এলাকার খবর" : "My Area News")
-    : (subTitle || parentTitle || "");
+    ? isBn
+      ? "আমার এলাকার খবর"
+      : "My Area News"
+    : subTitle || parentTitle || "";
 
   const articlesList = response?.data || [];
   const meta = response?.meta;
@@ -206,7 +211,7 @@ export default async function CategoryPage({
             key={`${category?.id}-${subCategoryId || "none"}-${locationId || "global"}`}
             initialData={articlesList}
             initialMeta={meta}
-            fetchParams={apiQuery} // 👈 5. Directly forward clean parameters object
+            fetchParams={apiQuery}
           />
         </div>
 
