@@ -21,11 +21,10 @@ export default function NewsListClient({
   noDataMessage = "কোনো সংবাদ পাওয়া যায়নি",
 }: NewsListClientProps) {
   const fetchMore = async (page: number) => {
-    // 2. Destructure the params so they transfer perfectly over deep pagination calls
     return getArticles({
       ...fetchParams,
       page,
-      limit: initialMeta?.limit || 10,
+      limit: initialMeta?.limit || 20,
     });
   };
 

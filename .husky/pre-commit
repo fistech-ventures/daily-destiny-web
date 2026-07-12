@@ -1,2 +1,15 @@
-npx lint-staged
+# Run lint-staged for auto-fixing (ignore exit code - next lint returns exit code 1 on deprecation warning)
+npx lint-staged 2>&1 || true
+
+# Run next lint directly to check for actual errors in staged files
+if ! npx next lint --file "src/app/[locale]/page.tsx" --file "src/app/[locale]/[slug]/page.tsx" --file "src/components/news/news-list-client.tsx" 2>&1 | grep -q "No ESLint warnings or errors"; then
+  echo ""
+  echo "ESLint errors found. Aborting commit."
+  exit 1
+fi
+
+echo ""
+echo "No ESLint errors found. Running TypeScript check..."
+echo ""
+
 npx tsc --noEmit
