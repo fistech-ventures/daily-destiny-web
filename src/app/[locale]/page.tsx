@@ -27,6 +27,7 @@ import PoliticsSection from "@/components/home/article/polititcs-section";
 import EconomySection from "@/components/home/article/economy-section";
 import LatestNewsSection from "@/components/news/latest-news-section";
 import BackToTop from "@/components/shared/back-to-top";
+import Link from "next/link";
 
 export async function generateMetadata({
   params,
@@ -272,7 +273,11 @@ export default async function Home({
               <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-6 bg-red-500 rounded-full"></div>
-                  <h3 className="text-lg font-bold text-gray-900">জাতীয়</h3>
+                  <Link href="/national">
+                    <h3 className="text-lg font-bold text-gray-900 cursor-pointer hover:text-[#1a66ca] transition-colors">
+                      জাতীয়
+                    </h3>
+                  </Link>
                 </div>
               </div>
 
