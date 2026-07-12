@@ -4,7 +4,6 @@ import Link from "next/link";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
-import AdBanner from "@/components/shared/ad-banner";
 
 export default async function LatestNewsSection() {
   // Fetch 7 latest articles (1 featured + 3 middle + 3 right)
