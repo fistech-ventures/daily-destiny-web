@@ -5,13 +5,62 @@ import { getArticleCategory } from "@/lib/utils";
 
 interface HorizontalArticleCardProps {
   article: Article;
-  layoutType?: "featured" | "side" | "grid";
+  layoutType?: "featured" | "side" | "grid" | "hero";
 }
 
 export default function HorizontalArticleCard({
   article,
   layoutType = "grid",
 }: HorizontalArticleCardProps) {
+  if (layoutType === "hero") {
+    return (
+      <Link
+        href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
+        className="group block relative w-full aspect-[16/7] md:aspect-[21/9] overflow-hidden rounded-xl shadow-md bg-gray-100"
+      >
+        <img
+          src={article.coverImage}
+          alt={article.title}
+          loading="eager"
+          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 via-40% to-transparent" />
+
+        <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7 lg:p-10 text-white">
+          {getArticleCategory(article)?.titleBn && (
+            <span className="inline-block px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full mb-3 shadow-sm">
+              {getArticleCategory(article)?.titleBn}
+            </span>
+          )}
+          <h2
+            className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight group-hover:text-gray-200 transition-colors"
+            style={{
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
+            {article.title}
+          </h2>
+          {(article.excerpt || article.details) && (
+            <p
+              className="text-xs md:text-sm lg:text-base text-gray-200 mt-2 leading-relaxed max-w-3xl"
+              style={{
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}
+            >
+              {article.excerpt || article.details?.replace(/<[^>]*>/g, '')}
+            </p>
+          )}
+        </div>
+      </Link>
+    );
+  }
+
   if (layoutType === "featured") {
     return (
       <Link
