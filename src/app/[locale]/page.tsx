@@ -170,6 +170,67 @@ export default async function Home({
     }
   }
 
+  // Fetch religion (ধর্ম) category articles — 1 hero + up to 6 side cards (Politics pattern)
+  const religionCat = categoriesList.find(
+    c => c.slug === "religion" || c.slug === "dhormo" || c.slug === "islam",
+  );
+  let religionArticles: Article[] = [];
+  if (religionCat) {
+    try {
+      const religionRes = await getArticles({
+        categoryId: religionCat.id,
+        limit: 7,
+        status: "Published",
+        includeMultiCategory: true,
+      });
+      religionArticles = religionRes?.data || [];
+    } catch (err) {
+      console.error("Failed to fetch religion articles:", err);
+    }
+  }
+
+  // Fetch law-order (আইন-আদালত) category articles — 1 hero + up to 6 side cards (Politics pattern)
+  const lawCat = categoriesList.find(
+    c => c.slug === "law-order" || c.slug === "law",
+  );
+  let lawArticles: Article[] = [];
+  if (lawCat) {
+    try {
+      const lawRes = await getArticles({
+        categoryId: lawCat.id,
+        limit: 7,
+        status: "Published",
+        includeMultiCategory: true,
+      });
+      lawArticles = lawRes?.data || [];
+    } catch (err) {
+      console.error("Failed to fetch law articles:", err);
+    }
+  }
+
+  // Fetch technology (তথ্যপ্রযুক্তি) category articles — up to 8 cards for the slider
+  const techCat = categoriesList.find(
+    c => c.slug === "information-technology" || c.slug === "technology" || c.slug === "tech",
+  );
+  let techArticles: Article[] = [];
+  let techTitle = "প্রযুক্তি";
+  let techSlug = "technology";
+  if (techCat) {
+    try {
+      const techRes = await getArticles({
+        categoryId: techCat.id,
+        limit: 8,
+        status: "Published",
+        includeMultiCategory: true,
+      });
+      techArticles = techRes?.data || [];
+      techTitle = techCat.titleBn || techCat.title || "প্রযুক্তি";
+      techSlug = techCat.slug;
+    } catch (err) {
+      console.error("Failed to fetch tech articles:", err);
+    }
+  }
+
   // Fetch economy (অর্থনীতি) category articles — up to 8 cards for the slider
   const economyCat = categoriesList.find(
     c =>
@@ -218,14 +279,21 @@ export default async function Home({
   }));
 
   return (
-    <main className="container mx-auto px-1.5 py-0 pb-2 flex flex-col gap-3 lg:gap-5">
-      {/* Homepage Advertisement Section */}
-      <AdBanner className="rounded-lg" altText="হোমপেজ বিজ্ঞাপন" />
+    <main className="container mx-auto px-1.5 py-0 pb-2 flex flex-col">
+      {/* ── TOP BANNER ── */}
+      <div className="mb-3 lg:mb-5">
+        <AdBanner className="rounded-lg" altText="হোমপেজ বিজ্ঞাপন" />
+      </div>
 
-      <FeatureBanner eventData={specialEvent} />
-      <MainLayout />
+      <div className="mb-3 lg:mb-5">
+        <FeatureBanner eventData={specialEvent} />
+      </div>
 
-      <section className="w-full">
+      <div className="mb-3 lg:mb-5">
+        <MainLayout />
+      </div>
+
+      <section className="w-full mb-3 lg:mb-5">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left: Location Filter (50%) + Advertisement (50%) */}
           <div className="lg:col-span-4 flex flex-col gap-4">
@@ -432,34 +500,88 @@ export default async function Home({
         </div>
       </section>
 
-      {politicsArticles.length > 0 && (
-        <PoliticsSection articles={politicsArticles} />
-      )}
-      {/* জাতীয় সংবাদ → সর্বশেষ সংবাদ with extra block in 3rd column */}
-      <LatestNewsSection />
-      <SingleCategoryNewsGrid slug="international" limit={7} />
-      {economyArticles.length > 0 && (
-        <EconomySection
-          articles={economyArticles}
-          title={economyTitle}
-          categorySlug={economySlug}
+      {/* ── POLITICS, RELIGION & LAW — Hero + Side Cards Group ── */}
+      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
+        {politicsArticles.length > 0 && (
+          <PoliticsSection articles={politicsArticles} />
+        )}
+
+      </div>
+
+      {/* ── DIVIDER ── */}
+      <div className="border-t border-gray-100 my-3 lg:my-5" />
+
+      {/* ── LATEST, INTERNATIONAL & ECONOMY ── */}
+      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
+        <LatestNewsSection />
+        <SingleCategoryNewsGrid slug="international" limit={7} />
+        {economyArticles.length > 0 && (
+          <EconomySection
+            articles={economyArticles}
+            title={economyTitle}
+            categorySlug={economySlug}
+          />
+        )}
+      </div>
+
+      {/* ── DIVIDER ── */}
+      <div className="border-t border-gray-100 my-3 lg:my-5" />
+
+      {/* ── ADVERTISEMENT ── */}
+      <div className="mb-3 lg:mb-5">
+        <AdBanner className="rounded-lg" altText="মাঝপাতার বিজ্ঞাপন" />
+      </div>
+
+      {/* ── ENTERTAINMENT, SPORTS & EDUCATION ── */}
+      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
+        <BinodonSection />
+        <KhelaSlider
+          articles={khelaArticles}
+          title={khelaTitle}
+          categorySlug={khelaSlug}
         />
-      )}
-      {/* Advertisement Section */}
-      <AdBanner className="rounded-lg" altText="মাঝপাতার বিজ্ঞাপন" />
+        <SingleCategoryNewsGrid slug="education" limit={7} />
 
-      <BinodonSection />
-      <KhelaSlider
-        articles={khelaArticles}
-        title={khelaTitle}
-        categorySlug={khelaSlug}
-      />
-      <SingleCategoryNewsGrid slug="education" limit={7} />
+        {techArticles.length > 0 && (
+          <KhelaSlider
+            articles={techArticles}
+            title={techTitle}
+            categorySlug={techSlug}
+          />
+        )}
+      </div>
+      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
 
-      <OthersCategories />
-      <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
-      <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
-      <ArchiveSection />
+        {religionArticles.length > 0 && (
+          <PoliticsSection articles={religionArticles} />
+        )}
+
+        {lawArticles.length > 0 && (
+          <PoliticsSection articles={lawArticles} />
+        )}
+      </div>
+
+      {/* ── DIVIDER ── */}
+      <div className="border-t border-gray-100 my-3 lg:my-5" />
+
+      {/* ── OPINION, HEALTH, LIFESTYLE & CAMPUS — 1+3+3 Grid Group ── */}
+      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
+        <SingleCategoryNewsGrid slug="opinion" limit={7} />
+        <SingleCategoryNewsGrid slug="health" limit={7} />
+        <SingleCategoryNewsGrid slug="lifestyle" limit={7} />
+        <SingleCategoryNewsGrid slug="campus" limit={7} />
+      </div>
+
+      {/* ── DIVIDER ── */}
+      <div className="border-t border-gray-100 my-3 lg:my-5" />
+
+      {/* ── OTHERS, GALLERY & ARCHIVE ── */}
+      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
+        <OthersCategories />
+        <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
+        <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
+        <ArchiveSection />
+      </div>
 
       <BackToTop />
     </main>
