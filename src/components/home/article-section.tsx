@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { Clock, TrendingUp } from "lucide-react";
-import { getArticles } from "@/lib/api";
-import { Article } from "@/lib/types";
+import { Monitor, TrendingUp } from "lucide-react";
+import { getArticles, getAllcategories } from "@/lib/api";
+import { Article, Category } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import AdBanner from "@/components/shared/ad-banner";
 
@@ -126,15 +126,32 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
       isExclusive: true,
     });
 
-    // Fetch latest 3 articles for sidebar
-    const latestRes = await getArticles({
+    // Fetch তথ্যপ্রযুক্তি (Information Technology) category for sidebar
+    const categoriesRes = await getAllcategories({
+      sortBy: "position",
       page: 1,
-      limit: 3,
-      sortBy: "date",
-      sortOrder: "DESC",
-      status: "Published",
+      limit: 50,
     });
-    const latestArticles: Article[] = latestRes?.data || [];
+    const allCategories: Category[] = categoriesRes?.data || [];
+    const techCat = allCategories.find(
+      c =>
+        c.slug === "information-technology" ||
+        c.slug === "technology" ||
+        c.slug === "tech" ||
+        c.slug === "তথ্যপ্রযুক্তি",
+    );
+
+    let techArticles: Article[] = [];
+    if (techCat) {
+      const techRes = await getArticles({
+        categoryId: techCat.id,
+        limit: 3,
+        status: "Published",
+        sortBy: "date",
+        sortOrder: "DESC",
+      });
+      techArticles = techRes?.data || [];
+    }
 
     // Fetch popular 3 articles for sidebar
     const popularSidebarRes = await getArticles({
@@ -178,22 +195,22 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
             {/* Advertisement Banner */}
             <AdBanner className="rounded-lg" />
 
-            {/* Latest News - 3 items */}
+            {/* তথ্যপ্রযুক্তি - 3 items */}
             <div>
-              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-red-600 pb-2 mb-3">
-                <Clock className="h-4 w-4 text-red-600" />
-                <span>সর্বশেষ সংবাদ</span>
+              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-blue-600 pb-2 mb-3">
+                <Monitor className="h-4 w-4 text-blue-600" />
+                <span>তথ্যপ্রযুক্তি</span>
               </h3>
               <div className="flex flex-col gap-2.5">
-                {latestArticles.length > 0 ? (
-                  latestArticles
+                {techArticles.length > 0 ? (
+                  techArticles
                     .slice(0, 3)
-                    .map((article) => (
+                    .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))
                 ) : (
                   <p className="text-gray-400 text-sm text-center py-4">
-                    কোনো সংবাদ পাওয়া যায়নি
+                    কোনো তথ্যপ্রযুক্তি সংবাদ পাওয়া যায়নি
                   </p>
                 )}
               </div>
@@ -201,15 +218,15 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
 
             {/* Popular News - 3 items */}
             <div>
-              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-orange-500 pb-2 mb-3">
-                <TrendingUp className="h-4 w-4 text-orange-500" />
+              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-3">
+                <TrendingUp className="h-4 w-4 text-blue-500" />
                 <span>জনপ্রিয় সংবাদ</span>
               </h3>
               <div className="flex flex-col gap-2.5">
                 {popularSidebarArticles.length > 0 ? (
                   popularSidebarArticles
                     .slice(0, 3)
-                    .map((article) => (
+                    .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))
                 ) : (

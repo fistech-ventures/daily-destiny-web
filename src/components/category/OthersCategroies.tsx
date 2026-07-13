@@ -1,13 +1,17 @@
-import React from 'react';
-import FourCategoryGrid from './ThreeColumnCategoryFeatured';
-import { Category } from '@/lib/types';
-import { getAllcategories, getArticles } from '@/lib/api';
+import React from "react";
+import FourCategoryGrid from "./ThreeColumnCategoryFeatured";
+import { Category } from "@/lib/types";
+import { getAllcategories, getArticles } from "@/lib/api";
 
 const OthersCategories = async () => {
   try {
     // 1. Fetch all available categories from your API setup
     // Must request enough to leave a pool after excluding dedicated-section categories
-    const categoriesRes = await getAllcategories({ sortBy: "position", page: 1, limit: 50 });
+    const categoriesRes = await getAllcategories({
+      sortBy: "position",
+      page: 1,
+      limit: 50,
+    });
     const categoriesList: Category[] = categoriesRes?.data || [];
 
     // 2. Map through every category dynamically to fetch its respective articles
@@ -27,14 +31,17 @@ const OthersCategories = async () => {
             articles: articlesRes?.data || [],
           };
         } catch (err) {
-          console.error(`Failed to fetch articles for category: ${cat.slug}`, err);
+          console.error(
+            `Failed to fetch articles for category: ${cat.slug}`,
+            err,
+          );
           return {
             title: cat.titleBn || cat.title,
             slug: cat.slug,
             articles: [],
           };
         }
-      })
+      }),
     );
 
     // Exclude categories that already have dedicated sections on the homepage
