@@ -14,6 +14,7 @@ import {
   Instagram,
   Linkedin,
   Users,
+  ChevronDown,
 } from "lucide-react";
 import {
   Sheet,
@@ -31,6 +32,7 @@ import { VideoArticle } from "@/lib/api";
 import { getMarketPrice } from "@/lib/api";
 import Headline from "./headline";
 import MarketPriceWidget from "../market-price/market-price-ticker";
+import { getAllcategories } from "@/lib/api";
 
 function DesktopDateTime() {
   const locale = useLocale();
@@ -70,10 +72,12 @@ function DesktopDateTime() {
 
 export function Navbar({
   categories,
+  totalCategories,
   headlines = [],
   marketPrices: initialMarketPrices = [],
 }: {
   categories: Category[];
+  totalCategories?: number;
   videos?: VideoArticle[];
   headlines?: { title: string; code: string; category: string }[];
   marketPrices?: MarketPrice[];
@@ -102,6 +106,7 @@ export function Navbar({
 
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
   const [isDesktopPopupOpen, setIsDesktopPopupOpen] = React.useState(false);
+  const [isMoreOpen, setIsMoreOpen] = React.useState(false);
   const [hideNavbar, setHideNavbar] = React.useState(false);
   const lastScrollY = React.useRef(0);
 
@@ -155,6 +160,50 @@ export function Navbar({
       }
     };
   }, []);
+
+  // ── Client-side category pagination (for the "আরও" overlay) ──
+  const [loadedCategories, setLoadedCategories] =
+    React.useState<Category[]>(categories);
+  const [categoriesPage, setCategoriesPage] = React.useState(1);
+  const [isLoadingMoreCats, setIsLoadingMoreCats] = React.useState(false);
+
+  // Sync state when the server-provided categories prop changes
+  React.useEffect(() => {
+    setLoadedCategories(categories);
+    setCategoriesPage(1);
+  }, [categories]);
+
+  const hasMoreCategories =
+    totalCategories !== undefined && loadedCategories.length < totalCategories;
+
+  const loadMoreCategories = async () => {
+    if (isLoadingMoreCats) return;
+    setIsLoadingMoreCats(true);
+    try {
+      const nextPage = categoriesPage + 1;
+      const res = await getAllcategories({
+        sortBy: "position",
+        page: nextPage,
+        limit: 50,
+      });
+      const newCategories: Category[] = res?.data || [];
+      if (newCategories.length > 0) {
+        // Append without duplicates using functional updater to avoid stale closure
+        setLoadedCategories((prev) => {
+          const existingTitles = new Set(prev.map((c) => c.titleBn || c.title));
+          const uniqueNew = newCategories.filter(
+            (c) => !existingTitles.has(c.titleBn || c.title),
+          );
+          return [...prev, ...uniqueNew];
+        });
+        setCategoriesPage(nextPage);
+      }
+    } catch (error) {
+      console.error("Failed to load more categories:", error);
+    } finally {
+      setIsLoadingMoreCats(false);
+    }
+  };
 
   const [mounted, setMounted] = React.useState(false);
 
@@ -334,6 +383,25 @@ export function Navbar({
                     ))}
                 </div>
 
+                {/* আরও button — shows all categories */}
+                <button
+                  onClick={() => setIsMoreOpen(!isMoreOpen)}
+                  className={cn(
+                    "cursor-pointer shrink-0 px-4 py-1.5 flex items-center gap-2 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all duration-300 select-none",
+                    isMoreOpen
+                      ? "bg-red-600 text-white shadow-md shadow-red-600/20 scale-[0.98]"
+                      : "bg-gray-50 border border-gray-200/80 text-gray-700 hover:bg-gray-100 hover:text-red-600 hover:border-red-200",
+                  )}
+                >
+                  <span>আরও</span>
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-300 ease-in-out",
+                      isMoreOpen ? "rotate-180" : "opacity-80",
+                    )}
+                  />
+                </button>
+
                 <Link
                   href={`/video`}
                   className={cn(
@@ -466,7 +534,24 @@ export function Navbar({
                                   </div>
                                 )}
                               </div>
-                            ))}
+                            ))}                            {/* আরও button inside hamburger */}
+                            <div className="flex items-start py-3 gap-4">
+                              <div className="flex items-center gap-2 shrink-0">
+                                <button
+                                  onClick={() => {
+                                    setIsSheetOpen(false);
+                                    setTimeout(() => setIsMoreOpen(true), 300);
+                                  }}
+                                  className="cursor-pointer text-[15px] font-bold text-red-600 hover:text-red-700 transition-all duration-200 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-red-50/60"
+                                >
+                                  আরও বিভাগ
+                                  <ChevronDown className="h-4 w-4" />
+                                </button>
+                              </div>
+                              <div className="text-sm text-gray-500 flex items-center">
+                                সকল বিভাগ দেখুন
+                              </div>
+                            </div>
                         </div>
                       </div>
 
@@ -681,6 +766,121 @@ export function Navbar({
                     />
                   </SocialIcon>
                 </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
+
+      {/* ════════════════════════════════════════════════
+        আরও — ALL CATEGORIES OVERLAY
+        ════════════════════════════════════════════════ */}
+      {mounted && isMoreOpen
+        ? createPortal(
+            <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-auto">
+              <div
+                onClick={() => setIsMoreOpen(false)}
+                className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300"
+              />
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="relative z-10 bg-white border border-gray-200 rounded-2xl p-8 pt-10 shadow-2xl max-w-2xl w-full mx-4 max-h-[85vh] overflow-y-auto animate-in fade-in zoom-in-75 slide-in-from-bottom-4 duration-300 ease-out"
+              >
+                <button
+                  onClick={() => setIsMoreOpen(false)}
+                  className="absolute top-3.5 right-3.5 text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  aria-label="Close"
+                >
+                  <X size={18} />
+                </button>
+
+                <h2 className="text-xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
+                  সকল বিভাগ
+                </h2>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {loadedCategories
+                    .filter((category, index, self) => {
+                      const title = category.titleBn || category.title;
+                      return (
+                        self.findIndex(
+                          (c) => (c.titleBn || c.title) === title,
+                        ) === index
+                      );
+                    })
+                    .map((category) => (
+                      <Link
+                        key={category.id}
+                        href={`/${category.slug}`}
+                        onClick={() => setIsMoreOpen(false)}
+                        className="flex flex-col p-3 rounded-lg border border-gray-100 hover:border-red-100 hover:bg-red-50/30 transition-all duration-200 group"
+                      >
+                        <span className="font-semibold text-gray-900 group-hover:text-red-600 transition-colors">
+                          {category.titleBn || category.title}
+                        </span>
+                        {(category as Category).subCategories?.length > 0 && (
+                          <span className="text-xs text-gray-400 mt-1">
+                            {(category as Category).subCategories!.length} টি
+                            উপবিভাগ
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                </div>
+
+                {/* Load More button — only shown when more categories are available */}
+                {hasMoreCategories && (
+                  <div className="flex justify-center mt-6">
+                    <button
+                      onClick={loadMoreCategories}
+                      disabled={isLoadingMoreCats}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white text-sm font-semibold rounded-lg transition-all duration-200 active:scale-[0.97]"
+                    >
+                      {isLoadingMoreCats ? (
+                        <>
+                          <svg
+                            className="animate-spin h-4 w-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            />
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                            />
+                          </svg>
+                          লোড হচ্ছে...
+                        </>
+                      ) : (
+                        <>
+                          <span>আরও বিভাগ লোড করুন</span>
+                          <svg
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>,
             document.body,

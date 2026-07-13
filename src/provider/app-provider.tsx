@@ -15,6 +15,7 @@ import ShareMarket from "@/components/shared/share-market";
 interface AppProviderProps {
   children: React.ReactNode;
   categories: Category[];
+  totalCategories?: number;
   headlines: { title: string; code: string; category: string }[];
   videos: VideoArticle[];
   marketPrices?: MarketPrice[];
@@ -23,6 +24,7 @@ interface AppProviderProps {
 export default function AppProvider({
   children,
   categories,
+  totalCategories,
   headlines,
   videos,
   marketPrices = [],
@@ -51,6 +53,7 @@ export default function AppProvider({
 
       <Navbar
         categories={categories}
+        totalCategories={totalCategories}
         videos={videos}
         headlines={headlines}
         marketPrices={marketPrices}

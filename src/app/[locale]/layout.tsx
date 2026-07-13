@@ -36,9 +36,11 @@ export default async function LocaleLayout({
   const messages = await getMessages({ locale });
 
   let categories = [];
+  let totalCategories = 0;
   try {
-    const res = await getAllcategories({ sortBy: "position" });
+    const res = await getAllcategories({ sortBy: "position", page: 1, limit: 50 });
     categories = res?.data || [];
+    totalCategories = res?.meta?.total || categories.length;
   } catch (error) {
     console.error("Failed to fetch categories for layout:", error);
   }
@@ -71,6 +73,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AppProvider
         categories={categories}
+        totalCategories={totalCategories}
         headlines={headlines}
         videos={videoAticles.data.slice(0, 3)}
         marketPrices={marketPrices}
