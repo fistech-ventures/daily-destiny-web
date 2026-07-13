@@ -5,6 +5,7 @@ import { Article } from "@/lib/types";
 import ArticleCard from "./ArticleCard";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { getArticleCategory } from "@/lib/utils";
 
 interface CategoryData {
   title: string;
@@ -57,7 +58,7 @@ function CategoryCard({ cat }: { cat: CategoryData }) {
       {/* "More" Action Button centered at bottom of card */}
       <div className="w-full flex justify-center mt-6 pt-2">
         <Link
-          href={`/${cat.slug}`}
+          href={`/news/${getArticleCategory(leadArticle)?.slug || cat.slug}/${leadArticle?.code || ""}`}
           className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white hover:!text-white text-xs font-medium px-5 py-2 rounded transition-colors shadow-xs min-w-[84px]"
         >
           আরও
@@ -70,7 +71,7 @@ function CategoryCard({ cat }: { cat: CategoryData }) {
 function CategoryRow({ items }: { items: CategoryData[] }) {
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-transparent">
-      {items.map((cat) => (
+      {items.map(cat => (
         <CategoryCard key={cat.slug} cat={cat} />
       ))}
     </div>
@@ -110,9 +111,7 @@ export default function FourCategoryGrid({
       )}
 
       {/* 4. Row 2 */}
-      {secondRow.length > 0 && (
-        <CategoryRow items={secondRow} />
-      )}
+      {secondRow.length > 0 && <CategoryRow items={secondRow} />}
     </div>
   );
 }

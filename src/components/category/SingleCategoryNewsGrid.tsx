@@ -14,7 +14,7 @@ interface Props {
 export default async function SingleCategoryNewsGrid({
   slug,
   fallbackTitle,
-  limit = 7, // ✅ FIX: must be 7
+  limit = 7,
 }: Props) {
   // Fetch categories
   const categoriesRes = await getAllcategories();
