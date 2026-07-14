@@ -10,6 +10,7 @@ import {
   getVideos,
   getMarketPrice,
 } from "@/lib/api";
+import BackToTop from "@/components/shared/back-to-top";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 
@@ -79,6 +80,7 @@ export default async function LocaleLayout({
         marketPrices={marketPrices}
       >
         {children}
+        <BackToTop />
         <Toaster position="top-center" duration={1000} />
       </AppProvider>
     </NextIntlClientProvider>

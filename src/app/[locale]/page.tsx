@@ -26,7 +26,6 @@ import KhelaSlider from "@/components/home/article/khela-slider";
 import PoliticsSection from "@/components/home/article/polititcs-section";
 import EconomySection from "@/components/home/article/economy-section";
 import LatestNewsSection from "@/components/news/latest-news-section";
-import BackToTop from "@/components/shared/back-to-top";
 import Link from "next/link";
 
 export async function generateMetadata({
@@ -583,7 +582,6 @@ export default async function Home({
         <ArchiveSection />
       </div>
 
-      <BackToTop />
     </main>
   );
 }
