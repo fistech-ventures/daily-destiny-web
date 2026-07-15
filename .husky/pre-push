@@ -2,7 +2,7 @@
 
 # Run build and capture output, but use || true inside $() to prevent
 # set -e from killing the script when build returns false exit code
-OUTPUT=$(npm run build 2>&1 || true)
+OUTPUT=$(yarn build 2>&1 || true)
 echo "$OUTPUT"
 
 if echo "$OUTPUT" | grep -q "Compiled successfully"; then

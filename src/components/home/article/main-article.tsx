@@ -3,6 +3,7 @@ import { getArticleCategory } from "@/lib/utils";
 
 import React from "react";
 import Link from "next/link";
+import ArticleTitle from "@/components/shared/article-title";
 import { useTranslations } from "next-intl";
 // import { Timer } from "lucide-react";
 // import { formatRelativeTime } from "@/utils/date-formatter";
@@ -46,7 +47,7 @@ export default function MainArticle({
             {formatRelativeTime(firstArticle.date)}
           </h5>
         </div> */}
-        <h2 className="lg:text-xl font-semibold">{firstArticle.title}</h2>
+        <h2 className="lg:text-xl font-semibold"><ArticleTitle article={firstArticle} /></h2>
         <p className="text-base font-normal text-muted-foreground"
           style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
           {firstArticle.excerpt}
@@ -75,7 +76,7 @@ export default function MainArticle({
                   {formatRelativeTime(article.date)}
                 </h5>
               </div> */}
-              <h2 className="lg:text-base font-semibold">{article.title}</h2>
+              <h2 className="lg:text-base font-semibold"><ArticleTitle article={article} /></h2>
               <p className="text-base font-normal text-muted-foreground"
                 style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                 {article.excerpt}

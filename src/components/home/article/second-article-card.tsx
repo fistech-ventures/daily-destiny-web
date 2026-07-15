@@ -3,6 +3,7 @@ import { getArticleCategory } from "@/lib/utils";
 
 import React from "react";
 import Link from "next/link";
+import ArticleTitle from "@/components/shared/article-title";
 // import { useLocale } from "next-intl";
 // import { Timer } from "lucide-react";
 // import { formatRelativeTime } from "@/utils/date-formatter";
@@ -43,7 +44,7 @@ export default function SecondArticleCard({ article }: { article: Article }) {
           <Link href={`/news/${getArticleCategory(article)?.slug ?? "others"}/${article.code}`}>
             <h3 className="lg:text-base text-xs font-semibold hover:underline"
               style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-              {article.title}
+              <ArticleTitle article={article} />
             </h3>
             <p className="text-sm font-normal text-muted-foreground"
               style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>

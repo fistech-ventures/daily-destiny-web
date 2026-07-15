@@ -5,6 +5,7 @@ import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import ArticleTitle from "@/components/shared/article-title";
 
 interface KhelaSliderProps {
   articles: Article[];
@@ -157,7 +158,7 @@ export default function KhelaSlider({
             <div className="p-3 flex flex-col gap-1">
               <h3 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
                 style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                {article.title}
+                <ArticleTitle article={article} />
               </h3>
               {article.excerpt && (
                 <p className="text-sm text-gray-600"

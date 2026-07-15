@@ -2,6 +2,7 @@ import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import React from "react";
 import Link from "next/link";
+import ArticleTitle from "../shared/article-title";
 // import { Timer } from "lucide-react";
 // import { formatRelativeTime } from "@/utils/date-formatter";
 
@@ -42,7 +43,7 @@ export default function RelatedNewsCard({ article }: { article: Article }) {
                 width: "100%",
               }}
             >
-              {article.title}
+              <ArticleTitle article={article} />
             </h4>
           </div>
         </div>

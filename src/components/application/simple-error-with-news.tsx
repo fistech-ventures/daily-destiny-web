@@ -85,10 +85,10 @@ export default function SimpleErrorWithNews({
             <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
           </div>
         ) : recentArticles.length > 0 ? (
-          <div className="flex flex-col divide-y divide-gray-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {recentArticles.map((article) => (
-              <div key={article.id} className="py-2">
-                <HorizontalArticleCard article={article} />
+              <div key={article.id} className="w-full">
+                <HorizontalArticleCard article={article} layoutType="grid" />
               </div>
             ))}
           </div>
