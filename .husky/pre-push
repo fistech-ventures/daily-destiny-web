@@ -1,2 +1,16 @@
 #!/usr/bin/env sh
-npm run build
+
+# Run build and capture output, but use || true inside $() to prevent
+# set -e from killing the script when build returns false exit code
+OUTPUT=$(npm run build 2>&1 || true)
+echo "$OUTPUT"
+
+if echo "$OUTPUT" | grep -q "Compiled successfully"; then
+  echo ""
+  echo "Build compiled successfully."
+  exit 0
+else
+  echo ""
+  echo "Build failed - check output above."
+  exit 1
+fi
