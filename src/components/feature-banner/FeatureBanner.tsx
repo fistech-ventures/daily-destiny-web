@@ -11,7 +11,7 @@ export interface APIArticle {
   slug: string;
   code: string;
   coverImage: string;
-  isActive: boolean;
+  isActive?: boolean;
   type?: string; // e.g. "news"
   excerpt?: string;
 }
@@ -43,8 +43,9 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
   } = eventData;
 
   // Filter out inactive articles, then cap at 4 to keep the grid layout intact
+  // `isActive` may not be present in the API response; default to true when missing
   const activeArticles = articles
-    .filter(article => article.isActive)
+    .filter(article => article.isActive !== false)
     .slice(0, 4);
 
   return (
