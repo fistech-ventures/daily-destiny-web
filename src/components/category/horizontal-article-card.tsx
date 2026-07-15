@@ -22,7 +22,7 @@ export default function HorizontalArticleCard({
           src={article.coverImage}
           alt={article.title}
           loading="eager"
-          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+          className="w-full h-full transition-transform duration-700 group-hover:scale-105 aspect-video"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 via-40% to-transparent" />
 
@@ -35,10 +35,10 @@ export default function HorizontalArticleCard({
           <h2
             className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight group-hover:text-gray-200 transition-colors"
             style={{
-              display: '-webkit-box',
+              display: "-webkit-box",
               WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
             }}
           >
             {article.title}
@@ -47,13 +47,13 @@ export default function HorizontalArticleCard({
             <p
               className="text-xs md:text-sm lg:text-base text-gray-200 mt-2 leading-relaxed max-w-3xl"
               style={{
-                display: '-webkit-box',
+                display: "-webkit-box",
                 WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
               }}
             >
-              {article.excerpt || article.details?.replace(/<[^>]*>/g, '')}
+              {article.excerpt || article.details?.replace(/<[^>]*>/g, "")}
             </p>
           )}
         </div>
@@ -71,13 +71,21 @@ export default function HorizontalArticleCard({
           src={article.coverImage}
           alt={article.title}
           loading="lazy"
-          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 aspect-video"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
         <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight group-hover:text-gray-200 transition-colors"
-            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
+          <h2
+            className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight group-hover:text-gray-200 transition-colors"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              width: "100%",
+            }}
+          >
             {article.title}
           </h2>
           {/* <p className="text-xs text-gray-300 mt-2 font-light">২১ মিনিট আগে</p> */}
@@ -104,8 +112,16 @@ export default function HorizontalArticleCard({
 
         {/* Text Area */}
         <div className="flex flex-col gap-1.5">
-          <h2 className="text-base md:text-lg font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors"
-            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
+          <h2
+            className="text-base md:text-lg font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              width: "100%",
+            }}
+          >
             {article.title}
           </h2>
 
@@ -115,13 +131,27 @@ export default function HorizontalArticleCard({
                 __html: article.details || article.excerpt,
               }}
               className="text-xs md:text-sm font-normal text-gray-600 leading-relaxed"
-              style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                width: "100%",
+              }}
             />
           ) : layoutType === "grid" ? (
-            (article.excerpt || article.details) ? (
-              <p className="text-xs md:text-sm text-gray-500 leading-relaxed"
-                style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                {article.excerpt || article.details?.replace(/<[^>]*>/g, '')}
+            article.excerpt || article.details ? (
+              <p
+                className="text-xs md:text-sm text-gray-500 leading-relaxed"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  width: "100%",
+                }}
+              >
+                {article.excerpt || article.details?.replace(/<[^>]*>/g, "")}
               </p>
             ) : null
           ) : null}
@@ -132,4 +162,3 @@ export default function HorizontalArticleCard({
     </Link>
   );
 }
-

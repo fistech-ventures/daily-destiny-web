@@ -387,7 +387,7 @@ export function Navbar({
                 <button
                   onClick={() => setIsMoreOpen(!isMoreOpen)}
                   className={cn(
-                    "cursor-pointer shrink-0 px-4 py-1.5 flex items-center gap-2 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all duration-300 select-none",
+                    "cursor-pointer shrink-0 px-4 py-1.5 flex items-center gap-2 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all duration-300 select-none","hidden md:flex",
                     isMoreOpen
                       ? "bg-red-600 text-white shadow-md shadow-red-600/20 scale-[0.98]"
                       : "bg-gray-50 border border-gray-200/80 text-gray-700 hover:bg-gray-100 hover:text-red-600 hover:border-red-200",
