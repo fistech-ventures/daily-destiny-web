@@ -3,6 +3,7 @@ import { getArticles } from "@/lib/api";
 import { getArticleCategory } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
+import ArticleTitle from "@/components/shared/article-title";
 
 export default async function CategorySection({
   category,
@@ -54,7 +55,7 @@ export default async function CategorySection({
           />
           <h3 className="text-lg font-semibold mt-2 group-hover:text-primary transition-colors"
             style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-            {isFirstArticle.title}
+            <ArticleTitle article={isFirstArticle} />
           </h3>
           <p className="text-sm text-muted-foreground mt-1"
             style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
@@ -80,7 +81,7 @@ export default async function CategorySection({
               <div className="flex-1">
                 <h4 className="text-base font-semibold group-hover:text-primary transition-colors"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                  {article.title}
+                  <ArticleTitle article={article} />
                 </h4>
                 <p className="text-sm text-muted-foreground mt-1"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>

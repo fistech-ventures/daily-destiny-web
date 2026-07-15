@@ -6,6 +6,7 @@ import SocialShare from "../shared/social-share";
 import { useLocale, useTranslations } from "next-intl";
 import { formatBdTime } from "@/utils/date-formatter";
 import Link from "next/link";
+import ArticleTitle from "../shared/article-title";
 
 export default function NewsDetails({ article }: { article: Article }) {
   const currentLocale = useLocale();
@@ -26,7 +27,7 @@ export default function NewsDetails({ article }: { article: Article }) {
 
       <div id="article-content" className="px-2 lg:px-4 print:px-0 py-8 bg-background rounded-md">
         <h1 className="text-lg md:text-2xl font-bold text-gray-900 leading-tight mb-2 lg:mb-6">
-          {article.title}
+          <ArticleTitle article={article} />
         </h1>
 
         <div className="flex print:flex-row print:justify-between flex-col gap-2 border-b border-gray-200 pb-4 mb-6">

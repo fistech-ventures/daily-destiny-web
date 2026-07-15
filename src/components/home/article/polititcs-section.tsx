@@ -3,6 +3,7 @@ import { getArticleCategory } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import ArticleTitle from "@/components/shared/article-title";
 
 // Reused the Article interface provided
 export interface Author {
@@ -88,7 +89,7 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
               </div>
               <div className="mt-4">
                 <h2 className="text-lg md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
-                  {mainArticle.title}
+                  <ArticleTitle article={mainArticle} />
                 </h2>
                 <p
                   className="mt-3 text-xs md:text-sm text-gray-600 leading-relaxed"
@@ -148,7 +149,7 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
                       width: "100%",
                     }}
                   >
-                    {article.title}
+                    <ArticleTitle article={article} />
                   </h3>
                 </div>
               </a>

@@ -2,6 +2,7 @@ import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
+import ArticleTitle from "@/components/shared/article-title";
 
 export default function GridSection({
   articles,
@@ -35,7 +36,7 @@ export default function GridSection({
                 </span>
                 <h3 className="text-base font-semibold mt-1 group-hover:text-primary transition-colors"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                  {article.title}
+                  <ArticleTitle article={article} />
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>

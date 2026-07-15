@@ -5,6 +5,7 @@ import { getArticles, getAllcategories } from "@/lib/api";
 import { Article, Category } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import AdBanner from "@/components/shared/ad-banner";
+import ArticleTitle from "@/components/shared/article-title";
 
 interface FeaturedSectionProps {
   article: Article;
@@ -37,7 +38,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
           href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
         >
           <h1 className="text-2xl md:text-3xl font-bold mb-4 hover:text-blue-600">
-            {article.title}
+            <ArticleTitle article={article} />
           </h1>
         </Link>
         <p
@@ -79,7 +80,7 @@ const GridCard: React.FC<GridCardProps> = ({ article }) => (
             width: "100%",
           }}
         >
-          {article.title}
+          <ArticleTitle article={article} />
         </h3>
       </div>
     </div>
@@ -110,7 +111,7 @@ const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
           width: "100%",
         }}
       >
-        {article.title}
+        <ArticleTitle article={article} />
       </h4>
     </div>
   </Link>

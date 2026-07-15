@@ -5,6 +5,7 @@ import { Article, Category } from "@/lib/types";
 import { getArticles } from "@/lib/api";
 import { getArticleCategory } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
+import ArticleTitle from "@/components/shared/article-title";
 // import { formatRelativeTime } from "@/utils/date-formatter";
 
 export default async function CategorySection({
@@ -76,7 +77,7 @@ export default async function CategorySection({
                 </div> */}
                 <h3 className="text-base font-medium leading-snug text-gray-900 group-hover:underline transition-colors"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                  {featuredArticle.title}
+                  <ArticleTitle article={featuredArticle} />
                 </h3>
               </div>
             </Link>
@@ -102,7 +103,7 @@ export default async function CategorySection({
                 >
                   <h4 className="text-base font-medium leading-relaxed text-gray-800 group-hover:underline transition-colors"
                     style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                    {article.title}
+                    <ArticleTitle article={article} />
                   </h4>
                 </Link>
               </div>

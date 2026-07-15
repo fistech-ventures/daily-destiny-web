@@ -28,6 +28,7 @@ const OthersCategories = async () => {
           return {
             title: cat.titleBn || cat.title,
             slug: cat.slug,
+            id: cat.id,
             articles: articlesRes?.data || [],
           };
         } catch (err) {
@@ -38,6 +39,7 @@ const OthersCategories = async () => {
           return {
             title: cat.titleBn || cat.title,
             slug: cat.slug,
+            id: cat.id,
             articles: [],
           };
         }

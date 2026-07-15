@@ -27,7 +27,7 @@ export default async function TpoicPage({
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
 
-  const response = await getArticles({ topics: [decodedSlug], limit: 10 });
+  const response = await getArticles({ topics: [decodedSlug], limit: 12 });
   const articles = response?.data || [];
   const meta = response?.meta;
 

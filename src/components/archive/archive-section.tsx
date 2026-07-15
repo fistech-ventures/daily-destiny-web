@@ -17,6 +17,7 @@ import AdBanner from "@/components/shared/ad-banner";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
+import ArticleTitle from "../shared/article-title";
 
 export default function ArchiveSection() {
   const { locale } = useParams();
@@ -65,12 +66,10 @@ export default function ArchiveSection() {
     let cancelled = false;
     setLoading(true);
 
-    const startDateParam = formatDateForAPI(startDate);
-    const endDateParam = formatDateForAPI(endDate);
+    const dateParam = formatDateForAPI(startDate);
 
     getArticles({
-      startDate: startDateParam,
-      endDate: endDateParam,
+      date: dateParam,
       limit: 9,
     })
       .then(res => {
@@ -105,7 +104,7 @@ export default function ArchiveSection() {
   const formatDateDisplay = (date: Date) => {
     return date.toLocaleDateString("bn-BD", {
       year: "numeric",
-      month: "short",
+      month: "long",
       day: "numeric",
     });
   };
@@ -205,7 +204,7 @@ export default function ArchiveSection() {
                       <div className="flex-1 p-3 flex flex-col">
                         <h4 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
                           style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                          {article.title}
+                          <ArticleTitle article={article} />
                         </h4>
                         <div className="flex items-center gap-2 mt-2">
                           {getArticleCategory(article)?.titleBn && (

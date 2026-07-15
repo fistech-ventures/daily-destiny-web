@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
+import ArticleTitle from "../shared/article-title";
 
 export default async function LatestNewsSection() {
   // Fetch 7 latest articles (1 featured + 3 middle + 3 right)
@@ -57,7 +58,7 @@ export default async function LatestNewsSection() {
               </div>
 
               <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#000058] transition-colors">
-                {featuredArticle.title}
+                <ArticleTitle article={featuredArticle} />
               </h3>
 
               {getArticleCategory(featuredArticle)?.titleBn && (
@@ -74,14 +75,14 @@ export default async function LatestNewsSection() {
               )}
             </Link>
 
-            <div className="absolute bottom-4 right-4">
+            {/* <div className="absolute bottom-4 right-4">
               <Link
                 href={`/news/${getArticleCategory(featuredArticle)?.slug || getArticleCategory(featuredArticle)?.slugBn || "others"}/${featuredArticle.code}`}
                 className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white hover:text-white text-sm font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
               >
                 বিস্তারিত
               </Link>
-            </div>
+            </div> */}
           </div>
         )}
 

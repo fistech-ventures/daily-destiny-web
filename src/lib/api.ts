@@ -101,6 +101,17 @@ export async function getAllcategories(query?: CategoryQueryParam) {
   }
 }
 
+// Get single category by ID
+export async function getCategoryById(id: string) {
+  try {
+    const response = await api.get(`/web/categories/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching category by id:", error);
+    throw error;
+  }
+}
+
 // Get trending topics/tags
 export async function getTrendingTopics() {
   try {
