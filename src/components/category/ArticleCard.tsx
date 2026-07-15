@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
+import ArticleTitle from "../shared/article-title";
 
 interface ArticleCardProps {
   article: Article;
@@ -78,7 +79,7 @@ export default function ArticleCard({
             }`}
             style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
           >
-            {article.title}
+            <ArticleTitle article={article} />
           </h2>
 
           {/* Render description details snippet ONLY for large center featured slots */}

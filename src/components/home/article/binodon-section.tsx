@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getAllcategories, getArticles } from "@/lib/api";
 import { Category, Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
+import ArticleTitle from "@/components/shared/article-title";
 
 export default async function BinodonSection() {
   // Fetch categories
@@ -74,7 +75,7 @@ export default async function BinodonSection() {
               </div>
               <div className="mt-4">
                 <h2 className="text-lg md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
-                  {mainArticle.title}
+                  <ArticleTitle article={mainArticle} />
                 </h2>
                 <p className="mt-3 text-xs md:text-sm text-gray-600 leading-relaxed"
                   style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
@@ -114,7 +115,7 @@ export default async function BinodonSection() {
                   </div>
                   <h3 className="mt-3 text-xs sm:text-sm font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200"
                     style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                    {article.title}
+                    <ArticleTitle article={article} />
                   </h3>
                 </div>
               </a>

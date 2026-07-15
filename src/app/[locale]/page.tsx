@@ -27,6 +27,7 @@ import PoliticsSection from "@/components/home/article/polititcs-section";
 import EconomySection from "@/components/home/article/economy-section";
 import LatestNewsSection from "@/components/news/latest-news-section";
 import Link from "next/link";
+import ArticleTitle from "@/components/shared/article-title";
 
 export async function generateMetadata({
   params,
@@ -432,9 +433,9 @@ export default async function Home({
                                   )}
                                 </span>
                               )}
-                              <span className="text-xs font-medium text-[#1a66ca] group-hover:underline">
+                              {/* <span className="text-xs font-medium text-[#1a66ca] group-hover:underline">
                                 বিস্তারিত →
-                              </span>
+                              </span> */}
                             </div>
                           </div>
                         </a>

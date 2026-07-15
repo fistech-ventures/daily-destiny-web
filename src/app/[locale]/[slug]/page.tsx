@@ -1,4 +1,4 @@
-import { getAllcategories, getArticles } from "@/lib/api";
+import { getAllcategories, getArticles, getCategoryById } from "@/lib/api";
 import {
   generateCategoryMetadata,
   generateFallbackMetadata,
@@ -21,7 +21,7 @@ export async function generateMetadata({
   const metadataPath = `/${decodedSlug}`;
 
   try {
-    const { data: categories } = await getAllcategories();
+    const { data: categories } = await getAllcategories({ sortBy: "position", limit: 50 });
     let category = categories.find(
       (c: Category) => c.slug === decodedSlug || c.slugBn === decodedSlug,
     );
@@ -85,7 +85,8 @@ export default async function CategoryPage({
   const { slug, locale } = await params;
   const decodedSlug = decodeURIComponent(slug);
 
-  const { data: categories } = await getAllcategories();
+  // Fetch all categories with a sufficient limit so lower-positioned slugs are included
+  const { data: categories } = await getAllcategories({ sortBy: "position", limit: 50 });
 
   let category = categories.find(
     (c: Category) => c.slug === decodedSlug || c.slugBn === decodedSlug,
@@ -102,6 +103,18 @@ export default async function CategoryPage({
         resolvedSubCategoryId = sub.id;
         break;
       }
+    }
+  }
+
+  // Enrich category with richer data from the single-category endpoint
+  if (category?.id) {
+    try {
+      const categoryRes = await getCategoryById(category.id);
+      if (categoryRes?.data) {
+        category = categoryRes.data;
+      }
+    } catch (err) {
+      console.error("Failed to enrich category data, using list data:", err);
     }
   }
 

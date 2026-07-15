@@ -3,8 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ArticleTitle from "../shared/article-title";
 
 // ── TYPE DEFINITIONS MATCHING THE API RESPONSE ────────────────────────────────
+interface APICategory {
+  id: string;
+  slug: string;
+  slugBn?: string;
+  title?: string;
+  titleBn?: string;
+}
+
 export interface APIArticle {
   id: string;
   title: string;
@@ -14,6 +23,8 @@ export interface APIArticle {
   isActive?: boolean;
   type?: string; // e.g. "news"
   excerpt?: string;
+  category?: APICategory;
+  categories?: APICategory[];
 }
 
 export interface APISpecialEvent {
@@ -29,6 +40,13 @@ interface FeatureBannerProps {
   eventData?: APISpecialEvent | null;
 }
 // ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Safely gets the effective category slug for an APIArticle.
+ */
+function getArticleCategorySlug(article: APIArticle): string | undefined {
+  return article.categories?.[0]?.slug ?? article.category?.slug ?? undefined;
+}
 
 const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
   // Root Visibility Guard: hide entirely when data is missing or event is inactive
@@ -81,7 +99,7 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
           {activeArticles.map(article => (
             <Link
               key={article.id}
-              href={`/news/${article.type || "news"}/${article.code}`}
+              href={`/news/${getArticleCategorySlug(article) || "others"}/${article.code}`}
               className="group flex flex-col justify-between"
             >
               <div>
@@ -100,7 +118,7 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
                 {/* Title */}
                 <h3 className="text-[#1e293b] text-xs sm:text-sm font-semibold mt-2 leading-relaxed group-hover:text-blue-700 transition-colors"
                 style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-                  {article.title}
+                  <ArticleTitle article={article} />
                 </h3>
               </div>
             </Link>

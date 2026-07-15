@@ -6,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 
 import Link from "next/link";
 import React from "react";
+import ArticleTitle from "@/components/shared/article-title";
 
 export default async function SpecialArticle({
   specialArticles,
@@ -80,7 +81,7 @@ export default async function SpecialArticle({
               </h5>
             </div> */}
             <h3 className="text-lg text-primary-foreground font-semibold  ">
-              {firstSpecialArticle.title}
+              <ArticleTitle article={firstSpecialArticle} />
             </h3>
             <p className="text-sm font-normal text-white"
               style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
@@ -114,7 +115,7 @@ export default async function SpecialArticle({
                   </h5>
                 </div> */}
                 <h3 className="text-base font-semibold group-hover:underline">
-                  {article.title}
+                  <ArticleTitle article={article} />
                 </h3>
                 <p className="text-sm font-normal text-foreground"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>

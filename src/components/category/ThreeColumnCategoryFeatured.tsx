@@ -10,6 +10,7 @@ import { getArticleCategory } from "@/lib/utils";
 interface CategoryData {
   title: string;
   slug: string;
+  id: string;
   articles: Article[];
 }
 

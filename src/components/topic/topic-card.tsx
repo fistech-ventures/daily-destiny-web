@@ -5,6 +5,7 @@ import { getArticleCategory } from "@/lib/utils";
 
 import Link from "next/link";
 import React from "react";
+import ArticleTitle from "../shared/article-title";
 
 interface NewsCardProps {
   article: Article;
@@ -33,7 +34,7 @@ export default async function TopicCard({ article }: NewsCardProps) {
         </div> */}
 
         <h3 className="text-lg md:text-xl font-bold text-gray-900 leading-snug">
-          {article.title}
+          <ArticleTitle article={article} />
         </h3>
 
         <div

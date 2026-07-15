@@ -2,6 +2,7 @@ import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
+import ArticleTitle from "@/components/shared/article-title";
 
 export default function FeaturedArticle({
   article,
@@ -33,7 +34,7 @@ export default function FeaturedArticle({
             </span>
             <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 group-hover:text-primary-foreground transition-colors"
               style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
-              {article.title}
+              <ArticleTitle article={article} />
             </h1>
             <p className="text-white/90 text-base"
               style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>

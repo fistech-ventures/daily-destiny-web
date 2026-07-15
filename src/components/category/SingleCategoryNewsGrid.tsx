@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getAllcategories, getArticles } from "@/lib/api";
 import { Category, Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
+import ArticleTitle from "../shared/article-title";
 
 interface Props {
   slug: string;
@@ -16,8 +17,8 @@ export default async function SingleCategoryNewsGrid({
   fallbackTitle,
   limit = 7,
 }: Props) {
-  // Fetch categories
-  const categoriesRes = await getAllcategories();
+  // Fetch categories with a sufficient limit so lower-positioned categories are included
+  const categoriesRes = await getAllcategories({ sortBy: "position", limit: 50 });
   const allCategories: Category[] = categoriesRes?.data || [];
 
   const currentCat = allCategories.find(category => category.slug === slug);
@@ -78,7 +79,7 @@ export default async function SingleCategoryNewsGrid({
               </div>
 
               <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#000058] transition-colors">
-                {featuredArticle.title}
+                <ArticleTitle article={featuredArticle} />
               </h3>
 
               {featuredArticle.excerpt && (
@@ -89,14 +90,14 @@ export default async function SingleCategoryNewsGrid({
               )}
             </Link>
 
-            <div className="absolute bottom-4 right-4">
+            {/* <div className="absolute bottom-4 right-4">
               <Link
                 href={`/news/${getArticleCategory(featuredArticle)?.slug || getArticleCategory(featuredArticle)?.slugBn}/${featuredArticle.code}`}
                 className="inline-flex items-center justify-center bg-[#000058] hover:bg-[#000058]/80 text-white hover:text-white text-sm font-medium px-4 py-1.5 rounded transition-colors shadow-xs"
               >
                 বিস্তারিত
               </Link>
-            </div>
+            </div> */}
           </div>
         )}
 
