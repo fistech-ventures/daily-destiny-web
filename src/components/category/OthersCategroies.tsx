@@ -2,15 +2,15 @@ import React from "react";
 import FourCategoryGrid from "./ThreeColumnCategoryFeatured";
 import { Category } from "@/lib/types";
 import { getAllcategories, getArticles } from "@/lib/api";
+import { ALL_DEDICATED_SLUGS } from "@/config/home-sections";
 
 const OthersCategories = async () => {
   try {
-    // 1. Fetch all available categories from your API setup
-    // Must request enough to leave a pool after excluding dedicated-section categories
+    // 1. Fetch a generous pool so filtering still leaves ~8+ categories
     const categoriesRes = await getAllcategories({
       sortBy: "position",
       page: 1,
-      limit: 50,
+      limit: 100,
     });
     const categoriesList: Category[] = categoriesRes?.data || [];
 
@@ -46,29 +46,9 @@ const OthersCategories = async () => {
       }),
     );
 
-    // Exclude categories that already have dedicated sections on the homepage
-    const excludedSlugs = [
-      "international",
-      "binodon",
-      "entertainment",
-      "kheladula",
-      "sports",
-      "national",
-      "education",
-      "economy",
-      "politics",
-      "religion",
-      "dhormo",
-      "information-technology",
-      "technology",
-      "tech",
-      "health",
-      "lifestyle",
-      "campus",
-      "law-order",
-      "law",
-      "opinion",
-    ];
+    // Exclude categories that already have dedicated sections on the homepage.
+    // Uses the config-driven slug list so it stays in sync automatically.
+    const excludedSlugs = ALL_DEDICATED_SLUGS;
 
     // Filter out categories without articles and those with dedicated sections
     const activeCategoriesData = categoriesData.filter(
@@ -82,6 +62,10 @@ const OthersCategories = async () => {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     const selectedCategories = shuffled.slice(0, 8);
+
+    if (selectedCategories.length === 0) {
+      return null;
+    }
 
     return (
       <div>
