@@ -140,8 +140,7 @@ export default function ArchiveSection() {
                       <>
                         <CalendarDays className="h-4 w-4 text-red-600" />
                         <span>
-                          {formatDateDisplay(startDate)} থেকে{" "}
-                          {formatDateDisplay(endDate)}
+                          {formatDateDisplay(startDate)}
                         </span>
                       </>
                     ) : (
@@ -227,7 +226,7 @@ export default function ArchiveSection() {
                   <FileText className="h-10 w-10 text-gray-300 mb-3" />
                   {hasDateRange ? (
                     <p className="text-gray-500 text-sm">
-                      এই তারিখ পরিসরে কোনো সংবাদ পাওয়া যায়নি
+                      এই তারিখে কোনো সংবাদ পাওয়া যায়নি
                     </p>
                   ) : (
                     <p className="text-gray-500 text-sm">
