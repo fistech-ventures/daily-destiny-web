@@ -177,7 +177,7 @@ export default function VisualEpaperSlider({
       {/* 2. MAIN RESPONSIVE WORKSPACE */}
       <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-12 gap-4 h-fit items-start">
         {/* COLUMN A: Left Page Thumbnail Strip (Clean background, auto-height fit) */}
-        <div className="lg:col-span-1 xl:col-span-2 flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto p-1 h-fit max-h-[20vh] lg:max-h-[85vh]">
+        <div className="lg:col-span-1 xl:col-span-1 flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto p-1 h-fit max-h-[20vh] lg:max-h-[85vh]">
           {edition.pages.map((page, idx) => (
             <div
               key={page.id}
@@ -211,7 +211,7 @@ export default function VisualEpaperSlider({
         </div>
 
         {/* COLUMN B: Center Interactive Canvas Mapping */}
-        <div className="lg:col-span-2 xl:col-span-6 bg-white border border-gray-200 rounded-lg p-2 md:p-4 flex justify-center items-start h-fit shadow-sm">
+        <div className="lg:col-span-2 xl:col-span-5 bg-white border border-gray-200 rounded-lg p-2 md:p-4 flex justify-center items-start h-fit shadow-sm">
           <div className="relative w-full aspect-[3/4] border border-gray-100 bg-gray-50">
             <Image
               src={currentPage.imageUrl}
@@ -254,7 +254,7 @@ export default function VisualEpaperSlider({
         </div>
 
         {/* COLUMN C: Right-hand Isolated Full-Width Crisp Snippet Panel */}
-        <div className="lg:col-span-1 xl:col-span-4 bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col h-fit">
+        <div className="lg:col-span-1 xl:col-span-6 bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col h-fit">
           <div className="p-3 bg-gray-50 border-b border-gray-200 font-semibold text-gray-700 text-sm flex justify-between items-center">
             <span>বিস্তারিত সংবাদ ভিউ</span>
             {selectedHotspot && (
