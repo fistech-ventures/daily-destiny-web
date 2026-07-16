@@ -282,7 +282,7 @@ export default async function Home({
     <main className="container mx-auto px-1.5 py-0 pb-2 flex flex-col">
       {/* ── TOP BANNER ── */}
       <div className="mb-3 lg:mb-5">
-        <AdBanner className="rounded-lg" altText="হোমপেজ বিজ্ঞাপন" />
+        <AdBanner className="rounded-lg" altText="হোমপেজ বিজ্ঞাপন" aspectRatio="6.5/1" />
       </div>
 
       <div className="mb-3 lg:mb-5">
@@ -327,8 +327,9 @@ export default async function Home({
             </div>
             <div className="flex-[1_1_0%]">
               <AdBanner
-                className="rounded-lg h-full"
+                className="rounded-lg"
                 altText="এলাকার সংবাদ বিজ্ঞাপন"
+                aspectRatio="16/9"
               />
             </div>
           </div>
@@ -529,7 +530,7 @@ export default async function Home({
 
       {/* ── ADVERTISEMENT ── */}
       <div className="mb-3 lg:mb-5">
-        <AdBanner className="rounded-lg" altText="মাঝপাতার বিজ্ঞাপন" />
+        <AdBanner className="rounded-lg" altText="মাঝপাতার বিজ্ঞাপন" aspectRatio="6.5/1" />
       </div>
 
       {/* ── ENTERTAINMENT, SPORTS & EDUCATION ── */}
