@@ -69,9 +69,17 @@ function CategoryCard({ cat }: { cat: CategoryData }) {
   );
 }
 
+function getGridColsClass(count: number): string {
+  if (count <= 1) return "grid-cols-1 lg:grid-cols-1";
+  if (count <= 2) return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2";
+  if (count <= 3) return "grid-cols-1 sm:grid-cols-3 lg:grid-cols-3";
+  return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
+}
+
 function CategoryRow({ items }: { items: CategoryData[] }) {
+  if (items.length === 0) return null;
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-transparent">
+    <div className={`w-full grid ${getGridColsClass(items.length)} gap-5 bg-transparent`}>
       {items.map(cat => (
         <CategoryCard key={cat.slug} cat={cat} />
       ))}
@@ -83,7 +91,15 @@ export default function FourCategoryGrid({
   categories,
   sectionTitle = "অন্যান্য",
 }: FourCategoryGridProps) {
-  if (!categories || categories.length === 0) return null;
+  if (!categories || categories.length === 0) {
+    return (
+      <div className="py-16 text-center">
+        <p className="text-gray-400 text-sm font-medium">
+          কোনো বিভাগ পাওয়া যায়নি
+        </p>
+      </div>
+    );
+  }
 
   const visible = categories.slice(0, 8);
   const firstRow = visible.slice(0, 4);

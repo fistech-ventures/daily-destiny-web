@@ -6,7 +6,7 @@ import ArticleTitle from "../shared/article-title";
 
 interface HorizontalArticleCardProps {
   article: Article;
-  layoutType?: "featured" | "side" | "grid" | "hero";
+  layoutType?: "featured" | "side" | "grid" | "hero" | "lead";
 }
 
 export default function HorizontalArticleCard({
@@ -95,6 +95,59 @@ export default function HorizontalArticleCard({
     );
   }
 
+  // Lead layout — like grid but with taller image and larger title
+  if (layoutType === "lead") {
+    return (
+      <Link
+        href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
+        className="group block w-full transition-all pb-3"
+      >
+        <div className="flex flex-col gap-3">
+          {/* Image Frame — taller aspect ratio */}
+          <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg shadow-sm bg-gray-100">
+            <img
+              src={article.coverImage}
+              alt={article.title}
+              loading="eager"
+              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+
+          {/* Text Area */}
+          <div className="flex flex-col gap-2">
+            <h2
+              className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                width: "100%",
+              }}
+            >
+              {article.title}
+            </h2>
+
+            {(article.excerpt || article.details) ? (
+              <p
+                className="text-sm md:text-base text-gray-500 leading-relaxed"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  width: "100%",
+                }}
+              >
+                {article.excerpt || article.details?.replace(/<[^>]*>/g, "")}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
   return (
     <Link
       href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
@@ -126,7 +179,7 @@ export default function HorizontalArticleCard({
             {article.title}
           </h2>
 
-          {layoutType === "side" ? (
+          {(layoutType === "side" ? (
             <div
               dangerouslySetInnerHTML={{
                 __html: article.details || article.excerpt,
@@ -155,7 +208,7 @@ export default function HorizontalArticleCard({
                 {article.excerpt || article.details?.replace(/<[^>]*>/g, "")}
               </p>
             ) : null
-          ) : null}
+          ) : null)}
 
           <p className="text-[11px] text-gray-400 font-normal mt-1"></p>
         </div>

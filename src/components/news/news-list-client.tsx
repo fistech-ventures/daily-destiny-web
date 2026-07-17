@@ -33,14 +33,14 @@ export default function NewsListClient({
       initialData={initialData}
       initialMeta={initialMeta}
       fetchData={fetchMore}
-      listClassName="grid grid-cols-2 md:grid-cols-3 gap-6"
+      listClassName="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
       wrapperClassName="w-full"
       noDataMessage={noDataMessage}
       renderItem={(article: Article, index: number) => {
         if (index === 0) {
           return (
-            <div key={article.id} className="col-span-2 md:col-span-3">
-              <HorizontalArticleCard article={article} layoutType="hero" />
+            <div key={article.id} className="col-span-1 sm:col-span-2 md:col-span-2 md:row-span-2">
+              <HorizontalArticleCard article={article} layoutType="lead" />
             </div>
           );
         }
