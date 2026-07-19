@@ -25,7 +25,6 @@ import BinodonSection from "@/components/home/article/binodon-section";
 import KhelaSlider from "@/components/home/article/khela-slider";
 import PoliticsSection from "@/components/home/article/polititcs-section";
 import EconomySection from "@/components/home/article/economy-section";
-import LatestNewsSection from "@/components/news/latest-news-section";
 import Link from "next/link";
 import ArticleTitle from "@/components/shared/article-title";
 
@@ -512,17 +511,15 @@ export default async function Home({
       {/* ── DIVIDER ── */}
       <div className="border-t border-gray-100 my-3 lg:my-5" />
 
-      {/* ── LATEST, INTERNATIONAL & ECONOMY ── */}
+      {/* ── BANGLADESH, INTERNATIONAL & ECONOMY ── */}
       <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
-        <LatestNewsSection />
+        <SingleCategoryNewsGrid slug="bangladesh" limit={7} />
         <SingleCategoryNewsGrid slug="international" limit={7} />
-        {economyArticles.length > 0 && (
-          <EconomySection
-            articles={economyArticles}
-            title={economyTitle}
-            categorySlug={economySlug}
-          />
-        )}
+        <KhelaSlider
+          articles={khelaArticles}
+          title={khelaTitle}
+          categorySlug={khelaSlug}
+        />
       </div>
 
       {/* ── DIVIDER ── */}
@@ -536,11 +533,18 @@ export default async function Home({
       {/* ── ENTERTAINMENT, SPORTS & EDUCATION ── */}
       <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
         <BinodonSection />
-        <KhelaSlider
-          articles={khelaArticles}
-          title={khelaTitle}
-          categorySlug={khelaSlug}
-        />
+        
+        {economyArticles.length > 0 && (
+          <EconomySection
+            articles={economyArticles}
+            title={economyTitle}
+            categorySlug={economySlug}
+          />
+        )}
+        {lawArticles.length > 0 && (
+          <PoliticsSection articles={lawArticles} />
+        )}
+        
         <SingleCategoryNewsGrid slug="education" limit={7} />
 
         {techArticles.length > 0 && (
@@ -556,10 +560,8 @@ export default async function Home({
         {religionArticles.length > 0 && (
           <PoliticsSection articles={religionArticles} />
         )}
+        
 
-        {lawArticles.length > 0 && (
-          <PoliticsSection articles={lawArticles} />
-        )}
       </div>
 
       {/* ── DIVIDER ── */}
