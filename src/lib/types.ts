@@ -86,6 +86,7 @@ export interface Article {
   coverImageCredit: string;
   seoMetaData?: SeoMetaData;
   hanger?: string;
+  shoulder?: string;
 }
 
 export interface ArticleMedia {
