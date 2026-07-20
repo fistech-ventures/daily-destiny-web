@@ -229,7 +229,7 @@ export default async function CategoryPage({
         </div>
 
         <div className="w-full lg:w-80 shrink-0 sticky top-4 flex flex-col gap-4">
-          <AdBanner className="rounded-lg" altText="বিভাগ পাতা বিজ্ঞাপন" />
+          <AdBanner slotKey="category-page-sidebar" />
           <LocationFilter initialLocationId={locationId} />
         </div>
       </div>

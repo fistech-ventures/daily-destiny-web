@@ -341,7 +341,7 @@ export default function VisualEpaperSlider({
 
           {/* Advertisement at bottom of right column */}
           <div className="p-2 md:p-4 border-t border-gray-200">
-            <AdBanner className="rounded-lg" altText="ই-পেপার বিজ্ঞাপন" />
+            <AdBanner slotKey="e-paper-sidebar" />
           </div>
         </div>
       </div>

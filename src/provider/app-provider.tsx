@@ -72,7 +72,7 @@ export default function AppProvider({
       {/* Footer Advertisement Section */}
       <div className="bg-gray-50 border-t border-gray-200">
         <div className="container mx-auto px-4 py-4">
-          <AdBanner className="rounded-lg" altText="ফুটার বিজ্ঞাপন" />
+          <AdBanner slotKey="footer-banner" />
         </div>
       </div>
       <Footer />
