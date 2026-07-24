@@ -229,7 +229,7 @@ export default async function CategoryPage({
         </div>
 
         <div className="w-full lg:w-80 shrink-0 sticky top-4 flex flex-col gap-4">
-          <AdBanner slotKey="category-page-sidebar" />
+          <AdBanner pageType="categoryPage" position="Right-Sidebar-top" categoryId={category?.id} keepSpace />
           <LocationFilter initialLocationId={locationId} />
         </div>
       </div>

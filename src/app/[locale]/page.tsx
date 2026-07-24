@@ -281,7 +281,7 @@ export default async function Home({
     <main className="container mx-auto px-1.5 py-0 pb-2 flex flex-col">
       {/* ── TOP BANNER ── */}
       <div className="mb-3 lg:mb-5">
-        <AdBanner slotKey="homepage-hero-banner" />
+        <AdBanner pageType="homePage" position="Home-TopBanner" />
       </div>
 
       <div className="mb-3 lg:mb-5">
@@ -325,7 +325,7 @@ export default async function Home({
               <LocationFilter />
             </div>
             <div className="flex-[1_1_0%]">
-              <AdBanner slotKey="homepage-sidebar" />
+              <AdBanner pageType="homePage" position="Area-Under" />
             </div>
           </div>
 
@@ -523,7 +523,7 @@ export default async function Home({
 
       {/* ── ADVERTISEMENT ── */}
       <div className="mb-3 lg:mb-5">
-        <AdBanner slotKey="homepage-mid-banner" />
+        <AdBanner pageType="homePage" position="Mid-Banner" />
       </div>
 
       {/* ── ENTERTAINMENT, SPORTS & EDUCATION ── */}

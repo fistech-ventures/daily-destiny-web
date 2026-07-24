@@ -177,7 +177,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
           {/* RIGHT SIDEBAR - 1/4 width */}
           <div className="w-full lg:w-1/4 flex flex-col gap-5">
             {/* Advertisement Banner */}
-            <AdBanner slotKey="article-section-sidebar" />
+            <AdBanner pageType="homePage" position="Lead-Right" keepSpace />
 
             {/* Recent / সর্বশেষ - 4 items */}
             <div>
