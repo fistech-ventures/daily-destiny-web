@@ -245,7 +245,7 @@ export default function ArchiveSection() {
               endDate={endDate}
               onDateRangeSelect={handleDateRangeSelect}
             />
-            <AdBanner slotKey="archive-sidebar" />
+            <AdBanner pageType="categoryPage" position="Right-Sidebar-top" />
           </div>
         </div>
       </div>

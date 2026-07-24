@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
-import ArticleTitle from "../shared/article-title";
 
 interface HorizontalArticleCardProps {
   article: Article;
