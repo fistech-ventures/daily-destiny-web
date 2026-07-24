@@ -49,16 +49,29 @@ interface AdBannerProps {
   aspectRatio?: string;
   /** Force-hide this ad banner. When true, renders nothing. */
   hidden?: boolean;
+  /**
+   * When true and in API mode with no active ad available,
+   * shows the "Call for Advertisement" placeholder instead of
+   * returning null. Useful for positions like sidebar ads where
+   * collapsing the layout is undesirable.
+   */
+  keepSpace?: boolean;
+  /**
+   * Optional category ID filter for category-specific ad targeting.
+   * Only used in API mode. When provided, the API returns ads that
+   * are specifically targeted to this category.
+   */
+  categoryId?: string;
 }
 
 /**
- * Placeholder shown when no ad is available.
+ * Placeholder shown when no ad configuration exists at all.
  */
 const DEV_PLACEHOLDER =
-  "https://placehold.co/1200x200/1a66ca/ffffff?text=Advertisement";
+  "https://placehold.co/1200x200/1a66ca/ffffff?text=Call+for+Advertisement";
 
 /** Default alt text when nothing more descriptive is available. */
-const FALLBACK_ALT = "Advertisement";
+const FALLBACK_ALT = "Call for Advertisement";
 
 // ── Ad type renderers ──────────────────────────────────────
 
@@ -68,7 +81,7 @@ function ImageAd({ ad }: { ad: Ad }) {
     <img
       src={ad.imageUrl || DEV_PLACEHOLDER}
       alt={ad.title || FALLBACK_ALT}
-      className="w-full h-full object-contain"
+      className="w-full block"
       loading="lazy"
     />
   );
@@ -83,7 +96,7 @@ function VideoAd({ ad }: { ad: Ad }) {
       muted
       loop
       playsInline
-      className="w-full h-full object-contain"
+      className="w-full block"
       aria-label={ad.title || FALLBACK_ALT}
     />
   );
@@ -96,7 +109,7 @@ function EmbedAd({ ad }: { ad: Ad }) {
   }
   return (
     <div
-      className="w-full h-full flex items-center justify-center"
+      className="w-full flex items-center justify-center"
       dangerouslySetInnerHTML={{ __html: ad.scriptEmbedCode }}
     />
   );
@@ -128,6 +141,8 @@ const AdBanner = ({
   className: explicitClassName = "",
   aspectRatio: explicitAspectRatio,
   hidden: explicitHidden,
+  keepSpace,
+  categoryId,
 }: AdBannerProps) => {
   // ── Determine rendering mode ──────────────────────────
   const isApiMode = Boolean(pageType && position);
@@ -136,7 +151,7 @@ const AdBanner = ({
   // ── API mode: fetch ads from backend ──────────────────
   const { data: apiAds } = useAds(
     isApiMode
-      ? { pageType: pageType!, position: position!, enabled: true }
+      ? { pageType: pageType!, position: position!, categoryId, enabled: true }
       : { enabled: false },
   );
   const apiAd = apiAds && apiAds.length > 0 ? apiAds[0] : null;
@@ -144,9 +159,17 @@ const AdBanner = ({
   // ── Legacy mode: resolve from static config ────────────
   const slotConfig = isLegacyMode && slotKey ? getSlotConfig(slotKey) : null;
 
-  // ── Hidden check ──────────────────────────────────────
-  const isHidden = explicitHidden ?? slotConfig?.hidden ?? false;
-  if (isHidden) return null;
+  // ── Hidden / no-active-ad check ───────────────────────
+  // If in API mode and no active ad was returned (all filtered out
+  // by isActive, status, or date range), render nothing.
+  // Unless keepSpace is true — then show placeholder instead.
+  if (isApiMode && !apiAd) {
+    if (!keepSpace) return null;
+  }
+
+  // Legacy / explicit hidden override
+  if (explicitHidden) return null;
+  if (slotConfig?.hidden) return null;
 
   // ── Resolve ad content ────────────────────────────────
   let resolvedImageUrl: string;
@@ -187,10 +210,6 @@ const AdBanner = ({
     resolvedClassName = explicitClassName;
   }
 
-  const heightClasses = resolvedAspectRatio
-    ? ""
-    : "h-[100px] sm:h-[140px] md:h-[250px]";
-
   const aspectStyle: React.CSSProperties | undefined = resolvedAspectRatio
     ? { aspectRatio: resolvedAspectRatio }
     : undefined;
@@ -198,7 +217,7 @@ const AdBanner = ({
   // ── Build banner content ──────────────────────────────
   const bannerContent = (
     <div
-      className={`relative w-full ${heightClasses} overflow-hidden bg-[#cbd5e1] rounded-sm ${resolvedClassName}`}
+      className={`relative w-full overflow-hidden bg-gray-50 rounded-sm min-h-[60px] ${resolvedClassName}`}
       style={aspectStyle}
     >
       {isApiMode && apiAd ? (
@@ -207,7 +226,7 @@ const AdBanner = ({
         <img
           src={resolvedImageUrl}
           alt={resolvedAltText}
-          className="w-full h-full object-contain"
+          className="w-full block"
           loading="lazy"
         />
       )}
