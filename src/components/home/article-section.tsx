@@ -179,16 +179,24 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
             {/* Advertisement Banner */}
             <AdBanner pageType="homePage" position="Lead-Right" keepSpace />
 
-            {/* Recent / সর্বশেষ - 4 items */}
+            {/* Recent / সর্বশেষ - 3 items */}
             <div>
-              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-blue-600 pb-2 mb-3">
-                <Monitor className="h-4 w-4 text-blue-600" />
-                <span>সর্বশেষ</span>
-              </h3>
+              <div className="flex items-center justify-between border-b-2 border-blue-600 pb-2 mb-3">
+                <h3 className="flex items-center gap-2 text-base font-bold text-gray-900">
+                  <Monitor className="h-4 w-4 text-blue-600" />
+                  <span>সর্বশেষ</span>
+                </h3>
+                <Link
+                  href="/recent"
+                  className="text-xs font-semibold text-blue-600 hover:text-blue-800 hover:underline transition-colors shrink-0"
+                >
+                  আরো দেখুন →
+                </Link>
+              </div>
               <div className="flex flex-col gap-2.5">
                 {recentSidebarArticles.length > 0 ? (
                   recentSidebarArticles
-                    .slice(0, 4)
+                    .slice(0, 3)
                     .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))
@@ -200,7 +208,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
               </div>
             </div>
 
-            {/* Popular News - 4 items */}
+            {/* Popular News - 3 items */}
             <div>
               <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-3">
                 <TrendingUp className="h-4 w-4 text-blue-500" />
@@ -209,7 +217,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
               <div className="flex flex-col gap-2.5">
                 {popularSidebarArticles.length > 0 ? (
                   popularSidebarArticles
-                    .slice(0, 4)
+                    .slice(0, 3)
                     .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))

@@ -1,5 +1,6 @@
 import { generateHomeMetadata } from "@/lib/metadata";
 import { SchemaGenerator } from "@/lib/schema";
+// @ts-expect-error -- allow global CSS side-effect import
 import "./global.css";
 // import { solaimanLipi } from "@/fonts";
 import { Noto_Serif_Bengali } from "next/font/google";

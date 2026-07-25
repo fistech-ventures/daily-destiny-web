@@ -21,7 +21,7 @@ import LocationFilter from "@/components/category/categoryfilter";
 import OthersCategories from "@/components/category/OthersCategroies";
 import FeatureBanner from "@/components/feature-banner/FeatureBanner";
 import AdBanner from "@/components/shared/ad-banner";
-import Circular from "@/components/circular/circular";
+// import Circular from "@/components/circular/circular";
 import BinodonSection from "@/components/home/article/binodon-section";
 import KhelaSlider from "@/components/home/article/khela-slider";
 import PoliticsSection from "@/components/home/article/polititcs-section";
@@ -592,9 +592,9 @@ export default async function Home({
         <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
         <ArchiveSection />
       </div>
-      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
+      {/* <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
         <Circular articles={circularArticles} />
-      </div>
+      </div> */}
 
     </main>
   );
