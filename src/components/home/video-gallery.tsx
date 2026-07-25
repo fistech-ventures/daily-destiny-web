@@ -48,7 +48,7 @@ export default function VideoGallery({
       {/* Header Bar Section */}
       <div className="flex items-center justify-between border-b border-[#1a1a7a] pb-3 mb-5">
         <Link href="/video" className="flex items-center gap-1.5 group">
-          <h2 className="text-xl font-bold border-b-2 border-cyan-400 pb-3 -mb-[14px]">
+          <h2 className="text-xl font-bold border-b-2 border-cyan-400  hover:text-cyan-400 pb-3 -mb-[14px]">
             ভিডিও
           </h2>
           <ChevronRight className="h-5 w-5 text-cyan-400 mt-0.5 transition-transform group-hover:translate-x-0.5" />
