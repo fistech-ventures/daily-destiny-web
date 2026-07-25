@@ -21,6 +21,7 @@ import LocationFilter from "@/components/category/categoryfilter";
 import OthersCategories from "@/components/category/OthersCategroies";
 import FeatureBanner from "@/components/feature-banner/FeatureBanner";
 import AdBanner from "@/components/shared/ad-banner";
+import Circular from "@/components/circular/circular";
 import BinodonSection from "@/components/home/article/binodon-section";
 import KhelaSlider from "@/components/home/article/khela-slider";
 import PoliticsSection from "@/components/home/article/polititcs-section";
@@ -267,7 +268,17 @@ export default async function Home({
     console.error("Failed to fetch special events:", err);
   }
 
+  // Fetch recent articles for the Circular component
+  let circularArticles: Article[] = [];
+  try {
+    const circularRes = await getArticles({ limit: 4, status: "Published" });
+    circularArticles = circularRes?.data || [];
+  } catch (err) {
+    console.error("Failed to fetch articles for circular:", err);
+  }
+
   const galleryItems = galleryArticles.map((article: imageArticle) => ({
+
     id: article.id,
     url: article.coverImage || "",
     title: article.title,
@@ -580,6 +591,9 @@ export default async function Home({
         <VideoGallery initialVideos={galleryVideos} initialMeta={galleryMeta} />
         <PhotoGallerySection items={galleryItems} title="ছবিঘর" />
         <ArchiveSection />
+      </div>
+      <div className="space-y-6 lg:space-y-8 mb-3 lg:mb-5">
+        <Circular articles={circularArticles} />
       </div>
 
     </main>
