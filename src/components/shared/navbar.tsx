@@ -354,8 +354,7 @@ export function Navbar({
                   সর্বশেষ
                 </Link>
 
-                {/* Ensure your parent container has classes like: "flex overflow-x-auto scrollbar-none" */}
-                <div className="hidden md:flex items-center overflow-x-auto scrollbar-none gap-2 h-full">
+                <div className="flex items-center overflow-x-auto scrollbar-none gap-2 h-full">
                   {categories
                     .slice(0, 10)
                     .filter((category, index, self) => {
@@ -371,7 +370,7 @@ export function Navbar({
                         <Link
                           href={`/${category.slug}`}
                           className={cn(
-                            "px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                            "px-3 flex items-center h-full text-sm md:text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                             strippedPathname === `/${category.slug}`
                               ? "border-red-600 text-red-600"
                               : "border-transparent text-gray-700 hover:text-red-600",
