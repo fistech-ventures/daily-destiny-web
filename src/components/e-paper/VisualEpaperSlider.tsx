@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import Image from "next/image";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import AdBanner from "@/components/shared/ad-banner";
+import CalendarPopover from "./CalendarPopover";
 
 interface Hotspot {
   id: string;
@@ -52,6 +53,7 @@ interface ImageDimensions {
 export default function VisualEpaperSlider({
   edition,
   currentDate,
+  availableDates,
 }: VisualEpaperSliderProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -59,6 +61,8 @@ export default function VisualEpaperSlider({
 
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [selectedHotspot, setSelectedHotspot] = useState<Hotspot | null>(null);
+  const [isPending, startTransition] = useTransition();
+
   // Natural pixel dimensions of the currently loaded page image.
   // Needed to correct the crop wrapper's aspect ratio, since hotspot
   // coordinates are normalized (0-1) fractions of the image, not raw
@@ -91,26 +95,40 @@ export default function VisualEpaperSlider({
 
   // Safely updates browser search query matching your sanitized API params layout
   const handleDateChange = (newDate: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (newDate && !newDate.includes("NaN")) {
-      params.set("date", newDate);
-    } else {
-      params.delete("date");
-    }
-    router.push(`${pathname}?${params.toString()}`);
+    startTransition(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (newDate && !newDate.includes("NaN")) {
+        params.set("date", newDate);
+      } else {
+        params.delete("date");
+      }
+      router.push(`${pathname}?${params.toString()}`);
+    });
   };
 
   return (
+    <>
+      {/* Loading overlay shown during date-switch navigation */}
+      {isPending && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl px-10 py-8 flex flex-col items-center gap-4 min-w-[240px]">
+            <div className="w-10 h-10 border-[3px] border-emerald-500 border-t-transparent rounded-full animate-spin" />
+            <p className="text-gray-700 font-semibold text-base">
+              ই-পেপার লোড হচ্ছে...
+            </p>
+          </div>
+        </div>
+      )}
+
     <div className="w-full p-2 md:p-4 flex flex-col gap-4 select-none">
       {/* 1. TOP NAVBAR / CONTROL BAR */}
       <div className="bg-white p-3 rounded-lg border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 h-fit">
-        {/* Left Side: Date Picker & Edition Mode */}
+        {/* Left Side: Calendar Date Picker */}
         <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
-          <input
-            type="date"
-            value={currentDate || ""}
-            onChange={e => handleDateChange(e.target.value)}
-            className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white font-medium text-gray-700 outline-none cursor-pointer"
+          <CalendarPopover
+            availableDates={availableDates}
+            currentDate={currentDate}
+            onSelect={handleDateChange}
           />
         </div>
 
@@ -346,5 +364,6 @@ export default function VisualEpaperSlider({
         </div>
       </div>
     </div>
+    </>
   );
 }
