@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { Monitor, TrendingUp } from "lucide-react";
-import { getArticles, getAllcategories } from "@/lib/api";
-import { Article, Category } from "@/lib/types";
+import { getArticles } from "@/lib/api";
+import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import AdBanner from "@/components/shared/ad-banner";
 import ArticleTitle from "@/components/shared/article-title";
@@ -127,37 +127,20 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
       isExclusive: true,
     });
 
-    // Fetch তথ্যপ্রযুক্তি (Information Technology) category for sidebar
-    const categoriesRes = await getAllcategories({
-      sortBy: "position",
+    // Fetch recent articles for sidebar
+    const recentSidebarRes = await getArticles({
       page: 1,
-      limit: 50,
+      limit: 4,
+      status: "Published",
+      sortBy: "date",
+      sortOrder: "DESC",
     });
-    const allCategories: Category[] = categoriesRes?.data || [];
-    const techCat = allCategories.find(
-      c =>
-        c.slug === "information-technology" ||
-        c.slug === "technology" ||
-        c.slug === "tech" ||
-        c.slug === "তথ্যপ্রযুক্তি",
-    );
+    const recentSidebarArticles: Article[] = recentSidebarRes?.data || [];
 
-    let techArticles: Article[] = [];
-    if (techCat) {
-      const techRes = await getArticles({
-        categoryId: techCat.id,
-        limit: 3,
-        status: "Published",
-        sortBy: "date",
-        sortOrder: "DESC",
-      });
-      techArticles = techRes?.data || [];
-    }
-
-    // Fetch popular 3 articles for sidebar
+    // Fetch popular 4 articles for sidebar
     const popularSidebarRes = await getArticles({
       page: 1,
-      limit: 3,
+      limit: 4,
       isPopular: true,
       status: "Published",
     });
@@ -194,24 +177,32 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
           {/* RIGHT SIDEBAR - 1/4 width */}
           <div className="w-full lg:w-1/4 flex flex-col gap-5">
             {/* Advertisement Banner */}
-            <AdBanner className="rounded-lg" />
+            <AdBanner pageType="homePage" position="Lead-Right" keepSpace />
 
-            {/* তথ্যপ্রযুক্তি - 3 items */}
+            {/* Recent / সর্বশেষ - 3 items */}
             <div>
-              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-blue-600 pb-2 mb-3">
-                <Monitor className="h-4 w-4 text-blue-600" />
-                <span>তথ্যপ্রযুক্তি</span>
-              </h3>
+              <div className="flex items-center justify-between border-b-2 border-blue-600 pb-2 mb-3">
+                <h3 className="flex items-center gap-2 text-base font-bold text-gray-900">
+                  <Monitor className="h-4 w-4 text-blue-600" />
+                  <span>সর্বশেষ</span>
+                </h3>
+                <Link
+                  href="/recent"
+                  className="text-xs font-semibold text-blue-600 hover:text-blue-800 hover:underline transition-colors shrink-0"
+                >
+                  আরো দেখুন →
+                </Link>
+              </div>
               <div className="flex flex-col gap-2.5">
-                {techArticles.length > 0 ? (
-                  techArticles
+                {recentSidebarArticles.length > 0 ? (
+                  recentSidebarArticles
                     .slice(0, 3)
                     .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))
                 ) : (
                   <p className="text-gray-400 text-sm text-center py-4">
-                    কোনো তথ্যপ্রযুক্তি সংবাদ পাওয়া যায়নি
+                    কোনো সংবাদ পাওয়া যায়নি
                   </p>
                 )}
               </div>

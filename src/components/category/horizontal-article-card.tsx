@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
-import ArticleTitle from "../shared/article-title";
 
 interface HorizontalArticleCardProps {
   article: Article;
@@ -23,7 +22,7 @@ export default function HorizontalArticleCard({
           src={article.coverImage}
           alt={article.title}
           loading="eager"
-          className="w-full h-full transition-transform duration-700 group-hover:scale-105 aspect-video"
+          className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 aspect-video"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 via-40% to-transparent" />
 
@@ -103,13 +102,13 @@ export default function HorizontalArticleCard({
         className="group block w-full transition-all pb-3"
       >
         <div className="flex flex-col gap-3">
-          {/* Image Frame — taller aspect ratio */}
-          <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg shadow-sm bg-gray-100">
+          {/* Image Frame — natural aspect ratio, no cropping, no letterboxing */}
+          <div className="relative w-full overflow-hidden rounded-lg shadow-sm bg-gray-100">
             <img
               src={article.coverImage}
               alt={article.title}
               loading="eager"
-              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
             />
           </div>
 

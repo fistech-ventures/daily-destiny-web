@@ -345,7 +345,7 @@ export function Navbar({
                 <Link
                   href={`/recent`}
                   className={cn(
-                    "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                    "shrink-0 px-3 hidden md:flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                     strippedPathname === `/recent`
                       ? "border-red-600 text-primary"
                       : "border-transparent text-gray-700 hover:text-primary/80",
@@ -354,7 +354,6 @@ export function Navbar({
                   সর্বশেষ
                 </Link>
 
-                {/* Ensure your parent container has classes like: "flex overflow-x-auto scrollbar-none" */}
                 <div className="flex items-center overflow-x-auto scrollbar-none gap-2 h-full">
                   {categories
                     .slice(0, 10)
@@ -371,7 +370,7 @@ export function Navbar({
                         <Link
                           href={`/${category.slug}`}
                           className={cn(
-                            "px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                            "px-3 flex items-center h-full text-sm md:text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                             strippedPathname === `/${category.slug}`
                               ? "border-red-600 text-red-600"
                               : "border-transparent text-gray-700 hover:text-red-600",
@@ -405,7 +404,7 @@ export function Navbar({
                 <Link
                   href={`/video`}
                   className={cn(
-                    "shrink-0 px-3 flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                    "shrink-0 px-3 hidden md:flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                     strippedPathname === `/video`
                       ? "border-primary text-text-primary/80"
                       : "border-transparent text-gray-700 hover:text-primary/80",

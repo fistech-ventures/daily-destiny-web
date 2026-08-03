@@ -48,7 +48,7 @@ export default async function RecentPage() {
 
         {/* Right Sidebar: Ad & Location Filter */}
         <div className="w-full lg:w-80 shrink-0 sticky top-4 flex flex-col gap-4">
-          <AdBanner className="rounded-lg" altText="সাম্প্রতিক পাতা বিজ্ঞাপন" />
+          <AdBanner pageType="recentPage" position="Right-Sidebar" />
           <LocationFilter />
         </div>
       </div>

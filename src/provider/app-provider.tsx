@@ -8,6 +8,7 @@ import { MobileBottomNav } from "@/components/shared/mobile-bottom-nav";
 import { usePathname } from "next/navigation";
 import { Category, MarketPrice } from "@/lib/types";
 import AdBanner from "@/components/shared/ad-banner";
+import { resolvePageType } from "@/lib/resolve-page-type";
 
 import { VideoArticle } from "@/lib/api";
 import ShareMarket from "@/components/shared/share-market";
@@ -72,7 +73,10 @@ export default function AppProvider({
       {/* Footer Advertisement Section */}
       <div className="bg-gray-50 border-t border-gray-200">
         <div className="container mx-auto px-4 py-4">
-          <AdBanner className="rounded-lg" altText="ফুটার বিজ্ঞাপন" />
+          <AdBanner
+            pageType={resolvePageType(pathname)}
+            position="Footer-Up-Banner"
+          />
         </div>
       </div>
       <Footer />

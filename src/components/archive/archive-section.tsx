@@ -245,7 +245,7 @@ export default function ArchiveSection() {
               endDate={endDate}
               onDateRangeSelect={handleDateRangeSelect}
             />
-            <AdBanner className="rounded-xl" altText="আর্কাইভ বিজ্ঞাপন" />
+            <AdBanner pageType="categoryPage" position="Right-Sidebar-top" />
           </div>
         </div>
       </div>
