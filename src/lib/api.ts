@@ -725,27 +725,69 @@ export async function getVisualEditionByDate(
 }
 
 // Get all visual edition dates
-// Falls back to the latest edition's publishDate when the API endpoint is broken
+// Falls back to generating a date range from the latest edition and validating each date
 export async function getVisualEditionDates(): Promise<string[]> {
+  // Primary: try the dedicated dates endpoint
   try {
     const locationBaseUrl = process.env.NEXT_PUBLIC_LOCATION_API_URL;
     const response = await api.get(
       `${locationBaseUrl}/web/epaper-visual/editions/dates`,
     );
-    return response.data?.data || [];
+    const dates = response.data?.data;
+    if (dates && Array.isArray(dates) && dates.length > 0) {
+      return dates;
+    }
   } catch (error) {
     console.error("Error fetching visual edition dates:", error);
-    // Fallback: derive dates from the latest edition
-    try {
-      const latest = await getLatestVisualEdition();
-      if (latest?.publishDate) {
-        return [latest.publishDate];
-      }
-    } catch {
-      // ignore
-    }
-    return [];
   }
+
+  // Fallback: Generate last 14 days from the latest edition & validate each date
+  try {
+    const latest = await getLatestVisualEdition();
+    if (latest?.publishDate) {
+      const latestDate = new Date(latest.publishDate + "T00:00:00");
+      const candidates: string[] = [];
+
+      // Build an array of YYYY-MM-DD strings for the last 14 days
+      for (let i = 0; i < 30; i++) {
+        const d = new Date(latestDate);
+        d.setDate(d.getDate() - i);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        candidates.push(`${y}-${m}-${day}`);
+      }
+
+      // Validate all candidates in parallel — getVisualEditionByDate returns
+      // the edition object on success or null on 404 / error
+      const results = await Promise.all(
+        candidates.map((date) =>
+          getVisualEditionByDate(date).then((edition) =>
+            edition ? date : null,
+          ),
+        ),
+      );
+
+      const validDates = results.filter((d): d is string => d !== null);
+      if (validDates.length > 0) {
+        return validDates.sort((a, b) => b.localeCompare(a));
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // Last resort: return just the latest edition's date
+  try {
+    const latest = await getLatestVisualEdition();
+    if (latest?.publishDate) {
+      return [latest.publishDate];
+    }
+  } catch {
+    // ignore
+  }
+
+  return [];
 }
 
 // Get all publication names
