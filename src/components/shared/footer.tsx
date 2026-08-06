@@ -35,6 +35,10 @@ export function Footer() {
           email: tFooter("companyInfoEn.email"),
         };
 
+  // Extract bare email addresses (strip the "ই-মেইল:"/"Email:" label) for the mailto: href
+  const emailAddresses =
+    companyInfo.email.match(/[\w.+-]+@[\w-]+\.[\w.]+/g) ?? [];
+
   return (
     <>
       <footer className="border-t border-gray-800 pt-12 pb-6 text-gray-400 select-none">
@@ -79,9 +83,12 @@ export function Footer() {
                 <span className="hover:text-primary transition-colors cursor-pointer">
                   {companyInfo.phone}
                 </span>
-                <span className="hover:text-primary transition-colors cursor-pointer text-nowrap">
+                <a
+                  href={`mailto:${emailAddresses.join(",")}`}
+                  className="hover:text-primary transition-colors cursor-pointer break-words"
+                >
                   {companyInfo.email}
-                </span>
+                </a>
               </div>
             </div>
 

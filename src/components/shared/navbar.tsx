@@ -333,7 +333,7 @@ export function Navbar({
                 <Link
                   href={`/`}
                   className={cn(
-                    "shrink-0 px-3 flex items-center h-full border-b-2 transition-colors",
+                    "shrink-0 px-2 hidden lg:flex items-center h-full border-b-2 transition-colors",
                     strippedPathname === `/`
                       ? "border-red-600 text-red-600"
                       : "border-transparent text-gray-700 hover:text-red-600",
@@ -345,7 +345,7 @@ export function Navbar({
                 <Link
                   href={`/recent`}
                   className={cn(
-                    "shrink-0 px-3 hidden md:flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                    "shrink-0 px-2 hidden md:flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                     strippedPathname === `/recent`
                       ? "border-red-600 text-primary"
                       : "border-transparent text-gray-700 hover:text-primary/80",
@@ -354,7 +354,7 @@ export function Navbar({
                   সর্বশেষ
                 </Link>
 
-                <div className="flex items-center overflow-x-auto scrollbar-none gap-2 h-full">
+                <div className="flex items-center overflow-x-auto scrollbar-none gap-1 h-full">
                   {categories
                     .slice(0, 10)
                     .filter((category, index, self) => {
@@ -370,7 +370,7 @@ export function Navbar({
                         <Link
                           href={`/${category.slug}`}
                           className={cn(
-                            "px-3 flex items-center h-full text-sm md:text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                            "px-2 flex items-center h-full text-sm md:text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                             strippedPathname === `/${category.slug}`
                               ? "border-red-600 text-red-600"
                               : "border-transparent text-gray-700 hover:text-red-600",
@@ -386,7 +386,7 @@ export function Navbar({
                 <button
                   onClick={() => setIsMoreOpen(!isMoreOpen)}
                   className={cn(
-                    "cursor-pointer shrink-0 px-4 py-1.5 flex items-center gap-2 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all duration-300 select-none","hidden md:flex",
+                    "cursor-pointer shrink-0 px-3 py-1.5 flex items-center gap-2 rounded-full text-sm font-bold tracking-wide whitespace-nowrap transition-all duration-300 select-none","hidden md:flex",
                     isMoreOpen
                       ? "bg-red-600 text-white shadow-md shadow-red-600/20 scale-[0.98]"
                       : "bg-gray-50 border border-gray-200/80 text-gray-700 hover:bg-gray-100 hover:text-red-600 hover:border-red-200",
@@ -404,7 +404,7 @@ export function Navbar({
                 <Link
                   href={`/video`}
                   className={cn(
-                    "shrink-0 px-3 hidden md:flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
+                    "shrink-0 px-2 hidden md:flex items-center h-full text-base font-bold whitespace-nowrap border-b-2 transition-colors",
                     strippedPathname === `/video`
                       ? "border-primary text-text-primary/80"
                       : "border-transparent text-gray-700 hover:text-primary/80",
