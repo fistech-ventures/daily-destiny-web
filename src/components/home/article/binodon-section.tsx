@@ -74,10 +74,10 @@ export default async function BinodonSection() {
                 />
               </div>
               <div className="mt-4">
-                <h2 className="text-lg md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
                   <ArticleTitle article={mainArticle} />
                 </h2>
-                <p className="mt-3 text-xs md:text-sm text-gray-600 leading-relaxed"
+                <p className="mt-3 text-lg md:text-xl text-gray-600 leading-relaxed"
                   style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {mainArticle.excerpt}
                 </p>
@@ -113,7 +113,7 @@ export default async function BinodonSection() {
                       className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-200"
                     />
                   </div>
-                  <h3 className="mt-3 text-xs sm:text-sm font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200"
+                  <h3 className="mt-3 text-base md:text-lg font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200"
                     style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                     <ArticleTitle article={article} />
                   </h3>
