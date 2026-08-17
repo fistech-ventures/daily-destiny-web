@@ -33,6 +33,7 @@ import { getMarketPrice } from "@/lib/api";
 import Headline from "./headline";
 import MarketPriceWidget from "../market-price/market-price-ticker";
 import { getAllcategories } from "@/lib/api";
+import NavbarSearch from "../search/navbar-search";
 
 function DesktopDateTime() {
   const locale = useLocale();
@@ -413,6 +414,9 @@ export function Navbar({
                   ভিডিও
                 </Link>
               </nav>
+
+              {/* Search — between category links and market widget */}
+              <NavbarSearch />
 
               {/* Right actions */}
               <div className="flex items-center shrink-0 h-full divide-x divide-gray-200 border-l border-gray-200">

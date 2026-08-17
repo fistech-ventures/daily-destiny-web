@@ -56,6 +56,37 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
+// ─── In-memory TTL cache for embedded article metadata ──────────────────────
+// Embedded links are re-fetched on every page load; without caching, an article
+// with N embeds causes N extra API calls per request. This module-level cache
+// (keyed by article code) serves repeat loads from memory for a short window.
+
+const EMBED_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+const embedCache = new Map<
+  string,
+  { article: Article; expiresAt: number }
+>();
+
+async function getCachedArticleByCode(code: string): Promise<Article | null> {
+  const hit = embedCache.get(code);
+  if (hit && hit.expiresAt > Date.now()) {
+    return hit.article;
+  }
+
+  try {
+    const res = await getArticleByCode(code);
+    const article = res?.data ?? null;
+    if (article) {
+      embedCache.set(code, { article, expiresAt: Date.now() + EMBED_CACHE_TTL_MS });
+    }
+    return article;
+  } catch {
+    // Keep the original anchor for links that fail to resolve.
+    return null;
+  }
+}
+
 /** Builds the styled card markup matching the site's horizontal article card. */
 function buildEmbedCardHtml(article: Article): string {
   const categorySlug = getArticleCategory(article)?.slug || "others";
@@ -70,7 +101,7 @@ function buildEmbedCardHtml(article: Article): string {
     `<div class="relative h-16 w-24 sm:h-20 sm:w-32 shrink-0 overflow-hidden rounded-md bg-gray-100">` +
     `<img src="${image}" alt="${alt}" loading="lazy" class="h-full w-full object-cover" />` +
     `</div>` +
-    `<h3 class="m-0 text-sm sm:text-base font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors">${title}</h3>` +
+    `<h3 class="m-0 text-xl font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors">${title}</h3>` +
     `</a>` +
     `</div>`
   );
@@ -90,12 +121,8 @@ export async function enrichArticleBodyWithCards(html: string): Promise<string> 
   const articles = new Map<string, Article>();
   await Promise.all(
     uniqueCodes.map(async (code) => {
-      try {
-        const res = await getArticleByCode(code);
-        if (res?.data) articles.set(code, res.data);
-      } catch {
-        // Keep the original anchor for links that fail to resolve.
-      }
+      const article = await getCachedArticleByCode(code);
+      if (article) articles.set(code, article);
     }),
   );
 
