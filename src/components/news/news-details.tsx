@@ -26,7 +26,7 @@ export default function NewsDetails({ article }: { article: Article }) {
       </div>
 
       <div id="article-content" className="px-2 lg:px-4 print:px-0 py-8 bg-background rounded-md">
-        <h1 className="text-lg md:text-2xl font-bold text-gray-900 leading-tight mb-2 lg:mb-6">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2 lg:mb-6">
           <ArticleTitle article={article} />
         </h1>
 
@@ -65,7 +65,7 @@ export default function NewsDetails({ article }: { article: Article }) {
         </div>
 
         <article
-          className="prose article-body text-lg prose-lg max-w-none text-gray-800 leading-relaxed"
+          className="prose article-body text-xl prose-xl max-w-none text-gray-800 leading-relaxed"
           dangerouslySetInnerHTML={{ __html: article.details }}
         />
 
