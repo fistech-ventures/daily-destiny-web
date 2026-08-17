@@ -19,6 +19,7 @@ import {
 import { Metadata } from "next";
 import { buildArticleLdJson } from "@/lib/article-ld-json";
 import ArticleViewTracker from "@/components/news/article-view-tracker";
+import { enrichArticleBodyWithCards } from "@/lib/article-embeds";
 
 export async function generateMetadata({
   params,
@@ -126,6 +127,7 @@ export default async function NewsDetailsPage({
   let article: Article | null = null;
   let relatedArticles: Article[] = [];
   let globalConfig: GlobalConfig | null = null;
+  let articleBodyHtml: string | undefined;
 
   try {
     const [response, configRes] = await Promise.all([
@@ -137,6 +139,7 @@ export default async function NewsDetailsPage({
     globalConfig = configRes?.data ?? null;
 
     if (article) {
+      articleBodyHtml = await enrichArticleBodyWithCards(article.details || "");
       // Use article.id (UUID) — the /related endpoint expects the UUID, not the numeric code
       const relatedRes = await getRelatedArticles(article.id);
 
@@ -182,7 +185,7 @@ export default async function NewsDetailsPage({
 
       {/* News Details */}
       <div className="lg:col-span-2 col-span-3">
-        <NewsDetails article={article} />
+        <NewsDetails article={article} bodyHtml={articleBodyHtml} />
       </div>
 
       {/* Related & Recent Articles */}

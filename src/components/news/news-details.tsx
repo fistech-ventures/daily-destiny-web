@@ -8,7 +8,13 @@ import { formatBdTime } from "@/utils/date-formatter";
 import Link from "next/link";
 import ArticleTitle from "../shared/article-title";
 
-export default function NewsDetails({ article }: { article: Article }) {
+export default function NewsDetails({
+  article,
+  bodyHtml,
+}: {
+  article: Article;
+  bodyHtml?: string;
+}) {
   const currentLocale = useLocale();
 
   const tFooter = useTranslations("footer");
@@ -66,7 +72,7 @@ export default function NewsDetails({ article }: { article: Article }) {
 
         <article
           className="prose article-body text-xl prose-xl max-w-none text-gray-800 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: article.details }}
+          dangerouslySetInnerHTML={{ __html: bodyHtml ?? article.details }}
         />
 
         <div className="no-print flex flex-wrap items-center gap-2 pt-3 lg:pt-6">
