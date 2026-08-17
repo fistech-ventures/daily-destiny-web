@@ -6,12 +6,9 @@ import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
 import AdBanner from "@/components/shared/ad-banner";
 import ArticleTitle from "@/components/shared/article-title";
+import ArticleGridWithMore from "./article/article-grid-with-more";
 
 interface FeaturedSectionProps {
-  article: Article;
-}
-
-interface GridCardProps {
   article: Article;
 }
 
@@ -58,35 +55,6 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
   </div>
 );
 
-// Grid Card - Image on top, Title below
-const GridCard: React.FC<GridCardProps> = ({ article }) => (
-  <Link
-    href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
-  >
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
-      <img
-        src={article.coverImage}
-        alt={article.title}
-        className="w-full aspect-video object-cover hover:opacity-90"
-      />
-      <div className="p-4">
-        <h3
-          className="text-sm md:text-base font-bold hover:text-blue-600"
-          style={{
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-            width: "100%",
-          }}
-        >
-          <ArticleTitle article={article} />
-        </h3>
-      </div>
-    </div>
-  </Link>
-);
-
 // News list item for latest/popular sidebar
 const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
   <Link
@@ -119,9 +87,11 @@ const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
 
 export default async function ArticleSection(): Promise<React.ReactNode> {
   try {
+    // Fetch 13 exclusive articles: 1 featured + up to 12 grid cards.
+    // The grid initially shows 6 and reveals 3 more per "আরও" click.
     const exclusiveArticles = await getArticles({
       page: 1,
-      limit: 7,
+      limit: 13,
       sortBy: "position",
       sortOrder: "ASC",
       isExclusive: true,
@@ -147,7 +117,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
     const popularSidebarArticles: Article[] = popularSidebarRes?.data || [];
 
     const exclusiveTop = exclusiveArticles.data[0];
-    const gridArticles = exclusiveArticles.data.slice(1, 7);
+    const gridArticles = exclusiveArticles.data.slice(1, 13);
 
     return (
       <section className="p-0!">
@@ -162,11 +132,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
             )}
 
             {gridArticles.length > 0 ? (
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                {gridArticles.map((article: Article) => (
-                  <GridCard key={article.id} article={article} />
-                ))}
-              </div>
+              <ArticleGridWithMore articles={gridArticles} />
             ) : (
               <div className="text-center py-10 text-gray-500">
                 No articles available
