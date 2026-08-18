@@ -39,7 +39,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
           </h1>
         </Link>
         <p
-          className="text-sm md:text-base text-gray-600"
+          className="text-lg md:text-xl text-gray-600"
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 4,
@@ -70,7 +70,7 @@ const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
     </div>
     <div className="flex-1 min-w-0 py-1.5 pr-2">
       <h4
-        className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+        className="text-base md:text-lg font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
         style={{
           display: "-webkit-box",
           WebkitLineClamp: 2,
@@ -107,12 +107,15 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
     });
     const recentSidebarArticles: Article[] = recentSidebarRes?.data || [];
 
-    // Fetch popular 4 articles for sidebar
+    // Fetch latest published articles for the popular slot — show the second batch (items 5-9)
+    // so it doesn't duplicate the সর্বশেষ section (items 1-4). Temporary stand-in until the
+    // isPopular API returns proper data from the backend.
     const popularSidebarRes = await getArticles({
       page: 1,
-      limit: 4,
-      isPopular: true,
+      limit: 9,
       status: "Published",
+      sortBy: "date",
+      sortOrder: "DESC",
     });
     const popularSidebarArticles: Article[] = popularSidebarRes?.data || [];
 
@@ -145,7 +148,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
             {/* Advertisement Banner */}
             <AdBanner pageType="homePage" position="Lead-Right" keepSpace />
 
-            {/* Recent / সর্বশেষ - 3 items */}
+            {/* Recent / সর্বশেষ - 4 items */}
             <div>
               <div className="flex items-center justify-between border-b-2 border-blue-600 pb-2 mb-3">
                 <h3 className="flex items-center gap-2 text-base font-bold text-gray-900">
@@ -162,33 +165,33 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
               <div className="flex flex-col gap-2.5">
                 {recentSidebarArticles.length > 0 ? (
                   recentSidebarArticles
-                    .slice(0, 3)
+                    .slice(0, 4)
                     .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))
                 ) : (
-                  <p className="text-gray-400 text-sm text-center py-4">
+                  <p className="text-gray-400 text-lg md:text-xl text-center py-4">
                     কোনো সংবাদ পাওয়া যায়নি
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Popular News - 3 items */}
+            {/* Popular News - 4 items */}
             <div>
               <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-3">
                 <TrendingUp className="h-4 w-4 text-blue-500" />
                 <span>জনপ্রিয় সংবাদ</span>
               </h3>
               <div className="flex flex-col gap-2.5">
-                {popularSidebarArticles.length > 0 ? (
+                {popularSidebarArticles.length > 4 ? (
                   popularSidebarArticles
-                    .slice(0, 3)
+                    .slice(4, 9)
                     .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))
                 ) : (
-                  <p className="text-gray-400 text-sm text-center py-4">
+                  <p className="text-gray-400 text-lg md:text-xl text-center py-4">
                     কোনো সংবাদ পাওয়া যায়নি
                   </p>
                 )}

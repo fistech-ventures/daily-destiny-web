@@ -45,7 +45,7 @@ export default function HorizontalArticleCard({
           </h2>
           {(article.excerpt || article.details) && (
             <p
-              className="text-xs md:text-sm lg:text-base text-gray-200 mt-2 leading-relaxed max-w-3xl"
+              className="text-lg md:text-xl text-gray-200 mt-2 leading-relaxed max-w-3xl"
               style={{
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
@@ -129,7 +129,7 @@ export default function HorizontalArticleCard({
 
             {(article.excerpt || article.details) ? (
               <p
-                className="text-sm md:text-base text-gray-500 leading-relaxed"
+                className="text-lg md:text-xl text-gray-500 leading-relaxed"
                 style={{
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -183,7 +183,7 @@ export default function HorizontalArticleCard({
               dangerouslySetInnerHTML={{
                 __html: article.details || article.excerpt,
               }}
-              className="text-xs md:text-sm font-normal text-gray-600 leading-relaxed"
+              className="text-lg md:text-xl font-normal text-gray-600 leading-relaxed"
               style={{
                 display: "-webkit-box",
                 WebkitLineClamp: 3,
@@ -195,7 +195,7 @@ export default function HorizontalArticleCard({
           ) : layoutType === "grid" ? (
             article.excerpt || article.details ? (
               <p
-                className="text-xs md:text-sm text-gray-500 leading-relaxed"
+                className="text-lg md:text-xl text-gray-500 leading-relaxed"
                 style={{
                   display: "-webkit-box",
                   WebkitLineClamp: 2,

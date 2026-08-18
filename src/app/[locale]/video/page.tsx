@@ -22,7 +22,7 @@ export default async function VideoPage() {
   const videoResponse = await getVideos({ page: 1, limit: 11 }); 
 
   return (
-    <div className="">
+    <div className="container mx-auto px-1.5 py-0 pb-2 flex flex-col">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-12 flex flex-col">
           <div className="my-2">
