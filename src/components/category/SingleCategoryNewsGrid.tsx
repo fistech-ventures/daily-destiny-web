@@ -78,12 +78,12 @@ export default async function SingleCategoryNewsGrid({
                 />
               </div>
 
-              <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#000058] transition-colors">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 leading-snug group-hover:text-[#000058] transition-colors">
                 <ArticleTitle article={featuredArticle} />
               </h3>
 
               {featuredArticle.excerpt && (
-                <p className="text-sm text-gray-600"
+                <p className="text-lg md:text-xl text-gray-600"
                   style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   {featuredArticle.excerpt}
                 </p>
@@ -119,13 +119,13 @@ export default async function SingleCategoryNewsGrid({
               </div>
 
               <div className="flex-1 min-w-0">
-                <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
+                <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
                   {article.title}
                 </h4>
 
                 {article.excerpt && (
                   <p
-                    className="hidden sm:block text-sm text-gray-500 mt-1"
+                    className="hidden sm:block text-lg md:text-xl text-gray-500 mt-1"
                     style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}
                   >
                     {article.excerpt}
@@ -154,12 +154,12 @@ export default async function SingleCategoryNewsGrid({
               </div>
 
               <div className="flex-1 min-w-0">
-                <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
+                <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
                   {article.title}
                 </h4>
 
                 {article.excerpt && (
-                  <p className="hidden sm:block text-sm text-gray-500 mt-1"
+                  <p className="hidden sm:block text-lg md:text-xl text-gray-500 mt-1"
                     style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                     {article.excerpt}
                   </p>
