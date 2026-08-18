@@ -72,9 +72,9 @@ export default function ArticleCard({
                 : isCompactRow
                   ? "text-sm sm:text-base font-bold text-gray-900"
                   : isVerticalLead
-                    ? "text-base md:text-lg"
+                    ? "text-lg md:text-xl"
                     : isTextOnly
-                      ? "text-sm md:text-base font-normal py-1.5"
+                      ? "text-base md:text-lg font-normal py-1.5"
                       : "text-lg md:text-xl lg:text-2xl"
             }`}
             style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}

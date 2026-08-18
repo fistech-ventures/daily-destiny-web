@@ -98,7 +98,7 @@ export default function PaginatedList<T>({
           items.map((item, index) => renderItem(item, index))
         ) : (
           <div className="py-12 text-center text-gray-500 col-span-full">
-            <p>{noDataMessage}</p>
+            <p className="text-lg md:text-xl">{noDataMessage}</p>
           </div>
         )}
       </div>

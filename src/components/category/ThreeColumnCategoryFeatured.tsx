@@ -94,7 +94,7 @@ export default function FourCategoryGrid({
   if (!categories || categories.length === 0) {
     return (
       <div className="py-16 text-center">
-        <p className="text-gray-400 text-sm font-medium">
+        <p className="text-gray-400 text-lg md:text-xl font-medium">
           কোনো বিভাগ পাওয়া যায়নি
         </p>
       </div>
