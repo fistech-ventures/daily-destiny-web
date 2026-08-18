@@ -389,7 +389,7 @@ export default async function Home({
                           {/* Content */}
                           <div className="p-4 flex flex-col">
                             <h4
-                              className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                              className="text-lg md:text-xl font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors"
                               style={{
                                 display: "-webkit-box",
                                 WebkitLineClamp: 2,
@@ -402,7 +402,7 @@ export default async function Home({
                             </h4>
                             {article.excerpt && (
                               <p
-                                className="text-sm text-gray-500 mt-2"
+                                className="text-lg md:text-xl text-gray-500 mt-2"
                                 style={{
                                   display: "-webkit-box",
                                   WebkitLineClamp: 2,
@@ -474,7 +474,7 @@ export default async function Home({
                           {/* Content */}
                           <div className="p-3">
                             <h4
-                              className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                              className="text-base md:text-lg font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
                               style={{
                                 display: "-webkit-box",
                                 WebkitLineClamp: 3,
@@ -498,7 +498,7 @@ export default async function Home({
                   </div>
                 </div>
               ) : (
-                <div className="py-10 text-center text-gray-400 text-sm">
+                <div className="py-10 text-center text-gray-400 text-lg md:text-xl">
                   কোনো সংবাদ পাওয়া যায়নি
                 </div>
               )}
