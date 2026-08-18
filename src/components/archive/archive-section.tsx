@@ -225,11 +225,11 @@ export default function ArchiveSection() {
                 <div className="flex flex-col items-center justify-center min-h-[200px] text-center p-6">
                   <FileText className="h-10 w-10 text-gray-300 mb-3" />
                   {hasDateRange ? (
-                    <p className="text-gray-500 text-sm">
+                    <p className="text-gray-500 text-lg md:text-xl">
                       এই তারিখে কোনো সংবাদ পাওয়া যায়নি
                     </p>
                   ) : (
-                    <p className="text-gray-500 text-sm">
+                    <p className="text-gray-500 text-lg md:text-xl">
                       কোনো সংবাদ পাওয়া যায়নি
                     </p>
                   )}
