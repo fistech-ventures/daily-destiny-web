@@ -28,7 +28,7 @@ export default async function RecentPage() {
   const meta = response?.meta;
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-1.5 py-0 pb-2 flex flex-col">
       {/* Header section */}
       <div className="my-2">
         <div className="flex items-center gap-3 border-l-4 border-primary pl-4">
