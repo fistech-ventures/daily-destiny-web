@@ -201,7 +201,7 @@ export default function ArchiveSection() {
 
                       {/* Content */}
                       <div className="flex-1 p-3 flex flex-col">
-                        <h4 className="text-base font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                        <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
                           style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                           <ArticleTitle article={article} />
                         </h4>

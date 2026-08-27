@@ -474,7 +474,7 @@ export default async function Home({
                           {/* Content */}
                           <div className="p-3">
                             <h4
-                              className="text-base md:text-lg font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+                              className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
                               style={{
                                 display: "-webkit-box",
                                 WebkitLineClamp: 3,

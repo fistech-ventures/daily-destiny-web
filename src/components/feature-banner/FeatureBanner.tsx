@@ -116,7 +116,7 @@ const FeatureBanner = ({ eventData }: FeatureBannerProps) => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-[#1e293b] text-xs sm:text-sm font-semibold mt-2 leading-relaxed group-hover:text-blue-700 transition-colors"
+                <h3 className="text-[#1e293b] text-base md:text-lg font-bold mt-2 leading-relaxed group-hover:text-[#1a66ca] transition-colors"
                 style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%' }}>
                   <ArticleTitle article={article} />
                 </h3>

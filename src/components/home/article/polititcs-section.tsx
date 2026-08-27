@@ -88,7 +88,7 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
                 />
               </div>
               <div className="mt-4">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors duration-200">
                   <ArticleTitle article={mainArticle} />
                 </h2>
                 <p
@@ -140,7 +140,7 @@ const PoliticsSection: React.FC<PoliticsSectionProps> = ({ articles }) => {
                     />
                   </div>
                   <h3
-                    className="mt-3 text-base md:text-lg font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200"
+                    className="mt-3 text-lg md:text-xl font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors duration-200"
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 3,

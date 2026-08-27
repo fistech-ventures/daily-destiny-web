@@ -279,4 +279,25 @@
   .animate-shadow-blink {
     animation: shadow-blink 1s infinite;
   }
+
+  /* Ribbon icon animations */
+  @keyframes clock-tick {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(8deg); }
+    75% { transform: rotate(-8deg); }
+  }
+
+  @keyframes bar-growth {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.3); }
+  }
+
+  .animate-clock-tick {
+    animation: clock-tick 2s ease-in-out infinite;
+  }
+
+  .animate-bar-growth {
+    animation: bar-growth 1.5s ease-in-out infinite;
+    transform-origin: bottom;
+  }
 }

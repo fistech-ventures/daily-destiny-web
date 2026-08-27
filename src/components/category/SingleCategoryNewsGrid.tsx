@@ -78,7 +78,7 @@ export default async function SingleCategoryNewsGrid({
                 />
               </div>
 
-              <h3 className="text-lg md:text-xl font-bold text-gray-900 leading-snug group-hover:text-[#000058] transition-colors">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors">
                 <ArticleTitle article={featuredArticle} />
               </h3>
 
@@ -119,7 +119,7 @@ export default async function SingleCategoryNewsGrid({
               </div>
 
               <div className="flex-1 min-w-0">
-                <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
+                <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2 sm:line-clamp-3">
                   {article.title}
                 </h4>
 
@@ -154,7 +154,7 @@ export default async function SingleCategoryNewsGrid({
               </div>
 
               <div className="flex-1 min-w-0">
-                <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors line-clamp-2 sm:line-clamp-3">
+                <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors line-clamp-2 sm:line-clamp-3">
                   {article.title}
                 </h4>
 

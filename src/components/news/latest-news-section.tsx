@@ -57,7 +57,7 @@ export default async function LatestNewsSection() {
                 />
               </div>
 
-              <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-[#000058] transition-colors">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 leading-snug group-hover:text-[#1a66ca] transition-colors">
                 <ArticleTitle article={featuredArticle} />
               </h3>
 
@@ -105,7 +105,7 @@ export default async function LatestNewsSection() {
 
               <div className="flex-1 min-w-0">
                 <div>
-                  <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors">
+                  <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors">
                     {article.title}
                   </h4>
                 </div>
@@ -139,7 +139,7 @@ export default async function LatestNewsSection() {
 
               <div className="flex-1 min-w-0">
                 <div>
-                  <h4 className="text-base font-bold text-gray-800 leading-snug group-hover:text-[#000058] transition-colors">
+                  <h4 className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors">
                     {article.title}
                   </h4>
                 </div>

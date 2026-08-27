@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Monitor, TrendingUp } from "lucide-react";
+import { Clock, BarChart3, ChevronRight } from "lucide-react";
 import { getArticles } from "@/lib/api";
 import { Article } from "@/lib/types";
 import { getArticleCategory } from "@/lib/utils";
@@ -34,7 +34,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ article }) => (
         <Link
           href={`/news/${getArticleCategory(article)?.slug || "others"}/${article.code}`}
         >
-          <h1 className="text-2xl md:text-3xl font-bold mb-4 hover:text-blue-600">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 hover:text-[#1a66ca]">
             <ArticleTitle article={article} />
           </h1>
         </Link>
@@ -70,7 +70,7 @@ const NewsListItem: React.FC<{ article: Article }> = ({ article }) => (
     </div>
     <div className="flex-1 min-w-0 py-1.5 pr-2">
       <h4
-        className="text-base md:text-lg font-semibold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
+        className="text-lg md:text-xl font-bold text-gray-800 leading-snug group-hover:text-[#1a66ca] transition-colors"
         style={{
           display: "-webkit-box",
           WebkitLineClamp: 2,
@@ -91,7 +91,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
     // The grid initially shows 6 and reveals 3 more per "আরও" click.
     const exclusiveArticles = await getArticles({
       page: 1,
-      limit: 13,
+      limit: 16,
       sortBy: "position",
       sortOrder: "ASC",
       isExclusive: true,
@@ -112,7 +112,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
     // isPopular API returns proper data from the backend.
     const popularSidebarRes = await getArticles({
       page: 1,
-      limit: 9,
+      limit: 11,
       status: "Published",
       sortBy: "date",
       sortOrder: "DESC",
@@ -120,7 +120,7 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
     const popularSidebarArticles: Article[] = popularSidebarRes?.data || [];
 
     const exclusiveTop = exclusiveArticles.data[0];
-    const gridArticles = exclusiveArticles.data.slice(1, 13);
+    const gridArticles = exclusiveArticles.data.slice(1, 16);
 
     return (
       <section className="p-0!">
@@ -135,7 +135,9 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
             )}
 
             {gridArticles.length > 0 ? (
-              <ArticleGridWithMore articles={gridArticles} />
+              <div className="group">
+                <ArticleGridWithMore articles={gridArticles} />
+              </div>
             ) : (
               <div className="text-center py-10 text-gray-500">
                 No articles available
@@ -150,17 +152,29 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
 
             {/* Recent / সর্বশেষ - 4 items */}
             <div>
-              <div className="flex items-center justify-between border-b-2 border-blue-600 pb-2 mb-3">
-                <h3 className="flex items-center gap-2 text-base font-bold text-gray-900">
-                  <Monitor className="h-4 w-4 text-blue-600" />
-                  <span>সর্বশেষ</span>
-                </h3>
-                <Link
-                  href="/recent"
-                  className="text-xs font-semibold text-blue-600 hover:text-blue-800 hover:underline transition-colors shrink-0"
-                >
-                  আরো দেখুন →
-                </Link>
+              {/* Ribbon Header */}
+              <div className="relative mb-3">
+                {/* Ribbon shadow/fold */}
+                <div className="absolute top-full left-0 w-[92%] h-2 bg-red-800/40 rounded-b-sm" style={{ clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)' }} />
+                {/* Main ribbon body */}
+                <div className="group relative bg-red-600 text-white pl-4 pr-14 py-3 transition-all duration-300 hover:bg-red-500" style={{ clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)' }}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="relative flex items-center justify-center w-7 h-7">
+                        <div className="absolute inset-0 bg-white/10 rounded-full blur-md" />
+                        <Clock className="relative h-6 w-6 text-white animate-clock-tick" />
+                      </div>
+                      <span className="font-extrabold uppercase tracking-wider text-base md:text-lg leading-none">সর্বশেষ</span>
+                    </div>
+                    <Link
+                      href="/recent"
+                      className="flex items-center gap-0.5 text-xs font-semibold text-white/70 group-hover:text-white! transition-colors shrink-0 pr-1"
+                    >
+                      আরো
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
               </div>
               <div className="flex flex-col gap-2.5">
                 {recentSidebarArticles.length > 0 ? (
@@ -179,14 +193,34 @@ export default async function ArticleSection(): Promise<React.ReactNode> {
 
             {/* Popular News - 4 items */}
             <div>
-              <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-3">
-                <TrendingUp className="h-4 w-4 text-blue-500" />
-                <span>জনপ্রিয় সংবাদ</span>
-              </h3>
+              {/* Ribbon Header */}
+              <div className="relative mb-3">
+                {/* Ribbon shadow/fold */}
+                <div className="absolute top-full left-0 w-[92%] h-2 bg-[#000029]/40 rounded-b-sm" style={{ clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)' }} />
+                {/* Main ribbon body */}
+                <div className="group relative bg-[#000058] text-white pl-4 pr-14 py-3 transition-all duration-300 hover:bg-[#00004a]" style={{ clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)' }}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="relative flex items-center justify-center w-7 h-7">
+                        <div className="absolute inset-0 bg-amber-400/15 rounded-full blur-md" />
+                        <BarChart3 className="relative h-6 w-6 text-amber-400 animate-bar-growth" />
+                      </div>
+                      <span className="font-extrabold uppercase tracking-wider text-base md:text-lg leading-none">জনপ্রিয়</span>
+                    </div>
+                    <Link
+                      href="/popular"
+                      className="flex items-center gap-0.5 text-xs font-semibold text-white/70 group-hover:text-white! transition-colors shrink-0 pr-1"
+                    >
+                      আরো
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
               <div className="flex flex-col gap-2.5">
                 {popularSidebarArticles.length > 4 ? (
                   popularSidebarArticles
-                    .slice(4, 9)
+                    .slice(4, 10)
                     .map(article => (
                       <NewsListItem key={article.id} article={article} />
                     ))
